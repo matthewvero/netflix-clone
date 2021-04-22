@@ -141,37 +141,61 @@ export const AnimationCardTextContainer = styled.div`
 	z-index: 10;
 	@media (max-width: 950px) {
 		width: 100%;
+		padding: 0;
 	}
+`;
+
+export const LayerAnimationImage = styled.img`
+	position: absolute;
+	max-width: 100%;
+	top: 0%;
+	left: 50%;
+	transform: translate(-50%, -20%);
 `;
 
 export const AnimationImage = styled.img`
 	object-fit: cover;
 	height: auto;
 	max-width: 100%;
+	margin-top: -5%;
 `;
 
 export const AnimationContainer = styled.div`
 	object-fit: cover;
 	position: relative;
-	max-width: 48%;
+	width: 42%;
+	margin: 0;
 	@media (max-width: 950px) {
-		max-width: 100%;
-		margin-top: -10%;
+		width: 100%;
+	}
+	&.layered {
+		margin: 5% 0 10% 0;
+		@media (max-width: 950px) {
+			width: 100%;
+			margin: 7% 0 10% 0;
+		}
+	}
+	&.devices {
+		transform: scale(1);
+		margin: 0 0 15% 0;
+
+		@media (max-width: 950px) {
+			transform: scale(0.8);
+		}
 	}
 `;
 
 export const Animation = styled.video`
-	position: absolute;
+	object-fit: cover;
 	max-width: 73%;
 	max-height: 54%;
-	top: 21%;
-	left: 13%;
 `;
 
 export const AnimationCard = styled(StartPageCard)`
 	padding: 75px 45px;
 	@media (max-width: 550px) {
 		padding: 50px 25px;
+		height: auto;
 	}
 `;
 
@@ -233,10 +257,12 @@ export const DownLoadCard = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
+	@media (min-width: 750px) {
+		width: 60%;
+	}
 	@media (min-width: 950px) {
-		width: 65%;
-		height: 25%;
+		width: 70%;
+		height: 30%;
 		gap: 5px;
 	}
 `;
