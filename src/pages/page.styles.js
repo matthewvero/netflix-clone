@@ -13,4 +13,5 @@ export const Page = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	background-color: black;
+	overflow-y: scroll;
 `;

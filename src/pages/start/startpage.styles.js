@@ -6,6 +6,7 @@ import {
 	InputContainer,
 	InputLabel,
 } from "../../components/misc/inputs.styles";
+import { Heading, SubHeading } from "../../components/misc/text.styles";
 
 export const StartPageCard = styled.section`
 	width: 100%;
@@ -20,6 +21,7 @@ export const StartPageCard = styled.section`
 	background-color: black;
 	background-size: cover;
 	background-position: center;
+	box-sizing: border-box;
 	@media (max-width: 550px) {
 		height: 525px;
 	}
@@ -129,5 +131,112 @@ export const StartPageButton = styled(Button)`
 		font-size: 26px;
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
+	}
+`;
+
+export const AnimationCardTextContainer = styled.div`
+	width: 52%;
+	padding-right: 50px;
+	box-sizing: border-box;
+	z-index: 10;
+	@media (max-width: 950px) {
+		width: 100%;
+	}
+`;
+
+export const AnimationImage = styled.img`
+	object-fit: cover;
+	height: auto;
+	max-width: 100%;
+`;
+
+export const AnimationContainer = styled.div`
+	object-fit: cover;
+	position: relative;
+	max-width: 48%;
+	@media (max-width: 950px) {
+		max-width: 100%;
+		margin-top: -10%;
+	}
+`;
+
+export const Animation = styled.video`
+	position: absolute;
+	max-width: 73%;
+	max-height: 54%;
+	top: 21%;
+	left: 13%;
+`;
+
+export const AnimationCard = styled(StartPageCard)`
+	padding: 75px 45px;
+	@media (max-width: 550px) {
+		padding: 50px 25px;
+	}
+`;
+
+export const AnimationCardHeading = styled.h1`
+	margin: 0;
+	color: white;
+	font-size: 50px;
+	@media (max-width: 1000px) {
+		font-size: 40px;
+	}
+	@media (max-width: 550px) {
+		font-size: 26px;
+	}
+
+	&.left {
+		@media (min-width: 950px) {
+			text-align: left;
+		}
+	}
+
+	&.right {
+		@media (min-width: 950px) {
+			text-align: right;
+		}
+	}
+`;
+
+export const AnimationCardSubHeading = styled(SubHeading)`
+	font-size: 26px;
+
+	@media (max-width: 950px) {
+		font-size: 20px;
+	}
+	&.left {
+		@media (min-width: 950px) {
+			text-align: left;
+		}
+	}
+
+	&.right {
+		@media (min-width: 950px) {
+			text-align: right;
+		}
+	}
+`;
+
+export const DownLoadCard = styled.div`
+	width: 65%;
+	height: 20%;
+	padding: 8px 12px;
+	box-sizing: border-box;
+	background-color: black;
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	border-radius: 10px;
+	position: absolute;
+	bottom: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	@media (min-width: 950px) {
+		width: 65%;
+		height: 25%;
+		gap: 5px;
 	}
 `;
