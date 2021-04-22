@@ -11,7 +11,7 @@ import { Heading, SubHeading } from "../../components/misc/text.styles";
 export const StartPageCard = styled.section`
 	width: 100%;
 	position: relative;
-	height: 700px;
+	height: auto;
 	width: 100vw;
 	max-width: 100vw;
 	display: flex;
