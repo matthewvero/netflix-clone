@@ -14,7 +14,6 @@ import {
 	StartPageButton,
 	StartPageCard,
 	StartPageEmailInput,
-	StartPageFormInputContainer,
 	StartPageHeader,
 	StartPageInputContainer,
 	Animation,
@@ -24,7 +23,10 @@ import {
 import { ReactComponent as ReactLogo } from "../../logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { InputBox, InputLabel } from "../../components/misc/inputs.styles";
+import {
+	FormInputContainer,
+	InputLabel,
+} from "../../components/misc/inputs.styles";
 import background from "../../images/home-bg.jpeg";
 import tv from "../../images/tv.png";
 import EnjoyAnimation from "../../videos/video-tv-0819.m4v";
@@ -38,10 +40,11 @@ import {
 	Heading,
 	SubHeading,
 } from "../../components/misc/text.styles";
-import AccordionSegment from "../../components/accordion/accordion.component";
-const StartPage = () => {
+import AccordionSegment from "../../components/accordion-segment/accordion-segment.component";
+import AccordionContainer from "../../components/accordion-container/accordion-container.component";
+import { withRouter } from "react-router";
+const StartPage = ({ history }) => {
 	const [email, setEmail] = useState();
-
 	return (
 		<Page>
 			<StartPageCard
@@ -72,18 +75,28 @@ const StartPage = () => {
 							flexDirection: "column",
 							alignItems: "center",
 						}}
+						onSubmit={(e) => {
+							e.preventDefault();
+							history.push({
+								pathname: "/signup",
+								state: {
+									email,
+								},
+							});
+						}}
 					>
 						<EmailFormTitle>
 							Ready to watch? Enter your email to
 							create or restart your membership.
 						</EmailFormTitle>
 
-						<StartPageFormInputContainer>
+						<FormInputContainer>
 							<StartPageInputContainer
 								style={{ position: "relative" }}
 							>
 								<StartPageEmailInput
 									value={email}
+									required
 									onChange={(e) =>
 										setEmail(
 											e.target.value
@@ -104,7 +117,7 @@ const StartPage = () => {
 									icon={faChevronRight}
 								/>
 							</StartPageButton>
-						</StartPageFormInputContainer>
+						</FormInputContainer>
 					</form>
 				</OurStoryContainer>
 			</StartPageCard>
@@ -259,16 +272,7 @@ const StartPage = () => {
 			</AnimationCard>
 			<StartPageCard style={{ height: "auto" }}>
 				<Heading>Frequently asked Questions</Heading>
-				<div
-					style={{
-						width: "80%",
-						minHeight: "auto",
-						margin: "30px",
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}
-				>
+				<AccordionContainer>
 					<AccordionSegment title="What is Netflix?">
 						<p
 							style={{
@@ -323,6 +327,7 @@ const StartPage = () => {
 								color: "white",
 								textAlign: "left",
 								fontSize: "20px",
+								marginBottom: "30px",
 							}}
 						>
 							Watch anywhere, anytime, on an
@@ -333,8 +338,17 @@ const StartPage = () => {
 							internet-connected device that offers
 							the Netflix app, including smart TVs,
 							smartphones, tablets, streaming media
-							players and game consoles. You can
-							also download your favourite
+							players and game consoles.
+						</p>
+						<p
+							style={{
+								margin: "0",
+								color: "white",
+								textAlign: "left",
+								fontSize: "20px",
+							}}
+						>
+							You can also download your favourite
 							programmes with the iOS, Android, or
 							Windows 10 app. Use downloads to watch
 							while you're on the go and without an
@@ -375,51 +389,46 @@ const StartPage = () => {
 							much as you want, any time you want.
 						</p>
 					</AccordionSegment>
-					<form
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							marginTop: "5%",
-						}}
-					>
-						<EmailFormTitle>
-							Ready to watch? Enter your email to
-							create or restart your membership.
-						</EmailFormTitle>
+				</AccordionContainer>
+				<form
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}
+				>
+					<EmailFormTitle>
+						Ready to watch? Enter your email to create
+						or restart your membership.
+					</EmailFormTitle>
 
-						<StartPageFormInputContainer>
-							<StartPageInputContainer
-								style={{ position: "relative" }}
-							>
-								<StartPageEmailInput
-									value={email}
-									onChange={(e) =>
-										setEmail(
-											e.target.value
-										)
-									}
-								/>
-								<InputLabel>
-									Email address
-								</InputLabel>
-							</StartPageInputContainer>
+					<FormInputContainer>
+						<StartPageInputContainer
+							style={{ position: "relative" }}
+						>
+							<StartPageEmailInput
+								value={email}
+								onChange={(e) =>
+									setEmail(e.target.value)
+								}
+							/>
+							<InputLabel>Email address</InputLabel>
+						</StartPageInputContainer>
 
-							<StartPageButton>
-								Get Started{" "}
-								<FontAwesomeIcon
-									style={{
-										marginLeft: "3px",
-									}}
-									icon={faChevronRight}
-								/>
-							</StartPageButton>
-						</StartPageFormInputContainer>
-					</form>
-				</div>
+						<StartPageButton>
+							Get Started{" "}
+							<FontAwesomeIcon
+								style={{
+									marginLeft: "3px",
+								}}
+								icon={faChevronRight}
+							/>
+						</StartPageButton>
+					</FormInputContainer>
+				</form>
 			</StartPageCard>
 		</Page>
 	);
 };
 
-export default StartPage;
+export default withRouter(StartPage);

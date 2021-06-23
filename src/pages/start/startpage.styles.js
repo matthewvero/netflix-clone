@@ -88,30 +88,10 @@ export const OurStoryContainer = styled.div`
 	}
 `;
 
-export const StartPageFormInputContainer = styled.div`
-	position: relative;
-	width: 100%;
-	margin: 0;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	@media (max-width: 750px) {
-		width: 500px;
-	}
-	@media (max-width: 550px) {
-		width: 400px;
-	}
-`;
-
 export const StartPageEmailInput = styled(InputBox)`
 	@media (min-width: 950px) {
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
-	}
-	&:focus ~ ${InputLabel} {
-		transition: all 50ms ease-in;
-		transform: translateY(-100%) scale(0.8);
-		color: #7c7c7c;
 	}
 `;
 
