@@ -44,7 +44,10 @@ import {
 import AccordionSegment from "../../components/accordion-segment/accordion-segment.component";
 import AccordionContainer from "../../components/accordion-container/accordion-container.component";
 import { withRouter } from "react-router";
-import { useFormValidator, withValidation } from "../../hooks/form-validator";
+import {
+	useFormValidator,
+	withValidation,
+} from "../../hooks/form-validator/form-validator";
 
 const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email");
 

@@ -8,7 +8,11 @@ import {
 	InputBox,
 	InputLabel,
 } from "../../components/misc/inputs.styles";
-import { useFormValidator, withValidation } from "../../hooks/form-validator";
+import {
+	useFormValidator,
+	withValidation,
+} from "../../hooks/form-validator/form-validator";
+
 import {
 	FormContainer,
 	FormPage,
@@ -25,7 +29,7 @@ const SignupPage = ({ location }) => {
 	const [direction, setDirection] = useState("+");
 	const [currentPage, setCurrentPage] = useState(0);
 
-	const { errors, interacted, handleSubmit, api } = useFormValidator({
+	const { state, handleSubmit, api } = useFormValidator({
 		email: location.state.email,
 	});
 
@@ -76,38 +80,42 @@ const SignupPage = ({ location }) => {
 							<ValidatedEmail api={api} />
 							<InputLabel>Email</InputLabel>
 						</FormInputContainer>
-						{errors["email"] &&
-							interacted["email"] &&
-							errors["email"].map((el, idx) => (
-								<p
-									key={idx}
-									style={{
-										margin: "5px 0",
-										color: "crimson",
-									}}
-								>
-									{el}
-								</p>
-							))}
+						{state.errors["email"] &&
+							state.interacted["email"] &&
+							state.errors["email"].map(
+								(el, idx) => (
+									<p
+										key={idx}
+										style={{
+											margin: "5px 0",
+											color: "crimson",
+										}}
+									>
+										{el}
+									</p>
+								)
+							)}
 						<FormInputContainer>
 							<ValidatedPassword api={api} />
 							<InputLabel>
 								Add a password
 							</InputLabel>
 						</FormInputContainer>
-						{errors["password"] &&
-							interacted["password"] &&
-							errors["password"].map((el, idx) => (
-								<p
-									key={idx}
-									style={{
-										margin: "5px 0",
-										color: "crimson",
-									}}
-								>
-									{el}
-								</p>
-							))}
+						{state.errors["password"] &&
+							state.interacted["password"] &&
+							state.errors["password"].map(
+								(el, idx) => (
+									<p
+										key={idx}
+										style={{
+											margin: "5px 0",
+											color: "crimson",
+										}}
+									>
+										{el}
+									</p>
+								)
+							)}
 						<button type="submit">submit </button>
 					</FormPage>
 				</CSSTransition>
