@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { Page } from "../page.styles";
 import {
 	AnimationCard,
@@ -13,18 +13,19 @@ import {
 	SignInButton,
 	StartPageButton,
 	StartPageCard,
-	StartPageEmailInput,
 	StartPageHeader,
 	StartPageInputContainer,
 	Animation,
 	AnimationCardSubHeading,
 	DownLoadCard,
+	StartPageEmailInput,
 } from "./startpage.styles";
 import { ReactComponent as ReactLogo } from "../../logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import {
 	FormInputContainer,
+	InputContainer,
 	InputLabel,
 } from "../../components/misc/inputs.styles";
 import background from "../../images/home-bg.jpeg";
@@ -43,8 +44,13 @@ import {
 import AccordionSegment from "../../components/accordion-segment/accordion-segment.component";
 import AccordionContainer from "../../components/accordion-container/accordion-container.component";
 import { withRouter } from "react-router";
+import { useFormValidator, withValidation } from "../../hooks/form-validator";
+
+const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email");
+
 const StartPage = ({ history }) => {
-	const [email, setEmail] = useState();
+	const { valuesObj, errors, interacted, api } = useFormValidator();
+
 	return (
 		<Page>
 			<StartPageCard
@@ -80,7 +86,7 @@ const StartPage = ({ history }) => {
 							history.push({
 								pathname: "/signup",
 								state: {
-									email,
+									email: valuesObj["email"],
 								},
 							});
 						}}
@@ -91,23 +97,39 @@ const StartPage = ({ history }) => {
 						</EmailFormTitle>
 
 						<FormInputContainer>
-							<StartPageInputContainer
-								style={{ position: "relative" }}
-							>
-								<StartPageEmailInput
-									value={email}
-									required
-									onChange={(e) =>
-										setEmail(
-											e.target.value
+							<StartPageInputContainer>
+								<InputContainer
+									style={{
+										position: "relative",
+									}}
+								>
+									<ValidatedEmail
+										api={api}
+									/>
+									<InputLabel>
+										Email address
+									</InputLabel>
+								</InputContainer>
+								{errors["email"] &&
+									interacted["email"] &&
+									errors["email"].map(
+										(el, idx) => (
+											<p
+												key={
+													idx
+												}
+												style={{
+													margin: "5px 0",
+													color: "orange",
+													textAlign:
+														"left",
+												}}
+											>
+												{el}
+											</p>
 										)
-									}
-								/>
-								<InputLabel>
-									Email address
-								</InputLabel>
+									)}
 							</StartPageInputContainer>
-
 							<StartPageButton>
 								Get Started{" "}
 								<FontAwesomeIcon
@@ -396,6 +418,15 @@ const StartPage = ({ history }) => {
 						flexDirection: "column",
 						alignItems: "center",
 					}}
+					onSubmit={(e) => {
+						e.preventDefault();
+						history.push({
+							pathname: "/signup",
+							state: {
+								email: valuesObj["email"],
+							},
+						});
+					}}
 				>
 					<EmailFormTitle>
 						Ready to watch? Enter your email to create
@@ -403,18 +434,35 @@ const StartPage = ({ history }) => {
 					</EmailFormTitle>
 
 					<FormInputContainer>
-						<StartPageInputContainer
-							style={{ position: "relative" }}
-						>
-							<StartPageEmailInput
-								value={email}
-								onChange={(e) =>
-									setEmail(e.target.value)
-								}
-							/>
-							<InputLabel>Email address</InputLabel>
+						<StartPageInputContainer>
+							<InputContainer
+								style={{
+									position: "relative",
+								}}
+							>
+								<ValidatedEmail api={api} />
+								<InputLabel>
+									Email address
+								</InputLabel>
+							</InputContainer>
+							{errors["email"] &&
+								interacted["email"] &&
+								errors["email"].map(
+									(el, idx) => (
+										<p
+											key={idx}
+											style={{
+												margin: "5px 0",
+												color: "orange",
+												textAlign:
+													"left",
+											}}
+										>
+											{el}
+										</p>
+									)
+								)}
 						</StartPageInputContainer>
-
 						<StartPageButton>
 							Get Started{" "}
 							<FontAwesomeIcon

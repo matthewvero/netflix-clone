@@ -5,21 +5,29 @@ import { withRouter } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import {
 	FormInputContainer,
+	InputBox,
 	InputLabel,
 } from "../../components/misc/inputs.styles";
-import { useFormValidator, ValidatedInput } from "../../hooks/form-validator";
+import { useFormValidator, withValidation } from "../../hooks/form-validator";
 import {
 	FormContainer,
 	FormPage,
 	SignupPageContainer,
 } from "./signuppage.styles";
 
+const ValidatedEmail = withValidation(InputBox, "email", "email");
+const ValidatedPassword = withValidation(InputBox, "password", "password", {
+	minLength: "6",
+});
+
 const SignupPage = ({ location }) => {
 	const [prevPage, setPrevPage] = useState(0);
 	const [direction, setDirection] = useState("+");
 	const [currentPage, setCurrentPage] = useState(0);
 
-	const { errors, interacted, api } = useFormValidator();
+	const { errors, interacted, handleSubmit, api } = useFormValidator({
+		email: location.state.email,
+	});
 
 	return (
 		<SignupPageContainer>
@@ -30,7 +38,10 @@ const SignupPage = ({ location }) => {
 					unmountOnExit
 					timeout={200}
 				>
-					<FormPage direction={direction}>
+					<FormPage
+						direction={direction}
+						onSubmit={(e) => handleSubmit(e)}
+					>
 						<p
 							style={{
 								margin: "0",
@@ -62,15 +73,7 @@ const SignupPage = ({ location }) => {
 							– it’s personalised for you!
 						</p>
 						<FormInputContainer>
-							<ValidatedInput
-								$api={api}
-								$name={"email"}
-								$type={"email"}
-								$rules={{
-									minLength: "6",
-									maxLength: "30",
-								}}
-							/>
+							<ValidatedEmail api={api} />
 							<InputLabel>Email</InputLabel>
 						</FormInputContainer>
 						{errors["email"] &&
@@ -87,15 +90,7 @@ const SignupPage = ({ location }) => {
 								</p>
 							))}
 						<FormInputContainer>
-							<ValidatedInput
-								$api={api}
-								$name={"password"}
-								$type={"password"}
-								$rules={{
-									minLength: "6",
-									maxLength: "30",
-								}}
-							/>
+							<ValidatedPassword api={api} />
 							<InputLabel>
 								Add a password
 							</InputLabel>

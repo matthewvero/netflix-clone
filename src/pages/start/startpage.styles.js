@@ -1,12 +1,8 @@
 /** @format */
 
 import styled from "styled-components/macro";
-import {
-	InputBox,
-	InputContainer,
-	InputLabel,
-} from "../../components/misc/inputs.styles";
-import { Heading, SubHeading } from "../../components/misc/text.styles";
+import { InputBox, InputContainer } from "../../components/misc/inputs.styles";
+import { SubHeading } from "../../components/misc/text.styles";
 
 export const StartPageCard = styled.section`
 	width: 100%;
@@ -72,7 +68,7 @@ export const SignInButton = styled(Button)`
 export const OurStoryContainer = styled.div`
 	height: auto;
 	display: flex;
-	padding: 70px 0;
+	padding: 70px 0 170px 0;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -89,6 +85,10 @@ export const OurStoryContainer = styled.div`
 `;
 
 export const StartPageEmailInput = styled(InputBox)`
+	&.error {
+		border: none;
+		border-bottom: 2px orange solid;
+	}
 	@media (min-width: 950px) {
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
