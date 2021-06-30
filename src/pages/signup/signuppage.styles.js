@@ -9,7 +9,7 @@ export const SignupPageContainer = styled(Page)`
 
 export const FormContainer = styled.div`
 	width: 500px;
-	height: 200px;
+	height: auto;
 `;
 
 export const FormPage = styled.form`

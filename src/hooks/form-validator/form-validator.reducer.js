@@ -3,6 +3,7 @@
 export const stateTypes = {
 	setInputs: "SET_INPUTS",
 	setValues: "SET_VALUES",
+	setPrevValues: "SET_PREV_VALUES",
 	setErrors: "SET_ERRORS",
 	setInteracted: "SET_INTERACTED",
 	setValidated: "SET_VALIDATED",
@@ -24,6 +25,13 @@ export const reducer = (state, action) => {
 				values: {
 					...state.values,
 					...action.payload,
+				},
+			};
+		case stateTypes.setPrevValues:
+			return {
+				...state,
+				prevValues: {
+					...state.values,
 				},
 			};
 		case stateTypes.setErrors:

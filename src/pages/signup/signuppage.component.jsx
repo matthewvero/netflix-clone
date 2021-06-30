@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import {
+	Button,
 	FormInputContainer,
 	InputBox,
 	InputLabel,
@@ -19,9 +20,12 @@ import {
 	SignupPageContainer,
 } from "./signuppage.styles";
 
-const ValidatedEmail = withValidation(InputBox, "email", "email");
+const ValidatedEmail = withValidation(InputBox, "email", "email", {
+	required: true,
+});
 const ValidatedPassword = withValidation(InputBox, "password", "password", {
-	minLength: "6",
+	minLength: 6,
+	required: true,
 });
 
 const SignupPage = ({ location }) => {
@@ -29,9 +33,11 @@ const SignupPage = ({ location }) => {
 	const [direction, setDirection] = useState("+");
 	const [currentPage, setCurrentPage] = useState(0);
 
-	const { state, handleSubmit, api } = useFormValidator({
+	const formApi = useFormValidator({
 		email: location.state.email,
 	});
+
+	const { state, handleSubmit } = formApi;
 
 	return (
 		<SignupPageContainer>
@@ -77,7 +83,7 @@ const SignupPage = ({ location }) => {
 							– it’s personalised for you!
 						</p>
 						<FormInputContainer>
-							<ValidatedEmail api={api} />
+							<ValidatedEmail api={formApi} />
 							<InputLabel>Email</InputLabel>
 						</FormInputContainer>
 						{state.errors["email"] &&
@@ -88,7 +94,8 @@ const SignupPage = ({ location }) => {
 										key={idx}
 										style={{
 											margin: "5px 0",
-											color: "crimson",
+											color: "#b92d2b",
+											fontSize: "13px",
 										}}
 									>
 										{el}
@@ -96,7 +103,7 @@ const SignupPage = ({ location }) => {
 								)
 							)}
 						<FormInputContainer>
-							<ValidatedPassword api={api} />
+							<ValidatedPassword api={formApi} />
 							<InputLabel>
 								Add a password
 							</InputLabel>
@@ -109,14 +116,26 @@ const SignupPage = ({ location }) => {
 										key={idx}
 										style={{
 											margin: "5px 0",
-											color: "crimson",
+											color: "#b92d2b",
+											fontSize: "13px",
 										}}
 									>
 										{el}
 									</p>
 								)
 							)}
-						<button type="submit">submit </button>
+
+						<Button
+							type="submit"
+							style={{
+								width: "100%",
+								height: "64px",
+								marginTop: "20px",
+							}}
+						>
+							{" "}
+							submit{" "}
+						</Button>
 					</FormPage>
 				</CSSTransition>
 			</FormContainer>

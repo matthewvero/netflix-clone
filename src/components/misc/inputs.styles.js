@@ -49,7 +49,10 @@ export const InputBox = styled.input`
 		font-weight: 600;
 	}
 	&.error {
-		border: red 1px solid;
+		border: #b92d2b 1px solid;
+	}
+	&.validated {
+		border: #5fa53f 1px solid;
 	}
 	&:focus ~ ${InputLabel} {
 		transform: translateY(-100%) scale(0.8);
@@ -60,4 +63,21 @@ export const InputBox = styled.input`
 
 export const InputContainer = styled.div`
 	position: relative;
+`;
+
+export const Button = styled.button`
+	height: 40px;
+	padding: 0 16px;
+	background-color: #e50914;
+	border: none;
+	border-radius: 2px;
+	margin-top: 4px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: white;
+	font-size: 1rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #f40612;
+	}
 `;

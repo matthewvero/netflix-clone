@@ -48,11 +48,16 @@ import {
 	useFormValidator,
 	withValidation,
 } from "../../hooks/form-validator/form-validator";
+import { stateTypes } from "../../hooks/form-validator/form-validator.reducer";
 
-const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email");
+const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email", {
+	required: true,
+});
 
 const StartPage = ({ history }) => {
-	const { valuesObj, errors, interacted, api } = useFormValidator();
+	const formApi = useFormValidator();
+
+	const { state, handleSubmit } = formApi;
 
 	return (
 		<Page>
@@ -89,7 +94,9 @@ const StartPage = ({ history }) => {
 							history.push({
 								pathname: "/signup",
 								state: {
-									email: valuesObj["email"],
+									email: state.values[
+										"email"
+									],
 								},
 							});
 						}}
@@ -107,15 +114,17 @@ const StartPage = ({ history }) => {
 									}}
 								>
 									<ValidatedEmail
-										api={api}
+										api={formApi}
 									/>
 									<InputLabel>
 										Email address
 									</InputLabel>
 								</InputContainer>
-								{errors["email"] &&
-									interacted["email"] &&
-									errors["email"].map(
+								{state.errors["email"] &&
+									state.interacted[
+										"email"
+									] &&
+									state.errors["email"].map(
 										(el, idx) => (
 											<p
 												key={
@@ -426,7 +435,7 @@ const StartPage = ({ history }) => {
 						history.push({
 							pathname: "/signup",
 							state: {
-								email: valuesObj["email"],
+								email: state.errors["email"],
 							},
 						});
 					}}
@@ -443,14 +452,14 @@ const StartPage = ({ history }) => {
 									position: "relative",
 								}}
 							>
-								<ValidatedEmail api={api} />
+								<ValidatedEmail api={formApi} />
 								<InputLabel>
 									Email address
 								</InputLabel>
 							</InputContainer>
-							{errors["email"] &&
-								interacted["email"] &&
-								errors["email"].map(
+							{state.errors["email"] &&
+								state.interacted["email"] &&
+								state.errors["email"].map(
 									(el, idx) => (
 										<p
 											key={idx}

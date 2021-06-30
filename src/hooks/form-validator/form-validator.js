@@ -7,25 +7,56 @@ function capitalise(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function emailRegex(input) {
+function emailRegex(input, value) {
 	let regex =
 		/^[a-z0-9!#%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
-	return regex.test(input);
+	if (input.type === "email" && !regex.test(value)) {
+		return "Please enter a valid email";
+	}
 }
 
-function customRegex(regex, input) {
-	return regex.test(input);
+function customRegex(input, value) {
+	if (input.rules.regex && !input.rules.regex.test(value)) {
+		return input.rules.regex.message;
+	}
+}
+
+function minLength(input, value) {
+	if (
+		input.rules.minLength &&
+		value.length < input.rules.minLength &&
+		value.length !== 0
+	) {
+		return `${capitalise(input.type)} must be more than ${
+			input.rules.minLength
+		}`;
+	}
+}
+
+function maxLength(input, value) {
+	if (input.rules.maxLength && value.length > input.rules.maxLength) {
+		return `${capitalise(input.type)} must be less than ${
+			input.rules.maxLength
+		}`;
+	}
+}
+
+function required(input, value) {
+	if (input.rules.required === true && value.length === 0) {
+		return "This field is required.";
+	}
 }
 
 export const useFormValidator = (initialValues) => {
 	const initialState = {
 		inputs: {},
-		values: initialValues,
+		values: initialValues || {},
 		errors: {},
 		interacted: {},
 		validated: false,
 	};
 
+	// Syntactical sugar
 	const setState = (type, payload, name) => {
 		dispatch({
 			type,
@@ -34,8 +65,24 @@ export const useFormValidator = (initialValues) => {
 		});
 	};
 
+	// Initiate reducer / state
 	const [state, dispatch] = useReducer(reducer, initialState);
 
+	// Ensure all inputs have initial values so that validation can begin immediately
+	useEffect(() => {
+		const initialValues = Object.keys(state.inputs).reduce(
+			(prev, cur) => {
+				if (!state.values[cur]) {
+					return { ...prev, [cur]: "" };
+				}
+				return prev;
+			},
+			{}
+		);
+		setState(stateTypes.setValues, initialValues);
+	}, [state.inputs]);
+
+	// Set validation state
 	useEffect(() => {
 		if (Object.keys(state.errors).length) {
 			const isValidated = Object.keys(state.errors).reduce(
@@ -52,53 +99,33 @@ export const useFormValidator = (initialValues) => {
 		}
 	}, [state.errors]);
 
+	// On change check values against rules
+	// Update errors for each input accordingly
+
 	useEffect(() => {
+		const standardChecks = [
+			emailRegex,
+			customRegex,
+			minLength,
+			maxLength,
+			required,
+		];
+		// Check new values against array of standard checks
+		// Do not check values that have not changed
 		for (const key in state.values) {
-			if (state.inputs[key] && state.values[key]) {
-				// Check input has been interacted with
-				let errorsArr = [];
-				if (
-					state.inputs[key].type === "email" &&
-					!emailRegex(state.values[key])
-				) {
-					errorsArr.push("Please enter a valid email");
-				}
-
-				if (
-					state.inputs[key].rules.regex &&
-					!customRegex(
-						state.inputs[key].rules.regex.str,
+			if (state.inputs[key]) {
+				const errorsArr = standardChecks.reduce((acc, next) => {
+					const errMessage = next(
+						state.inputs[key],
 						state.values[key]
-					)
-				) {
-					errorsArr.push(
-						state.inputs[key].rules.regex.message
 					);
-				}
 
-				if (
-					state.inputs[key].rules.minLength &&
-					state.values[key].length <
-						state.inputs[key].rules.minLength
-				) {
-					errorsArr.push(
-						`${capitalise(key)} must be more than ${
-							state.inputs[key].rules.minLength
-						}`
-					);
-				}
+					if (errMessage) {
+						return [...acc, errMessage];
+					}
+					return acc;
+				}, []);
 
-				if (
-					state.inputs[key].rules.maxLength &&
-					state.values[key].length >
-						state.inputs[key].rules.maxLength
-				) {
-					errorsArr.push(
-						`${capitalise(key)} must be less than ${
-							state.inputs[key].maxLength
-						}`
-					);
-				}
 				setState(stateTypes.setErrors, { [key]: errorsArr });
 			}
 		}
@@ -106,18 +133,19 @@ export const useFormValidator = (initialValues) => {
 
 	const handleSubmit = (event, fn) => {
 		event.preventDefault();
-		let newInteractedObj = {};
-		for (const key in state.interacted) {
-			newInteractedObj[key] = true;
-		}
-		setState(stateTypes.setInteracted, newInteractedObj);
-	};
 
-	const api = {
-		state,
-		setState,
-		stateTypes,
-		handleSubmit,
+		// Highlight any validation errors
+		const newInteractedObj = Object.keys(state.inputs).reduce(
+			(prev, key) => {
+				return { ...prev, [key]: true };
+			},
+			{}
+		);
+		setState(stateTypes.setInteracted, newInteractedObj);
+
+		if (state.validated) {
+			fn();
+		}
 	};
 
 	return {
@@ -125,7 +153,6 @@ export const useFormValidator = (initialValues) => {
 		setState,
 		stateTypes,
 		handleSubmit,
-		api,
 	};
 };
 
@@ -148,6 +175,12 @@ export const withValidation = (WrappedComponent, name, type, rules = {}) => {
 		const handleChange = (e) => {
 			setState(stateTypes.setValues, { [name]: e.target.value });
 		};
+
+		const handleBlur = () =>
+			setState(stateTypes.setInteracted, {
+				[name]: true,
+			});
+
 		return (
 			<WrappedComponent
 				name={name}
@@ -162,13 +195,15 @@ export const withValidation = (WrappedComponent, name, type, rules = {}) => {
 					state.interacted[name] &&
 					Object.keys(state.errors[name]).length &&
 					"error"
+				}
+				${
+					state.interacted[name] &&
+					state.errors[name] &&
+					Object.keys(state.errors[name]).length === 0 &&
+					"validated"
 				}`}
 				onChange={(e) => handleChange(e)}
-				onBlur={() =>
-					setState(stateTypes.setInteracted, {
-						[name]: true,
-					})
-				}
+				onBlur={handleBlur}
 				{...props}
 			/>
 		);
