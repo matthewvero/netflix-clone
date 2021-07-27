@@ -21,6 +21,7 @@ export const FormInputContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	box-sizing: border-box;
 	@media (max-width: 950px) {
 		width: 500px;
 	}
@@ -40,9 +41,6 @@ export const InputBox = styled.input`
 	font-size: 1.1rem;
 	outline: none;
 
-	@media (max-width: 750px) {
-		height: 48px;
-	}
 	&.populated ~ ${InputLabel} {
 		transform: translateY(-100%) scale(0.8);
 		color: #7c7c7c;
@@ -58,6 +56,15 @@ export const InputBox = styled.input`
 		transform: translateY(-100%) scale(0.8);
 		color: #7c7c7c;
 		font-weight: 600;
+	}
+`;
+
+export const SignupFormInputBox = styled(FormInputContainer)`
+	@media (max-width: 950px) {
+		width: 100%;
+	}
+	@media (max-width: 550px) {
+		width: 100%;
 	}
 `;
 
@@ -79,5 +86,8 @@ export const Button = styled.button`
 
 	&:hover {
 		background-color: #f40612;
+	}
+	&:active {
+		background-color: #e50914;
 	}
 `;

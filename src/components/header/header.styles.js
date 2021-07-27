@@ -1,6 +1,6 @@
 /** @format */
 
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const HeaderContainer = styled.header`
 	height: 91px;

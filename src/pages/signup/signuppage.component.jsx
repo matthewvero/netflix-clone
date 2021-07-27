@@ -1,143 +1,119 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router";
+import React, { useContext, useEffect, useState } from "react";
+import { Route, withRouter, useHistory } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import {
-	Button,
-	FormInputContainer,
-	InputBox,
-	InputLabel,
-} from "../../components/misc/inputs.styles";
-import {
-	useFormValidator,
-	withValidation,
-} from "../../hooks/form-validator/form-validator";
 
-import {
-	FormContainer,
-	FormPage,
-	SignupPageContainer,
-} from "./signuppage.styles";
+import { UserContext } from "../../components/user.context";
 
-const ValidatedEmail = withValidation(InputBox, "email", "email", {
-	required: true,
-});
-const ValidatedPassword = withValidation(InputBox, "password", "password", {
-	minLength: 6,
-	required: true,
-});
+import { useFormValidator } from "../../hooks/form-validator/form-validator";
+import { PerksPage, PlansPage, SignupForm } from "./signup.pages";
+
+import { FormContainer, SignupPageContainer } from "./signuppage.styles";
 
 const SignupPage = ({ location }) => {
-	const [prevPage, setPrevPage] = useState(0);
-	const [direction, setDirection] = useState("+");
-	const [currentPage, setCurrentPage] = useState(0);
+	const [locationKeys, setLocationKeys] = useState([]);
+	const [forward, setForward] = useState(false);
+	const user = useContext(UserContext);
 
+	const history = useHistory();
 	const formApi = useFormValidator({
-		email: location.state.email,
+		email: location.state ? location.state.email : "",
 	});
 
-	const { state, handleSubmit } = formApi;
+	useEffect(() => {
+		// Check if user has signed up and reroute
+		if (user) {
+			history.push("/signup/perks");
+		} else {
+			history.push("/signup/form");
+		}
+
+		// Manually dispatch popstate event because history.push does not (this will trigger the animations).
+		const popStateEvent = new PopStateEvent("popstate");
+		dispatchEvent(popStateEvent);
+	}, [history, user]);
+
+	useEffect(() => {
+		// Detect back and forward and change animation direction accordingly
+		return history.listen((location) => {
+			if (history.action === "PUSH") {
+				setLocationKeys([location.key]);
+			}
+
+			if (history.action === "POP") {
+				if (locationKeys[1] === location.key) {
+					setLocationKeys(([_, ...keys]) => keys);
+					setForward(true);
+					// Handle forward event
+				} else {
+					setLocationKeys((keys) => [
+						location.key,
+						...keys,
+					]);
+					setForward(false);
+					// Handle back event
+				}
+			}
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [locationKeys]);
 
 	return (
 		<SignupPageContainer>
 			<FormContainer>
-				<CSSTransition
-					in={currentPage === 0}
-					classNames="formpage"
-					unmountOnExit
-					timeout={200}
-				>
-					<FormPage
-						direction={direction}
-						onSubmit={(e) => handleSubmit(e)}
-					>
-						<p
-							style={{
-								margin: "0",
-								fontSize: "0.8rem",
-							}}
-						>
-							STEP 1 OF 3
-						</p>
-						<h2 style={{ margin: "3px 0 7.5px" }}>
-							Create your password!
-						</h2>
-						<p
-							style={{
-								textAlign: "left",
-								fontSize: "1.2rem",
-								margin: "0",
-							}}
-						>
-							Just a few more steps before you can
-							watch Netflix
-						</p>
-						<p
-							style={{
-								textAlign: "left",
-								fontSize: "1.2rem",
-								margin: "0",
-							}}
-						>
-							– it’s personalised for you!
-						</p>
-						<FormInputContainer>
-							<ValidatedEmail api={formApi} />
-							<InputLabel>Email</InputLabel>
-						</FormInputContainer>
-						{state.errors["email"] &&
-							state.interacted["email"] &&
-							state.errors["email"].map(
-								(el, idx) => (
-									<p
-										key={idx}
-										style={{
-											margin: "5px 0",
-											color: "#b92d2b",
-											fontSize: "13px",
-										}}
-									>
-										{el}
-									</p>
-								)
-							)}
-						<FormInputContainer>
-							<ValidatedPassword api={formApi} />
-							<InputLabel>
-								Add a password
-							</InputLabel>
-						</FormInputContainer>
-						{state.errors["password"] &&
-							state.interacted["password"] &&
-							state.errors["password"].map(
-								(el, idx) => (
-									<p
-										key={idx}
-										style={{
-											margin: "5px 0",
-											color: "#b92d2b",
-											fontSize: "13px",
-										}}
-									>
-										{el}
-									</p>
-								)
-							)}
-
-						<Button
-							type="submit"
-							style={{
-								width: "100%",
-								height: "64px",
-								marginTop: "20px",
-							}}
-						>
-							{" "}
-							submit{" "}
-						</Button>
-					</FormPage>
-				</CSSTransition>
+				<BrowserRouter>
+					<Route path={"/signup/form"} exact>
+						{({ match }) => (
+							<CSSTransition
+								in={match != null}
+								timeout={400}
+								classNames={
+									forward === true
+										? "forward"
+										: "firstpage"
+								}
+								unmountOnExit
+							>
+								<SignupForm formApi={formApi} />
+							</CSSTransition>
+						)}
+					</Route>
+					<Route path={"/signup/perks"} exact>
+						{({ match }) => (
+							<CSSTransition
+								in={match != null}
+								timeout={400}
+								classNames={
+									forward === true
+										? "forward"
+										: "backward"
+								}
+								unmountOnExit
+							>
+								<PerksPage />
+							</CSSTransition>
+						)}
+					</Route>
+					<Route path={"/signup/plans"} exact>
+						{({ match }) => (
+							<CSSTransition
+								in={match != null}
+								timeout={400}
+								classNames={
+									forward === true
+										? "forward"
+										: "backward"
+								}
+								unmountOnExit
+							>
+								<PlansPage />
+							</CSSTransition>
+						)}
+					</Route>
+				</BrowserRouter>
 			</FormContainer>
 		</SignupPageContainer>
 	);

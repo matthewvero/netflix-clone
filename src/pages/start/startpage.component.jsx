@@ -48,7 +48,6 @@ import {
 	useFormValidator,
 	withValidation,
 } from "../../hooks/form-validator/form-validator";
-import { stateTypes } from "../../hooks/form-validator/form-validator.reducer";
 
 const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email", {
 	required: true,
@@ -92,7 +91,7 @@ const StartPage = ({ history }) => {
 						onSubmit={(e) => {
 							e.preventDefault();
 							history.push({
-								pathname: "/signup",
+								pathname: "/signup/form",
 								state: {
 									email: state.values[
 										"email"

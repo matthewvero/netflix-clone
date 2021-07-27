@@ -72,6 +72,9 @@ export const OurStoryContainer = styled.div`
 `;
 
 export const StartPageEmailInput = styled(InputBox)`
+	@media (max-width: 750px) {
+		height: 48px;
+	}
 	&.error {
 		border: none;
 		border-bottom: 2px orange solid;

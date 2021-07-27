@@ -42,6 +42,9 @@ function maxLength(input, value) {
 }
 
 function required(input, value) {
+	if (!value) {
+		return;
+	}
 	if (input.rules.required === true && value.length === 0) {
 		return "This field is required.";
 	}
@@ -80,6 +83,8 @@ export const useFormValidator = (initialValues) => {
 			{}
 		);
 		setState(stateTypes.setValues, initialValues);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.inputs]);
 
 	// Set validation state
@@ -143,7 +148,7 @@ export const useFormValidator = (initialValues) => {
 		);
 		setState(stateTypes.setInteracted, newInteractedObj);
 
-		if (state.validated) {
+		if (state.validated && fn) {
 			fn();
 		}
 	};
