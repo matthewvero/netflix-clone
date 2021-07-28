@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Route, withRouter, useHistory } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
@@ -8,7 +8,10 @@ import { CSSTransition } from "react-transition-group";
 import { UserContext } from "../../components/user.context";
 
 import { useFormValidator } from "../../hooks/form-validator/form-validator";
-import { PerksPage, PlansPage, SignupForm } from "./signup.pages";
+import PaymentPage from "./pages/paymentpage/paymentpage.component";
+import PerksPage from "./pages/perkspage/perkspage.component";
+import { PlansPage } from "./pages/planspage/planspage.component";
+import { SignupForm } from "./pages/signupform/signupform.component";
 
 import { FormContainer, SignupPageContainer } from "./signuppage.styles";
 
@@ -16,7 +19,9 @@ const SignupPage = ({ location }) => {
 	const [locationKeys, setLocationKeys] = useState([]);
 	const [forward, setForward] = useState(false);
 	const user = useContext(UserContext);
-
+	const signupFormRef = useRef();
+	const perksPageRef = useRef();
+	const plansPageRef = useRef();
 	const history = useHistory();
 	const formApi = useFormValidator({
 		email: location.state ? location.state.email : "",
@@ -25,7 +30,16 @@ const SignupPage = ({ location }) => {
 	useEffect(() => {
 		// Check if user has signed up and reroute
 		if (user) {
-			history.push("/signup/perks");
+			switch (user.signUpState) {
+				case 1:
+					history.push("/signup/perks");
+					break;
+				case 2:
+					history.push("/signup/payment");
+					break;
+				default:
+					history.push("/signup/perks");
+			}
 		} else {
 			history.push("/signup/form");
 		}
@@ -69,15 +83,19 @@ const SignupPage = ({ location }) => {
 						{({ match }) => (
 							<CSSTransition
 								in={match != null}
-								timeout={400}
+								timeout={450}
 								classNames={
 									forward === true
 										? "forward"
 										: "firstpage"
 								}
 								unmountOnExit
+								nodeRef={signupFormRef}
 							>
-								<SignupForm formApi={formApi} />
+								<SignupForm
+									formApi={formApi}
+									$ref={signupFormRef}
+								/>
 							</CSSTransition>
 						)}
 					</Route>
@@ -85,15 +103,18 @@ const SignupPage = ({ location }) => {
 						{({ match }) => (
 							<CSSTransition
 								in={match != null}
-								timeout={400}
+								timeout={450}
 								classNames={
 									forward === true
 										? "forward"
 										: "backward"
 								}
 								unmountOnExit
+								nodeRef={perksPageRef}
 							>
-								<PerksPage />
+								<PerksPage
+									$ref={perksPageRef}
+								/>
 							</CSSTransition>
 						)}
 					</Route>
@@ -108,8 +129,30 @@ const SignupPage = ({ location }) => {
 										: "backward"
 								}
 								unmountOnExit
+								nodeRef={plansPageRef}
 							>
-								<PlansPage />
+								<PlansPage
+									$ref={plansPageRef}
+								/>
+							</CSSTransition>
+						)}
+					</Route>
+					<Route path={"/signup/payment"} exact>
+						{({ match }) => (
+							<CSSTransition
+								in={match != null}
+								timeout={400}
+								classNames={
+									forward === true
+										? "forward"
+										: "backward"
+								}
+								unmountOnExit
+								nodeRef={plansPageRef}
+							>
+								<PaymentPage
+									$ref={plansPageRef}
+								/>
 							</CSSTransition>
 						)}
 					</Route>

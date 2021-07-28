@@ -18,3 +18,12 @@ export const signupUser = async (email, password) => {
 		console.error(err);
 	}
 };
+
+export const updateDocument = async (docID, collection, obj) => {
+	try {
+		const res = await db.collection(collection).doc(docID).update(obj);
+		return res;
+	} catch (err) {
+		throw new Error(err);
+	}
+};
