@@ -82,6 +82,11 @@ export const FormPage = styled.form`
 	& p > span {
 		font-weight: 600;
 	}
+
+	& .step {
+		font-size: 13px;
+		margin: 0;
+	}
 `;
 
 export const ListIcon = styled(FontAwesomeIcon)`

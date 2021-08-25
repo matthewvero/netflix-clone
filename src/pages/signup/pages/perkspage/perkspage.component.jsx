@@ -20,46 +20,11 @@ const PerksPage = ({ $ref }) => {
 			}}
 			ref={$ref}
 		>
-			<FontAwesomeIcon
-				icon={faCheckCircle}
-				style={{
-					color: "#e50914",
-					fontSize: "3rem",
-					margin: "80px 0 20px 0",
-				}}
-			/>
-			<p
-				style={{
-					fontSize: "13px",
-					margin: "0",
-				}}
-			>
-				Step{" "}
-				<span
-					style={{
-						fontWeight: "600",
-					}}
-				>
-					1
-				</span>{" "}
-				of{" "}
-				<span
-					style={{
-						fontWeight: "600",
-					}}
-				>
-					3
-				</span>
+			<FontAwesomeIcon icon={faCheckCircle} className="perksicon" />
+			<p className="step">
+				Step <span>1</span> of <span>3</span>
 			</p>
-			<Heading
-				style={{
-					color: "black",
-					margin: "0 0 20px 0",
-					fontSize: "32px",
-				}}
-			>
-				Choose your plan.
-			</Heading>
+			<Heading className="perksheading">Choose your plan.</Heading>
 			<ul className="perkspage">
 				<li>
 					<ListIcon icon={faCheck} />

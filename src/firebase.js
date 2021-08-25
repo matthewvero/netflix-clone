@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
-
+import "firebase/functions";
 var firebaseConfig = {
 	apiKey: "AIzaSyCpPeJuwc3EeD5UCeUiWSd8a6I9rADAgdY",
 	authDomain: "netflix-clone-978d0.firebaseapp.com",
@@ -21,3 +21,10 @@ export const Firebase = firebase.initializeApp(firebaseConfig);
 export const auth = Firebase.auth();
 
 export const db = Firebase.firestore();
+
+if (window.location.hostname === "localhost") {
+	auth.useEmulator("http://localhost:9099");
+	db.useEmulator("localhost", 8080);
+
+	Firebase.functions().useEmulator("localhost", 5001);
+}

@@ -18,7 +18,7 @@ import {
 import { PlanFormContainer } from "./planspage.styles";
 
 export const PlansPage = ({ $ref }) => {
-	const [selectedPlan, setSelectedPlan] = useState(3);
+	const [selectedPlan, setSelectedPlan] = useState(2);
 	const user = useContext(UserContext);
 	useEffect(() => {}, []);
 	const selectPlan = async (e) => {
@@ -91,13 +91,7 @@ export const PlansPage = ({ $ref }) => {
 			ref={$ref}
 		>
 			<div className="plansheadingcontainer">
-				<p
-					style={{
-						margin: "0",
-						fontSize: "13px",
-						color: "#333333",
-					}}
-				>
+				<p className="step">
 					STEP <span>2</span> OF <span>3</span>
 				</p>
 				<Heading>Choose the plan that’s right for you</Heading>

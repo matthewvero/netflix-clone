@@ -27,3 +27,14 @@ export const updateDocument = async (docID, collection, obj) => {
 		throw new Error(err);
 	}
 };
+
+export const getIdToken = async () => {
+	try {
+		const idToken = await auth.currentUser.getIdToken(
+			/* forceRefresh */ true
+		);
+		return idToken;
+	} catch (err) {
+		throw new Error(err);
+	}
+};

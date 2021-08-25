@@ -35,7 +35,7 @@ const SignupPage = ({ location }) => {
 					history.push("/signup/perks");
 					break;
 				case 2:
-					history.push("/signup/payment");
+					history.push("/browse");
 					break;
 				default:
 					history.push("/signup/perks");
@@ -44,7 +44,7 @@ const SignupPage = ({ location }) => {
 			history.push("/signup/form");
 		}
 
-		// Manually dispatch popstate event because history.push does not (this will trigger the animations).
+		// Manually dispatch popstate event because history.push does not (this will trigger the page switch animation).
 		const popStateEvent = new PopStateEvent("popstate");
 		dispatchEvent(popStateEvent);
 	}, [history, user]);

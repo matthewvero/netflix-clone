@@ -28,6 +28,17 @@ export const PerksContainer = styled(FormPage)`
 		margin: 0 0 20px 0;
 		padding: 0 5%;
 	}
+
+	& .perksheading {
+		color: black;
+		margin: 0 0 20px 0;
+		font-size: 32px;
+	}
+	& .perksicon {
+		color: #e50914;
+		font-size: 3rem;
+		margin: 80px 0 20px 0;
+	}
 `;
 
 export const PlanCell = styled.div`

@@ -7,7 +7,8 @@ import ContextRoute from "./components/context-route/context-route.component";
 import Header from "./components/header/header.component";
 import { UserContext } from "./components/user.context";
 import { useAuthListener } from "./hooks/auth-hooks";
-import Homepage from "./pages/homepage/homepage.component";
+import BrowsePage from "./pages/homepage/browse.component";
+
 import SignupPage from "./pages/signup/signuppage.component";
 import StartPage from "./pages/start/startpage.component";
 
@@ -18,18 +19,24 @@ function App() {
 		<div className="App">
 			<BrowserRouter>
 				<ContextRoute
-					path="/:anything"
+					path="/signup/:anything"
 					contextComponent={UserContext}
 					value={user}
 				>
 					<Header />
 				</ContextRoute>
 				<Route exact path="/">
-					{user ? <Redirect to="/home" /> : <StartPage />}
+					{user ? <Redirect to="/browse" /> : <StartPage />}
 				</Route>
-				<Route exact path="/home">
-					{user ? <Homepage /> : <Redirect to="/" />}
-				</Route>
+				<ContextRoute
+					exact
+					path="/browse"
+					contextComponent={UserContext}
+					value={user}
+				>
+					{user ? <BrowsePage /> : <Redirect to="/" />}
+				</ContextRoute>
+
 				<ContextRoute
 					path="/signup"
 					contextComponent={UserContext}

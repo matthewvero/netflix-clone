@@ -35,56 +35,14 @@ export const SignupForm = ({ formApi, $ref }) => {
 			}
 			ref={$ref}
 		>
-			<p
-				style={{
-					margin: "0",
-					fontSize: "16px",
-					color: "#333333",
-				}}
-			>
-				STEP{" "}
-				<span
-					style={{
-						fontWeight: "600",
-					}}
-				>
-					1
-				</span>{" "}
-				OF{" "}
-				<span
-					style={{
-						fontWeight: "600",
-					}}
-				>
-					3
-				</span>
+			<p className="step">
+				STEP <span>1</span> OF <span>3</span>
 			</p>
-			<h2
-				style={{
-					margin: "3px 0 13px",
-					fontSize: "32px",
-					color: "#333333",
-				}}
-			>
-				Create your password!
-			</h2>
-			<p
-				style={{
-					textAlign: "left",
-					fontSize: "1.2rem",
-					margin: "0",
-					color: "#333333",
-				}}
-			>
+			<h2 className="signupheading">Create your password!</h2>
+			<p className="signupsubheading">
 				Just a few more steps before you can watch Netflix
 			</p>
-			<p
-				style={{
-					textAlign: "left",
-					fontSize: "1.2rem",
-					margin: "0",
-				}}
-			>
+			<p className="signupsubheading">
 				– it’s personalised for you!
 			</p>
 			<SignupFormInputBox>
@@ -94,14 +52,7 @@ export const SignupForm = ({ formApi, $ref }) => {
 			{state.errors["email"] &&
 				state.interacted["email"] &&
 				state.errors["email"].map((el, idx) => (
-					<p
-						key={idx}
-						style={{
-							margin: "5px 0",
-							color: "#b92d2b",
-							fontSize: "13px",
-						}}
-					>
+					<p key={idx} className="inputerror">
 						{el}
 					</p>
 				))}
@@ -112,30 +63,12 @@ export const SignupForm = ({ formApi, $ref }) => {
 			{state.errors["password"] &&
 				state.interacted["password"] &&
 				state.errors["password"].map((el, idx) => (
-					<p
-						key={idx}
-						style={{
-							margin: "5px 0",
-							color: "#b92d2b",
-							fontSize: "13px",
-						}}
-					>
+					<p key={idx} className="inputerror">
 						{el}
 					</p>
 				))}
 
-			<Button
-				type="submit"
-				style={{
-					width: "100%",
-					height: "64px",
-					minHeight: "64px",
-					marginTop: "20px",
-					fontSize: "24px",
-					boxShadow: "1px 1px rgb(0 0 0 / 25%)",
-					borderRadius: "4px",
-				}}
-			>
+			<Button type="submit" className="signupbutton">
 				{" "}
 				Next{" "}
 			</Button>

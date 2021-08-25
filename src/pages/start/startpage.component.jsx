@@ -56,7 +56,7 @@ const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email", {
 const StartPage = ({ history }) => {
 	const formApi = useFormValidator();
 
-	const { state, handleSubmit } = formApi;
+	const { state } = formApi;
 
 	return (
 		<Page>
