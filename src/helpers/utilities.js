@@ -10,6 +10,7 @@ export function useThrottle(func, timeout) {
 			func.apply(this, args);
 
 			timer.current = setTimeout(() => {
+				func.apply(this, args);
 				timer.current = undefined;
 			}, timeout);
 		}

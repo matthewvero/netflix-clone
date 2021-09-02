@@ -26,21 +26,22 @@ export const CarouselPage = styled.div`
 	height: 100%;
 	display: flex;
 	position: absolute;
-	left: -${(props) => props.$offsetWidth}px;
+	left: -${(props) => props.$offsetWidth}%;
+	will-change: transform;
 	&.carouselpage-enter {
 		position: absolute;
 		transform: translateX(${(props) => props.$entryDirection + "100%"});
 	}
 	&.carouselpage-enter-active {
 		transform: translateX(0);
-		transition: all 400ms ease-in-out;
+		transition: all 400ms ease-out;
 	}
 	&.carouselpage-exit {
 		position: absolute;
 	}
 	&.carouselpage-exit-active {
 		transform: translateX(${(props) => props.$exitDirection + "100%"});
-		transition: all 400ms ease-in-out;
+		transition: all 400ms ease-out;
 	}
 `;
 
@@ -55,13 +56,15 @@ export const CarouselSlider = styled.div`
 
 export const CarouselContainer = styled.div`
 	position: relative;
-	height: 35vw;
+	height: ${(props) => props.$height}px;
 	width: 100vw;
+	margin: 50px 0;
+	transition: height 100ms linear;
 	&:hover ${IndicatorGroup} {
 		opacity: 1;
 	}
-	@media (min-width: 1100px) {
-		height: 20vw;
+	&:hover {
+		z-index: 100;
 	}
 `;
 

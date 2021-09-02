@@ -32,7 +32,7 @@ const BrowsePage = () => {
 				titles: el.data(),
 			}));
 
-			setTitles(data[0]);
+			setTitles(data.slice(0, 4));
 		};
 		getTitles();
 	}, []);
@@ -95,7 +95,8 @@ const BrowsePage = () => {
 					width: "100vw",
 				}}
 			></div>
-			<Carousel $titles={titles} />
+			{titles.length &&
+				titles.map((el) => <Carousel $titles={el} />)}
 		</BrowsePageContainer>
 	);
 };

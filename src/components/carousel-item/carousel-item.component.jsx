@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import {
 	CarouselItemContainer,
-	CarouselItemCard,
+	CarouselItemContent,
+	CarouselItemBackground,
 } from "./carousel-item.styles";
 
 const CarouselItem = ({ $title, $left, $right, $width }) => {
@@ -12,12 +13,14 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 		<CarouselItemContainer
 			$left={$left}
 			$right={$right}
-			onMouseEnter={() => setActive(true)}
-			onMouseOut={() => setActive(false)}
 			className={`${active && "active"}`}
-			$backgroundImage={`https://image.tmdb.org/t/p/w342${$title.poster_path}`}
 			$width={$width}
-		></CarouselItemContainer>
+		>
+			<CarouselItemContent></CarouselItemContent>
+			<CarouselItemBackground
+				src={`https://image.tmdb.org/t/p/w342${$title.poster_path}`}
+			/>
+		</CarouselItemContainer>
 	);
 };
 

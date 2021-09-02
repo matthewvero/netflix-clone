@@ -4,7 +4,7 @@ import {
 	faChevronLeft,
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useThrottle } from "../../helpers/utilities";
 import CarouselItem from "../carousel-item/carousel-item.component";
@@ -23,62 +23,44 @@ const Carousel = ({ $titles }) => {
 	const [activeIndicator, setActiveIndicator] = useState(0);
 	const [pageArr, setPageArr] = useState([]);
 	const [resultsPerPage, setResultsPerPage] = useState(4);
-	const [prevPage, setPrevPage] = useState(-1);
 	const [activePage, setActivePage] = useState(0);
-	const [nextPage, setNextPage] = useState(1);
 	const [direction, setDirection] = useState(true);
-	const [interacted, setInteracted] = useState(false);
+	// const [interacted, setInteracted] = useState(false);
 	const [width, setWidth] = useState(0);
+	const [height, setHeight] = useState(
+		Math.round((window.innerWidth / resultsPerPage) * 1.4)
+	);
 	const [domNode, setDomNode] = useState(null);
 
+	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
 
+	// Change number of results based on view width
+	const resizeListener = useCallback(() => {
+		if (window.innerWidth < 500) {
+			setResultsPerPage(2);
+		} else if (window.innerWidth >= 500 && window.innerWidth < 800) {
+			setResultsPerPage(3);
+		} else if (window.innerWidth >= 800 && window.innerWidth < 1100) {
+			setResultsPerPage(4);
+		} else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
+			setResultsPerPage(5);
+		} else if (window.innerWidth >= 1400) {
+			setResultsPerPage(6);
+		}
+
+		setHeight(Math.round((window.innerWidth / resultsPerPage) * 1.35));
+	}, [resultsPerPage]);
+
+	const throttledResizeListener = useThrottle(resizeListener, 100);
+
 	useEffect(() => {
-		if (domNode) {
-			setWidth(domNode.clientWidth / resultsPerPage - 4);
-		}
-	}, [domNode, resultsPerPage]);
-
-	const incrementActivePage = (direction) => {
-		let newNum;
-
-		if (activeIndicator + 1 >= pageArr.length && direction === "+") {
-			newNum = 0;
-		} else if (activeIndicator - 1 < 0 && direction === "-") {
-			newNum = pageArr.length - 1;
-		} else {
-			direction === "+"
-				? (newNum = activeIndicator + 1)
-				: (newNum = activeIndicator - 1);
-		}
-
-		setActiveIndicator(newNum);
-	};
-
-	const clickHandler = (direction) => {
-		setDirection(direction);
-		// // const maxScroll = containerRef.current.scrollWidth;
-		// const moveDistance = containerRef.current.offsetWidth;
-		// const { scrollWidth } = containerRef.current;
-		// const scrollEnd = scrollWidth - containerRef.current.offsetWidth;
-		let newPageNum;
-
-		if (direction === true) {
-			if (activePage + 1 > pageArr.length - 1) {
-				newPageNum = 0;
-			} else {
-				newPageNum = activePage + 1;
-			}
-		} else {
-			if (activePage - 1 < 0) {
-				newPageNum = pageArr.length - 1;
-			} else {
-				newPageNum = activePage - 1;
-			}
-		}
-
-		setActivePage(newPageNum);
-	};
+		resizeListener();
+		window.addEventListener("resize", throttledResizeListener);
+		return () => {
+			window.removeEventListener("resize", throttledResizeListener);
+		};
+	}, [resizeListener, throttledResizeListener]);
 
 	useEffect(() => {
 		// Paginate titles
@@ -103,10 +85,55 @@ const Carousel = ({ $titles }) => {
 		}
 	}, [$titles, resultsPerPage]);
 
+	useEffect(() => {
+		// Set width of carousel items.
+		if (domNode) {
+			setWidth(100 / resultsPerPage);
+		}
+	}, [domNode, resultsPerPage]);
+
+	const incrementActivePage = (direction) => {
+		let newNum;
+
+		if (activeIndicator + 1 >= pageArr.length && direction === true) {
+			newNum = 0;
+		} else if (activeIndicator - 1 < 0 && direction === false) {
+			newNum = pageArr.length - 1;
+		} else {
+			direction === true
+				? (newNum = activeIndicator + 1)
+				: (newNum = activeIndicator - 1);
+		}
+
+		setActiveIndicator(newNum);
+	};
+
+	const clickHandler = (direction) => {
+		setDirection(direction);
+		incrementActivePage(direction);
+		let newPageNum;
+		// Loop through pages
+		if (direction === true) {
+			if (activePage + 1 > pageArr.length - 1) {
+				newPageNum = 0;
+			} else {
+				newPageNum = activePage + 1;
+			}
+		} else {
+			if (activePage - 1 < 0) {
+				newPageNum = pageArr.length - 1;
+			} else {
+				newPageNum = activePage - 1;
+			}
+		}
+
+		setActivePage(newPageNum);
+	};
+
 	const throttledClickHandler = useThrottle(clickHandler, 500);
 
 	return (
-		<CarouselContainer>
+		<CarouselContainer $height={height}>
 			{$titles && (
 				<CarouselTitle>{$titles.collectionName}</CarouselTitle>
 			)}
@@ -138,10 +165,7 @@ const Carousel = ({ $titles }) => {
 						unmountOnExit
 					>
 						<CarouselPage
-							$offsetWidth={
-								domNode.clientWidth /
-								resultsPerPage
-							}
+							$offsetWidth={width}
 							key={idx}
 							$entryDirection={
 								direction === true ? "+" : "-"
@@ -149,8 +173,6 @@ const Carousel = ({ $titles }) => {
 							$exitDirection={
 								direction === true ? "-" : "+"
 							}
-							$active={idx === activePage}
-							$prev={idx === prevPage}
 						>
 							{el.map((el, index) => (
 								<CarouselItem
@@ -159,10 +181,13 @@ const Carousel = ({ $titles }) => {
 										Math.random()
 									)}
 									$left={index === 1}
-									$right={index === 4}
+									$right={
+										index ===
+										resultsPerPage
+									}
 									$title={el}
 									$width={width}
-								></CarouselItem>
+								/>
 							))}
 						</CarouselPage>
 					</CSSTransition>
