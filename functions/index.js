@@ -3,7 +3,7 @@ const functions = require("firebase-functions");
 const cors = require("cors");
 const express = require("express");
 const fetch = require("node-fetch");
-const apiKey = functions.config().someservice.key;
+const apiKey = functions.config().tmdbapi.key;
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
