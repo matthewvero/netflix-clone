@@ -35,14 +35,14 @@ export const CarouselPage = styled.div`
 	}
 	&.carouselpage-enter-active {
 		transform: translateX(0);
-		transition: transform 400ms linear;
+		transition: transform 400ms ease;
 	}
 	&.carouselpage-exit {
 		position: absolute;
 	}
 	&.carouselpage-exit-active {
 		transform: translateX(100%);
-		transition: transform 400ms linear;
+		transition: transform 400ms ease;
 	}
 	&.forward {
 		&.carouselpage-enter {
@@ -51,14 +51,14 @@ export const CarouselPage = styled.div`
 		}
 		&.carouselpage-enter-active {
 			transform: translateX(0);
-			transition: transform 400ms linear;
+			transition: transform 400ms ease;
 		}
 		&.carouselpage-exit {
 			position: absolute;
 		}
 		&.carouselpage-exit-active {
 			transform: translateX(-100%);
-			transition: transform 400ms linear;
+			transition: transform 400ms ease;
 		}
 	}
 `;

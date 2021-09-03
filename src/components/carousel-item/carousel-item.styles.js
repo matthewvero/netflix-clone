@@ -7,7 +7,7 @@ export const CarouselItemBackground = styled.img`
 	width: 100%;
 	height: 101%;
 	position: absolute;
-
+	object-fit: cover;
 	will-change: transform;
 	transition: all 300ms cubic-bezier(0.15, 0.75, 0.3, 1.03);
 `;

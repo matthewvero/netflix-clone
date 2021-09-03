@@ -36,11 +36,17 @@ const BrowsePage = () => {
 		};
 
 		const getCategoryIDs = async () => {
-			const categoryIDs = await db
-				.collection("categoryIDs")
-				.doc("IDs")
-				.get();
-			setCategoryIDs(categoryIDs.data().genres);
+			try {
+				const categoryIDs = await db
+					.collection("categoryIDs")
+					.doc("IDs")
+					.get();
+				const genreData = categoryIDs.data();
+
+				setCategoryIDs(genreData.genres);
+			} catch (err) {
+				alert(err);
+			}
 		};
 		getCategoryIDs();
 

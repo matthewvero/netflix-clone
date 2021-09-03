@@ -20,14 +20,11 @@ import {
 } from "./carousel.styles";
 
 const Carousel = ({ $titles }) => {
-	const [activeIndicator, setActiveIndicator] = useState(0);
 	const [pageArr, setPageArr] = useState([]);
 	const [refArr, setRefArr] = useState([]);
 	const [resultsPerPage, setResultsPerPage] = useState(4);
 	const [activePage, setActivePage] = useState(0);
 	const [direction, setDirection] = useState(true);
-
-	// const [interacted, setInteracted] = useState(false);
 	const [width, setWidth] = useState(0);
 	const [height, setHeight] = useState(
 		Math.round((window.innerWidth / resultsPerPage) * 1.4)
@@ -36,14 +33,11 @@ const Carousel = ({ $titles }) => {
 	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
 
+	// Preload images
 	useEffect(() => {
-		const imgUrls = $titles.titles.results.map(
-			(el) => `https://image.tmdb.org/t/p/w342${el.poster_path}`
-		);
-
-		imgUrls.forEach((url) => {
+		$titles.titles.results.forEach((el) => {
 			const img = new Image();
-			img.src = url;
+			img.src = el.poster_path;
 		});
 	}, [$titles.titles.results]);
 
@@ -96,34 +90,18 @@ const Carousel = ({ $titles }) => {
 			setPageArr(newArr);
 		}
 	}, [$titles, resultsPerPage]);
-
+	// Create array of refs to prevent ref forwarding error
 	useEffect(() => {
 		const newRefArr = pageArr.map(() => React.createRef(null));
 		setRefArr(newRefArr);
 	}, [pageArr]);
 
+	// Set width of carousel items.
 	useEffect(() => {
-		// Set width of carousel items.
 		if (domNode) {
 			setWidth(100 / resultsPerPage);
 		}
 	}, [domNode, resultsPerPage]);
-
-	const incrementActivePage = (direction) => {
-		let newNum;
-
-		if (activeIndicator + 1 >= pageArr.length && direction === true) {
-			newNum = 0;
-		} else if (activeIndicator - 1 < 0 && direction === false) {
-			newNum = pageArr.length - 1;
-		} else {
-			direction === true
-				? (newNum = activeIndicator + 1)
-				: (newNum = activeIndicator - 1);
-		}
-
-		setActiveIndicator(newNum);
-	};
 
 	const clickHandler = (direction) => {
 		setDirection(direction);
@@ -156,7 +134,7 @@ const Carousel = ({ $titles }) => {
 			<IndicatorGroup>
 				{pageArr.map((el, idx) => (
 					<Indicator
-						$activePage={activeIndicator}
+						$activePage={activePage}
 						$idx={idx}
 						key={Math.max(Math.random())}
 					/>
@@ -180,9 +158,6 @@ const Carousel = ({ $titles }) => {
 						classNames="carouselpage"
 						unmountOnExit
 						nodeRef={refArr[idx]}
-						onEntered={() =>
-							incrementActivePage(direction)
-						}
 					>
 						<CarouselPage
 							ref={refArr[idx]}

@@ -3,7 +3,7 @@ const functions = require("firebase-functions");
 const cors = require("cors");
 const express = require("express");
 const fetch = require("node-fetch");
-
+const apiKey = functions.config().someservice.key;
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -15,8 +15,6 @@ const db = admin.firestore();
 var app = express();
 
 app.use(cors());
-
-const apiKey = "24c967e4ec4743f553689097e37b8a3c";
 
 // const apiReadAccessTokenV4 =
 // 	"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGM5NjdlNGVjNDc0M2Y1NTM2ODkwOTdlMzdiOGEzYyIsInN1YiI6IjYxMDE4NWIzN2Q1ZjRiMDA3NDMwM2QxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cKPCG4kPE_mP-WrbHxn4zWzPD17S6jEAYUZuIR7_TcU";
