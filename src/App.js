@@ -5,7 +5,7 @@ import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import "./App.css";
 import ContextRoute from "./components/context-route/context-route.component";
 import Header from "./components/header/header.component";
-import { UserContext } from "./components/user.context";
+import { UserContext } from "./components/contexts";
 import { useAuthListener } from "./hooks/auth-hooks";
 import BrowsePage from "./pages/homepage/browse.component";
 

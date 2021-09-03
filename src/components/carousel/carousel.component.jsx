@@ -4,7 +4,7 @@ import {
 	faChevronLeft,
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useThrottle } from "../../helpers/utilities";
 import CarouselItem from "../carousel-item/carousel-item.component";
@@ -22,18 +22,30 @@ import {
 const Carousel = ({ $titles }) => {
 	const [activeIndicator, setActiveIndicator] = useState(0);
 	const [pageArr, setPageArr] = useState([]);
+	const [refArr, setRefArr] = useState([]);
 	const [resultsPerPage, setResultsPerPage] = useState(4);
 	const [activePage, setActivePage] = useState(0);
 	const [direction, setDirection] = useState(true);
+
 	// const [interacted, setInteracted] = useState(false);
 	const [width, setWidth] = useState(0);
 	const [height, setHeight] = useState(
 		Math.round((window.innerWidth / resultsPerPage) * 1.4)
 	);
 	const [domNode, setDomNode] = useState(null);
-
 	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
+
+	useEffect(() => {
+		const imgUrls = $titles.titles.results.map(
+			(el) => `https://image.tmdb.org/t/p/w342${el.poster_path}`
+		);
+
+		imgUrls.forEach((url) => {
+			const img = new Image();
+			img.src = url;
+		});
+	}, [$titles.titles.results]);
 
 	// Change number of results based on view width
 	const resizeListener = useCallback(() => {
@@ -86,6 +98,11 @@ const Carousel = ({ $titles }) => {
 	}, [$titles, resultsPerPage]);
 
 	useEffect(() => {
+		const newRefArr = pageArr.map(() => React.createRef(null));
+		setRefArr(newRefArr);
+	}, [pageArr]);
+
+	useEffect(() => {
 		// Set width of carousel items.
 		if (domNode) {
 			setWidth(100 / resultsPerPage);
@@ -110,7 +127,6 @@ const Carousel = ({ $titles }) => {
 
 	const clickHandler = (direction) => {
 		setDirection(direction);
-		incrementActivePage(direction);
 		let newPageNum;
 		// Loop through pages
 		if (direction === true) {
@@ -142,7 +158,7 @@ const Carousel = ({ $titles }) => {
 					<Indicator
 						$activePage={activeIndicator}
 						$idx={idx}
-						key={idx}
+						key={Math.max(Math.random())}
 					/>
 				))}
 			</IndicatorGroup>
@@ -163,16 +179,15 @@ const Carousel = ({ $titles }) => {
 						timeout={400}
 						classNames="carouselpage"
 						unmountOnExit
+						nodeRef={refArr[idx]}
+						onEntered={() =>
+							incrementActivePage(direction)
+						}
 					>
 						<CarouselPage
+							ref={refArr[idx]}
 							$offsetWidth={width}
-							key={idx}
-							$entryDirection={
-								direction === true ? "+" : "-"
-							}
-							$exitDirection={
-								direction === true ? "-" : "+"
-							}
+							className={direction && "forward"}
 						>
 							{el.map((el, index) => (
 								<CarouselItem

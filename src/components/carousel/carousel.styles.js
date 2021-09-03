@@ -28,20 +28,38 @@ export const CarouselPage = styled.div`
 	position: absolute;
 	left: -${(props) => props.$offsetWidth}%;
 	will-change: transform;
+
 	&.carouselpage-enter {
 		position: absolute;
-		transform: translateX(${(props) => props.$entryDirection + "100%"});
+		transform: translateX(-100%);
 	}
 	&.carouselpage-enter-active {
 		transform: translateX(0);
-		transition: all 400ms ease-out;
+		transition: transform 400ms linear;
 	}
 	&.carouselpage-exit {
 		position: absolute;
 	}
 	&.carouselpage-exit-active {
-		transform: translateX(${(props) => props.$exitDirection + "100%"});
-		transition: all 400ms ease-out;
+		transform: translateX(100%);
+		transition: transform 400ms linear;
+	}
+	&.forward {
+		&.carouselpage-enter {
+			position: absolute;
+			transform: translateX(100%);
+		}
+		&.carouselpage-enter-active {
+			transform: translateX(0);
+			transition: transform 400ms linear;
+		}
+		&.carouselpage-exit {
+			position: absolute;
+		}
+		&.carouselpage-exit-active {
+			transform: translateX(-100%);
+			transition: transform 400ms linear;
+		}
 	}
 `;
 

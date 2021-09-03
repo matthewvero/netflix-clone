@@ -15,14 +15,14 @@ import {
 	faChevronDown,
 	faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import { UserContext } from "../../components/user.context";
+import { GenreContext } from "../../components/contexts";
 import { db } from "../../firebase";
 
 import Carousel from "../../components/carousel/carousel.component";
 
 const BrowsePage = () => {
-	const user = useContext(UserContext);
 	const [titles, setTitles] = useState([]);
+	const [categoryIDs, setCategoryIDs] = useState([]);
 
 	useEffect(() => {
 		const getTitles = async () => {
@@ -34,6 +34,16 @@ const BrowsePage = () => {
 
 			setTitles(data.slice(0, 4));
 		};
+
+		const getCategoryIDs = async () => {
+			const categoryIDs = await db
+				.collection("categoryIDs")
+				.doc("IDs")
+				.get();
+			setCategoryIDs(categoryIDs.data().genres);
+		};
+		getCategoryIDs();
+
 		getTitles();
 	}, []);
 
@@ -95,8 +105,16 @@ const BrowsePage = () => {
 					width: "100vw",
 				}}
 			></div>
-			{titles.length &&
-				titles.map((el) => <Carousel $titles={el} />)}
+			<GenreContext.Provider value={categoryIDs}>
+				{titles.length &&
+					titles.map((el) => (
+						<Carousel
+							$titles={el}
+							$genreIDs={categoryIDs}
+							key={Math.max(Math.random())}
+						/>
+					))}
+			</GenreContext.Provider>
 		</BrowsePageContainer>
 	);
 };

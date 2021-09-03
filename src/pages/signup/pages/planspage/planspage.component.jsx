@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../../../../components/misc/inputs.styles";
 import { Heading } from "../../../../components/misc/text.styles";
-import { UserContext } from "../../../../components/user.context";
+import { UserContext } from "../../../../components/contexts";
 import { updateDocument } from "../../../../firebase.utils";
 import { ListIcon } from "../../signuppage.styles";
 import {

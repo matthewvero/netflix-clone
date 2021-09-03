@@ -60,6 +60,8 @@ const storeCategories = async () => {
 				.doc(categoriesInfo.genres[idx].name)
 				.set(category);
 		});
+
+		db.collection("categoryIDs").doc("IDs").set(categoriesInfo);
 	} catch (err) {
 		console.log(err);
 		return;

@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { HeaderContainer } from "./header.styles";
 import { ReactComponent as ReactLogo } from "../../logo.svg";
-import { UserContext } from "../user.context";
+import { UserContext } from "../contexts";
 const Header = () => {
 	const user = useContext(UserContext);
 	return (

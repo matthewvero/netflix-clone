@@ -5,7 +5,7 @@ import { Route, withRouter, useHistory } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
-import { UserContext } from "../../components/user.context";
+import { UserContext } from "../../components/contexts";
 
 import { useFormValidator } from "../../hooks/form-validator/form-validator";
 import PaymentPage from "./pages/paymentpage/paymentpage.component";
