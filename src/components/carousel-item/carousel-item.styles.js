@@ -36,7 +36,7 @@ export const CarouselItemContainer = styled.div`
 	color: white;
 	background-color: #141414;
 	overflow: hidden;
-	transition: transform 200ms linear;
+	transition: z-index 1ms 200ms linear, transform 200ms linear;
 	transform-origin: ${(props) => {
 		if (props.$left) return "left";
 		else if (props.$right) return "right";
@@ -46,7 +46,7 @@ export const CarouselItemContainer = styled.div`
 	cursor: pointer;
 	&:hover {
 		transform: scale(1.4);
-		z-index: 1000;
+		z-index: 100;
 		transition: transform 300ms 300ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
 		box-shadow: 0 0 10px black;

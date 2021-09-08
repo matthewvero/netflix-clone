@@ -26,13 +26,23 @@ const BrowsePage = () => {
 
 	useEffect(() => {
 		const getTitles = async () => {
-			const collectionRef = await db.collection("categories").get();
-			const data = collectionRef.docs.map((el) => ({
-				collectionName: el.id,
-				titles: el.data(),
-			}));
+			try {
+				const collectionRef = await db
+					.collection("categories")
+					.get();
+				if (collectionRef.docs) {
+					const data = collectionRef.docs.map((el) => ({
+						collectionName: el.id,
+						titles: el.data(),
+					}));
 
-			setTitles(data.slice(0, 4));
+					setTitles(data.slice(0, 4));
+				} else {
+					alert("There was a problem loading content");
+				}
+			} catch (err) {
+				alert(err);
+			}
 		};
 
 		const getCategoryIDs = async () => {
@@ -42,15 +52,18 @@ const BrowsePage = () => {
 					.doc("IDs")
 					.get();
 				const genreData = categoryIDs.data();
-
-				setCategoryIDs(genreData.genres);
+				if (genreData.genres) {
+					setCategoryIDs(genreData.genres);
+				} else {
+					alert("There was a problem loading content");
+				}
 			} catch (err) {
 				alert(err);
 			}
 		};
-		getCategoryIDs();
 
 		getTitles();
+		getCategoryIDs();
 	}, []);
 
 	return (

@@ -4,9 +4,6 @@ const cors = require("cors");
 const express = require("express");
 const fetch = require("node-fetch");
 const apiKey = functions.config().tmdbapi.key;
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
 
 const admin = require("firebase-admin");
 admin.initializeApp();
@@ -16,32 +13,18 @@ var app = express();
 
 app.use(cors());
 
-// const apiReadAccessTokenV4 =
-// 	"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGM5NjdlNGVjNDc0M2Y1NTM2ODkwOTdlMzdiOGEzYyIsInN1YiI6IjYxMDE4NWIzN2Q1ZjRiMDA3NDMwM2QxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cKPCG4kPE_mP-WrbHxn4zWzPD17S6jEAYUZuIR7_TcU";
-
-const sendRequest = async (query, method) => {
-	const url = `https://api.themoviedb.org/3/${query}?api_key=${apiKey}`;
-	try {
-		const res = await fetch(url);
-		const data = await res.json();
-		return data;
-	} catch (err) {
-		throw new Error(err);
-	}
-};
-
 const storeCategories = async () => {
 	try {
 		// GET CATEGORY IDS
 		const categoriesIDRes = await fetch(
-			"https://api.themoviedb.org/3/genre/movie/list?api_key=24c967e4ec4743f553689097e37b8a3c"
+			`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`
 		);
 		const categoriesInfo = await categoriesIDRes.json();
 
 		// CREATE CATEGORY API LINKS
 		const categoriesURLs = categoriesInfo.genres.map(
 			(el) =>
-				`https://api.themoviedb.org/3/discover/movie?api_key=24c967e4ec4743f553689097e37b8a3c&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1&with_genres=${el.id}&with_watch_monetization_types=flatrate`
+				`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1&with_genres=${el.id}&with_watch_monetization_types=flatrate`
 		);
 
 		// RETRIEVE POPULAR FILMS FROM EACH CATEGORY
@@ -52,26 +35,31 @@ const storeCategories = async () => {
 			categoriesRes.map((el) => el.json())
 		);
 
+		const batch = db.batch();
+
 		// WRITE TO FIRESTORE FOR FASTER INITIAL LOAD
 		data.forEach((category, idx) => {
-			db.collection("categories")
-				.doc(categoriesInfo.genres[idx].name)
-				.set(category);
-		});
+			const ref = db
+				.collection("categories")
+				.doc(categoriesInfo.genres[idx].name);
 
-		db.collection("categoryIDs").doc("IDs").set(categoriesInfo);
+			batch.set(ref, category);
+		});
+		const categoriesInfoRef = db.collection("categoryIDs").doc("IDs");
+
+		batch.set(categoriesInfoRef, categoriesInfo);
+
+		return batch.commit();
 	} catch (err) {
 		console.log(err);
 		return;
 	}
 };
 
-storeCategories();
-
 const storeTrending = async () => {
 	try {
 		const res = await fetch(
-			"https://api.themoviedb.org/3/trending/all/week?api_key=24c967e4ec4743f553689097e37b8a3c"
+			`https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`
 		);
 
 		const data = await res.json();
@@ -83,7 +71,13 @@ const storeTrending = async () => {
 	}
 };
 
-storeTrending();
+exports.scheduledFunction = functions.pubsub
+	.schedule("every 1 months")
+	.onRun(async (context) => {
+		await storeTrending();
+		await storeCategories();
+		return null;
+	});
 
 const authenticate = async (req, res, next) => {
 	if (
@@ -108,6 +102,17 @@ const authenticate = async (req, res, next) => {
 };
 
 // app.use(authenticate);
+
+const sendRequest = async (query, method) => {
+	const url = `https://api.themoviedb.org/3/${query}?api_key=${apiKey}`;
+	try {
+		const res = await fetch(url);
+		const data = await res.json();
+		return data;
+	} catch (err) {
+		throw new Error(err);
+	}
+};
 
 app.get("/films", async (req, res) => {
 	try {
