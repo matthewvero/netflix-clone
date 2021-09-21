@@ -4,7 +4,7 @@ import {
 	faChevronLeft,
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useThrottle } from "../../helpers/utilities";
 import CarouselItem from "../carousel-item/carousel-item.component";
@@ -24,6 +24,7 @@ const Carousel = ({ $titles }) => {
 	const [refArr, setRefArr] = useState([]);
 	const [resultsPerPage, setResultsPerPage] = useState(4);
 	const [activePage, setActivePage] = useState(0);
+
 	const [direction, setDirection] = useState(true);
 	const [width, setWidth] = useState(0);
 	const [height, setHeight] = useState(
@@ -136,17 +137,21 @@ const Carousel = ({ $titles }) => {
 					<Indicator
 						$activePage={activePage}
 						$idx={idx}
-						key={Math.max(Math.random())}
+						key={idx}
 					/>
 				))}
 			</IndicatorGroup>
 			<CarouselButton
+				$width={width}
 				className="left"
 				onClick={() => throttledClickHandler(false)}
 			>
 				<CarouselIcon icon={faChevronLeft} />
 			</CarouselButton>
-			<CarouselButton onClick={() => throttledClickHandler(true)}>
+			<CarouselButton
+				$width={width}
+				onClick={() => throttledClickHandler(true)}
+			>
 				<CarouselIcon icon={faChevronRight} />
 			</CarouselButton>
 
@@ -158,6 +163,7 @@ const Carousel = ({ $titles }) => {
 						classNames="carouselpage"
 						unmountOnExit
 						nodeRef={refArr[idx]}
+						key={idx}
 					>
 						<CarouselPage
 							ref={refArr[idx]}

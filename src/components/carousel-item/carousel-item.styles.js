@@ -5,11 +5,12 @@ import styled from "styled-components/macro";
 
 export const CarouselItemBackground = styled.img`
 	width: 100%;
-	height: 101%;
+	height: 100%;
 	position: absolute;
 	object-fit: cover;
 	will-change: transform;
 	transition: all 300ms cubic-bezier(0.15, 0.75, 0.3, 1.03);
+	border-radius: 6px;
 `;
 
 export const CarouselItemContent = styled.div`
@@ -27,7 +28,7 @@ export const CarouselItemContent = styled.div`
 
 export const CarouselItemContainer = styled.div`
 	z-index: 0;
-	height: 100%;
+	min-height: 100%;
 	min-width: calc(${(props) => props.$width}% - 4px);
 	margin: 0 2px;
 	display: flex;
@@ -47,13 +48,13 @@ export const CarouselItemContainer = styled.div`
 	&:hover {
 		transform: scale(1.4);
 		z-index: 100;
-		transition: transform 300ms 300ms
+		transition: transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
-		box-shadow: 0 0 10px black;
+		box-shadow: 0 0 10px #101010;
 	}
 
 	&:hover ${CarouselItemBackground} {
-		transition: transform 300ms 300ms
+		transition: transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
 		transform: translateY(-35%);
 	}
@@ -89,5 +90,40 @@ export const CarouselButton = styled.div`
 `;
 
 export const CarouselButtonIcon = styled(FontAwesomeIcon)`
+	font-size: 0.5rem;
+`;
+
+export const Rating = styled.span`
+	height: 10px;
+	width: 10px;
+	background-color: ${(props) => {
+		switch (props.children) {
+			case "U":
+				return "green";
+
+			case "PG":
+				return "yellow";
+
+			case "12":
+				return "orange";
+
+			case "12A":
+				return "orange";
+
+			case "15":
+				return "hotpink";
+
+			case "18":
+				return "red";
+			default:
+				return "white";
+		}
+	}};
+	display: grid;
+	place-items: center;
+	padding: 3px;
+	border-radius: 50%;
+	border: white solid 1px;
+	font-weight: 600;
 	font-size: 0.5rem;
 `;

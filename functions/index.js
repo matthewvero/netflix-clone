@@ -74,8 +74,12 @@ const storeTrending = async () => {
 exports.scheduledFunction = functions.pubsub
 	.schedule("every 1 months")
 	.onRun(async (context) => {
-		await storeTrending();
-		await storeCategories();
+		try {
+			await storeTrending();
+			await storeCategories();
+		} catch (err) {
+			console.log(err);
+		}
 		return null;
 	});
 
@@ -133,6 +137,39 @@ app.get("/trending", async (req, res) => {
 	} catch (err) {
 		console.log(err);
 		return;
+	}
+});
+
+app.get("/getinfo/:filmid", async (req, res) => {
+	try {
+		const releaseInfoRes = await fetch(
+			`https://api.themoviedb.org/3/movie/${req.params.filmid}/release_dates?api_key=${apiKey}`
+		);
+		const titleInfoRes = await fetch(
+			`https://api.themoviedb.org/3/movie/${req.params.filmid}?api_key=${apiKey}`
+		);
+		const releaseInfo = await releaseInfoRes.json();
+		const titleInfo = await titleInfoRes.json();
+		res.status(200).send({ releaseInfo, titleInfo });
+	} catch (err) {
+		console.log(err);
+		res.status(500).send(err);
+	}
+});
+
+app.get("/init", async (req, res) => {
+	console.log(req);
+	if (req.query.api_key === apiKey) {
+		try {
+			await storeTrending();
+			await storeCategories();
+			res.status(200).send("ok");
+		} catch (err) {
+			console.log(err);
+			res.status(400).send(err);
+		}
+	} else {
+		res.status(400).send("Wrong key");
 	}
 });
 

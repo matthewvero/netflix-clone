@@ -22,7 +22,7 @@ export const Indicator = styled.div`
 `;
 
 export const CarouselPage = styled.div`
-	width: 100%;
+	min-width: 100%;
 	height: 100%;
 	display: flex;
 	position: absolute;
@@ -98,16 +98,22 @@ export const CarouselButton = styled.div`
 	right: 0;
 	height: 100%;
 	width: 5vw;
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(50, 50, 50, 0.4);
+	background-color: rgba(25, 25, 25, 0.6);
 
 	cursor: pointer;
-	border-radius: 4px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 	z-index: 101;
 	&.left {
 		left: 0;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
 	}
 	&:hover ${CarouselIcon} {
 		transform: scale(1.4);

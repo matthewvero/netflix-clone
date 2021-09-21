@@ -8,7 +8,6 @@ import Header from "./components/header/header.component";
 import { UserContext } from "./components/contexts";
 import { useAuthListener } from "./hooks/auth-hooks";
 import BrowsePage from "./pages/homepage/browse.component";
-
 import SignupPage from "./pages/signup/signuppage.component";
 import StartPage from "./pages/start/startpage.component";
 
@@ -16,7 +15,7 @@ function App() {
 	const user = useAuthListener();
 
 	return (
-		<div className="App">
+		<div className="App" id="App">
 			<BrowserRouter>
 				<ContextRoute
 					path="/signup/:anything"

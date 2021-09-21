@@ -21,6 +21,10 @@ export const Firebase = firebase.initializeApp(firebaseConfig);
 export const auth = Firebase.auth();
 
 export const db = Firebase.firestore();
+export const functionsURL =
+	window.location.hostname === "localhost"
+		? "http://localhost:5001/netflix-clone-978d0/us-central1/widgets"
+		: "https://us-central1-netflix-clone-978d0.cloudfunctions.net/widgets";
 
 if (window.location.hostname === "localhost") {
 	auth.useEmulator("http://localhost:9099");

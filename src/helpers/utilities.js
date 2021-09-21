@@ -16,3 +16,19 @@ export function useThrottle(func, timeout) {
 		}
 	};
 }
+
+export const truncateText = (str, maxLength) => {
+	if (str) {
+		const trimmedString = str.substr(0, maxLength);
+
+		return (
+			trimmedString.substring(
+				0,
+				Math.min(
+					trimmedString.length,
+					trimmedString.lastIndexOf(".") + 1
+				)
+			) + ".."
+		);
+	}
+};

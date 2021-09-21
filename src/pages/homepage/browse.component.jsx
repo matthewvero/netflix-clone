@@ -1,29 +1,38 @@
 /** @format */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	BrowsePageContainer,
 	BrowsePageHeader,
 	HeaderItem,
 	HeaderSection,
 	HeaderLink,
+	FeaturedBanner,
+	BannerContentContainer,
+	BannerContent,
+	BannerOverview,
+	BannerPlayButton,
+	BannerInfoButton,
 } from "./browse.styles";
 import { ReactComponent as NetflixLogo } from "../../logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faBell,
 	faChevronDown,
+	faInfoCircle,
+	faPlay,
 	faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { GenreContext } from "../../components/contexts";
 import { db } from "../../firebase";
 
 import Carousel from "../../components/carousel/carousel.component";
+import { truncateText } from "../../helpers/utilities";
 
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);
 	const [categoryIDs, setCategoryIDs] = useState([]);
-
+	const [featured, setFeatured] = useState();
 	useEffect(() => {
 		const getTitles = async () => {
 			try {
@@ -35,8 +44,13 @@ const BrowsePage = () => {
 						collectionName: el.id,
 						titles: el.data(),
 					}));
-
-					setTitles(data.slice(0, 4));
+					setFeatured(
+						data.filter(
+							(el) =>
+								el.collectionName === "trending"
+						)[0].titles.results[0]
+					);
+					setTitles(data);
 				} else {
 					alert("There was a problem loading content");
 				}
@@ -74,6 +88,7 @@ const BrowsePage = () => {
 						style={{
 							maxHeight: "60%",
 							maxWidth: "30%",
+							marginRight: "3%",
 						}}
 					/>
 					<HeaderLink>Home</HeaderLink>
@@ -118,21 +133,61 @@ const BrowsePage = () => {
 					</HeaderItem>
 				</HeaderSection>
 			</BrowsePageHeader>
-			<div
-				style={{
-					height: "20vh",
-					width: "100vw",
-				}}
-			></div>
+
+			{featured && (
+				<FeaturedBanner
+					$backgroundImage={
+						"https://image.tmdb.org/t/p/original" +
+						featured.poster_path
+					}
+				>
+					<BannerContentContainer>
+						<BannerContent>
+							<BannerOverview style={{}}>
+								{featured.overview &&
+									truncateText(
+										featured.overview,
+										200
+									)}
+								<div
+									style={{
+										display: "flex",
+										margin: "13px 0",
+									}}
+								>
+									<BannerPlayButton>
+										<FontAwesomeIcon
+											className="bannericon"
+											icon={faPlay}
+										/>
+										Play
+									</BannerPlayButton>
+									<BannerInfoButton>
+										<FontAwesomeIcon
+											className="bannericon"
+											icon={
+												faInfoCircle
+											}
+										/>
+										More info
+									</BannerInfoButton>
+								</div>
+							</BannerOverview>
+						</BannerContent>
+					</BannerContentContainer>
+				</FeaturedBanner>
+			)}
+
 			<GenreContext.Provider value={categoryIDs}>
-				{titles.length &&
-					titles.map((el) => (
-						<Carousel
-							$titles={el}
-							$genreIDs={categoryIDs}
-							key={Math.max(Math.random())}
-						/>
-					))}
+				{titles.length
+					? titles.map((el) => (
+							<Carousel
+								$titles={el}
+								$genreIDs={categoryIDs}
+								key={Math.max(Math.random())}
+							/>
+					  ))
+					: null}
 			</GenreContext.Provider>
 		</BrowsePageContainer>
 	);
