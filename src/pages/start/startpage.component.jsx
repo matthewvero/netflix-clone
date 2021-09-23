@@ -22,7 +22,11 @@ import {
 } from "./startpage.styles";
 import { ReactComponent as ReactLogo } from "../../logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+	faChevronRight,
+	faPlus,
+	faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import {
 	FormInputContainer,
 	InputContainer,
@@ -41,14 +45,17 @@ import {
 	Heading,
 	SubHeading,
 } from "../../components/misc/text.styles";
-import AccordionSegment from "../../components/accordion-segment/accordion-segment.component";
-import AccordionContainer from "../../components/accordion-container/accordion-container.component";
 import { withRouter } from "react-router";
 import {
 	useFormValidator,
 	withValidation,
 } from "../../hooks/form-validator/form-validator";
 
+import {
+	AccordionSegment,
+	AccordionSummary,
+} from "../../components/accordion/accordion.styles";
+import Accordion from "../../components/accordion/accordion.component";
 const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email", {
 	required: true,
 });
@@ -305,11 +312,24 @@ const StartPage = ({ history }) => {
 			</AnimationCard>
 			<StartPageCard style={{ height: "auto" }}>
 				<Heading>Frequently asked Questions</Heading>
-				<AccordionContainer>
-					<AccordionSegment title="What is Netflix?">
+				<Accordion>
+					<AccordionSegment>
+						<AccordionSummary>
+							<SubHeading>
+								What is Netflix?
+							</SubHeading>
+							<FontAwesomeIcon
+								icon={faPlus}
+								className="opened"
+							/>
+							<FontAwesomeIcon
+								icon={faTimes}
+								className="closed"
+							/>
+						</AccordionSummary>
 						<p
 							style={{
-								margin: "0 0 5% 0",
+								margin: "0",
 								color: "white",
 								textAlign: "left",
 								fontSize: "20px",
@@ -337,7 +357,20 @@ const StartPage = ({ history }) => {
 							films are added every week!
 						</p>
 					</AccordionSegment>
-					<AccordionSegment title="How much does Netflix cost?">
+					<AccordionSegment>
+						<AccordionSummary>
+							<SubHeading>
+								How much does Netflix cost??
+							</SubHeading>
+							<FontAwesomeIcon
+								icon={faPlus}
+								className="opened"
+							/>
+							<FontAwesomeIcon
+								icon={faTimes}
+								className="closed"
+							/>
+						</AccordionSummary>
 						<p
 							style={{
 								margin: "0",
@@ -353,7 +386,20 @@ const StartPage = ({ history }) => {
 							month. No extra costs, no contracts.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment title="Where can I watch?">
+					<AccordionSegment>
+						<AccordionSummary>
+							<SubHeading>
+								Where can I watch?
+							</SubHeading>
+							<FontAwesomeIcon
+								icon={faPlus}
+								className="opened"
+							/>
+							<FontAwesomeIcon
+								icon={faTimes}
+								className="closed"
+							/>
+						</AccordionSummary>
 						<p
 							style={{
 								margin: "0",
@@ -389,7 +435,20 @@ const StartPage = ({ history }) => {
 							you anywhere.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment title="How do I cancel?">
+					<AccordionSegment>
+						<AccordionSummary>
+							<SubHeading>
+								How do I cancel?
+							</SubHeading>
+							<FontAwesomeIcon
+								icon={faPlus}
+								className="opened"
+							/>
+							<FontAwesomeIcon
+								icon={faTimes}
+								className="closed"
+							/>
+						</AccordionSummary>
 						<p
 							style={{
 								margin: "0",
@@ -406,7 +465,20 @@ const StartPage = ({ history }) => {
 							account at any time.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment title="What can I watch on Netflix?">
+					<AccordionSegment>
+						<AccordionSummary>
+							<SubHeading>
+								What can I watch on Netflix?
+							</SubHeading>
+							<FontAwesomeIcon
+								icon={faPlus}
+								className="opened"
+							/>
+							<FontAwesomeIcon
+								icon={faTimes}
+								className="closed"
+							/>
+						</AccordionSummary>
 						<p
 							style={{
 								margin: "0",
@@ -422,7 +494,7 @@ const StartPage = ({ history }) => {
 							much as you want, any time you want.
 						</p>
 					</AccordionSegment>
-				</AccordionContainer>
+				</Accordion>
 				<form
 					style={{
 						display: "flex",

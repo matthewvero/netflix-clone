@@ -1,7 +1,7 @@
 /** @format */
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 export const CarouselItemBackground = styled.img`
 	width: 100%;
@@ -36,8 +36,7 @@ export const CarouselItemContainer = styled.div`
 	border-radius: 6px;
 	color: white;
 	background-color: #141414;
-	overflow: hidden;
-	transition: z-index 1ms 200ms linear, transform 200ms linear;
+	transition: z-index 1ms 300ms linear, transform 200ms linear;
 	transform-origin: ${(props) => {
 		if (props.$left) return "left";
 		else if (props.$right) return "right";
