@@ -126,12 +126,20 @@ const StartPage = ({ history }) => {
 										Email address
 									</InputLabel>
 								</InputContainer>
-								{state.errors["email"] &&
-									state.interacted[
-										"email"
-									] &&
-									state.errors["email"].map(
-										(el, idx) => (
+								<div
+									style={{
+										position: "absolute",
+										bottom: "-75%",
+										height: "50px",
+									}}
+								>
+									{state.errors["email"] &&
+										state.interacted[
+											"email"
+										] &&
+										state.errors[
+											"email"
+										].map((el, idx) => (
 											<p
 												key={
 													idx
@@ -145,8 +153,8 @@ const StartPage = ({ history }) => {
 											>
 												{el}
 											</p>
-										)
-									)}
+										))}
+								</div>
 							</StartPageInputContainer>
 							<StartPageButton>
 								Get Started{" "}
@@ -313,7 +321,7 @@ const StartPage = ({ history }) => {
 			<StartPageCard style={{ height: "auto" }}>
 				<Heading>Frequently asked Questions</Heading>
 				<Accordion>
-					<AccordionSegment>
+					<AccordionSegment className="segment">
 						<AccordionSummary>
 							<SubHeading>
 								What is Netflix?
@@ -357,7 +365,7 @@ const StartPage = ({ history }) => {
 							films are added every week!
 						</p>
 					</AccordionSegment>
-					<AccordionSegment>
+					<AccordionSegment className="segment">
 						<AccordionSummary>
 							<SubHeading>
 								How much does Netflix cost??
@@ -386,7 +394,7 @@ const StartPage = ({ history }) => {
 							month. No extra costs, no contracts.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment>
+					<AccordionSegment className="segment">
 						<AccordionSummary>
 							<SubHeading>
 								Where can I watch?
@@ -435,7 +443,7 @@ const StartPage = ({ history }) => {
 							you anywhere.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment>
+					<AccordionSegment className="segment">
 						<AccordionSummary>
 							<SubHeading>
 								How do I cancel?
@@ -465,7 +473,7 @@ const StartPage = ({ history }) => {
 							account at any time.
 						</p>
 					</AccordionSegment>
-					<AccordionSegment>
+					<AccordionSegment className="segment">
 						<AccordionSummary>
 							<SubHeading>
 								What can I watch on Netflix?

@@ -1,6 +1,6 @@
 /** @format */
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components/macro";
 
 const expandIn = keyframes`
       from {
@@ -76,7 +76,7 @@ export const TitleModalCloseButton = styled.div`
 	width: 30px;
 	padding: 3px;
 	border-radius: 50%;
-	background-color: #282c34;
+	background-color: #141414;
 	display: grid;
 	place-items: center;
 	z-index: 1000000;
@@ -89,5 +89,5 @@ export const TitleModalContentContainer = styled.div`
 	left: 0;
 	width: 100%;
 	min-height: 50%;
-	background-color: #282c34;
+	background-color: #141414;
 `;

@@ -19,12 +19,11 @@ import {
 	IndicatorGroup,
 } from "./carousel.styles";
 
-const Carousel = ({ $titles }) => {
+const Carousel = ({ $titles, ...props }) => {
 	const [pageArr, setPageArr] = useState([]);
 	const [refArr, setRefArr] = useState([]);
 	const [resultsPerPage, setResultsPerPage] = useState(4);
 	const [activePage, setActivePage] = useState(0);
-
 	const [direction, setDirection] = useState(true);
 	const [width, setWidth] = useState(0);
 	const [height, setHeight] = useState(
@@ -41,7 +40,6 @@ const Carousel = ({ $titles }) => {
 			img.src = el.poster_path;
 		});
 	}, [$titles.titles.results]);
-
 	// Change number of results based on view width
 	const resizeListener = useCallback(() => {
 		if (window.innerWidth < 500) {
@@ -126,7 +124,7 @@ const Carousel = ({ $titles }) => {
 	};
 
 	const throttledClickHandler = useThrottle(clickHandler, 500);
-
+	if (!$titles) return null;
 	return (
 		<CarouselContainer $height={height}>
 			{$titles && (

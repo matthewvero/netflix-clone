@@ -5,7 +5,7 @@ export const AccordionSegment = styled.details`
 	height: 57px;
 	width: 90%;
 	margin-bottom: 10px;
-	transition: height 300ms linear;
+
 	background-color: #303030;
 	position: relative;
 	user-select: none;

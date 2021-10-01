@@ -7,7 +7,7 @@ import {
 	faThumbsDown,
 	faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { functionsURL } from "../../firebase";
 import { GenreContext } from "../contexts";
@@ -19,6 +19,8 @@ import {
 	CarouselButton,
 	CarouselButtonIcon,
 	Rating,
+	GenresContainer,
+	GenreContentRow,
 } from "./carousel-item.styles";
 
 const CarouselItem = ({ $title, $left, $right, $width }) => {
@@ -27,16 +29,11 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const [info, setInfo] = useState({});
 	const [modalVisible, setModalVisible] = useState(false);
 	const domNode = document.getElementById("App");
-	// const itemRef = useRef(null);
 	const [itemRef, setItemRef] = useState(null);
+	const [imgLoaded, setImgLoaded] = useState(false);
 
 	useEffect(() => {
-		if (
-			genreIDs &&
-			genreIDs.length &&
-			$title &&
-			$title.genre_ids.length
-		) {
+		if (genreIDs?.length && $title?.genre_ids?.length) {
 			setGenres(
 				genreIDs.filter((el) =>
 					$title.genre_ids.includes(el.id)
@@ -46,9 +43,14 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 	}, [$title, genreIDs]);
 
 	const getInfo = async (id) => {
+		if (!imgLoaded) {
+			const image = new Image();
+			image.src = `https://image.tmdb.org/t/p/original${$title.poster_path}`;
+			setImgLoaded(true);
+		}
 		// get additional title data
 		try {
-			if (!info.hasOwnProperty("iso_3166_1")) {
+			if (!info.releaseInfo?.hasOwnProperty("iso_3166_1")) {
 				const res = await fetch(
 					`${functionsURL}/getinfo/${id}`
 				);
@@ -65,8 +67,6 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 				});
 			}
 			// preload full size image
-			const img = new Image();
-			img.src = `https://image.tmdb.org/t/p/original${$title.poster_path}`;
 		} catch (err) {
 			console.log(err.message);
 		}
@@ -93,14 +93,7 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 			onMouseEnter={() => getInfo($title.id)}
 		>
 			<CarouselItemContent>
-				<div
-					style={{
-						width: "100%",
-						height: "30%",
-						display: "flex",
-						alignItems: "center",
-					}}
-				>
+				<GenreContentRow>
 					<CarouselButton style={{ marginLeft: "0" }}>
 						<CarouselButtonIcon icon={faPlay} />
 					</CarouselButton>
@@ -114,12 +107,12 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 						<CarouselButtonIcon icon={faThumbsDown} />
 					</CarouselButton>
 					<CarouselButton
-						style={{ marginLeft: "auto" }}
+						className="right"
 						onClick={() => setModalVisible(true)}
 					>
 						<CarouselButtonIcon icon={faChevronDown} />
 					</CarouselButton>
-				</div>
+				</GenreContentRow>
 				<div
 					style={{
 						height: "30%",
@@ -159,14 +152,7 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 						</p>
 					)}
 				</div>
-				<div
-					style={{
-						height: "30%",
-						width: "100%",
-						display: "flex",
-						flexWrap: "wrap",
-					}}
-				>
+				<GenresContainer>
 					{genres.map((el, idx) => (
 						<React.Fragment key={idx}>
 							<span
@@ -179,7 +165,7 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 							</span>
 						</React.Fragment>
 					))}
-				</div>
+				</GenresContainer>
 			</CarouselItemContent>
 			<CarouselItemBackground
 				ref={(ref) => setItemRef(ref)}

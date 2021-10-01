@@ -50,21 +50,23 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   },
   "babel": {
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
-    ]
+    ],
+      "plugins": ["babel-plugin-styled-components"]
+    
   },
   "devDependencies": {
-    "jest-styled-components": "^7.0.5",
-      "@babel/core": "^7.8.7",
-      "@babel/plugin-transform-runtime": "^7.8.3"
-  
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "babel-plugin-styled-components": "^1.13.2",
+    "jest-styled-components": "^7.0.5"
   }
 }

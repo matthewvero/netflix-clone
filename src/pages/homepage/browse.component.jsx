@@ -1,21 +1,5 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import {
-	BrowsePageContainer,
-	BrowsePageHeader,
-	HeaderItem,
-	HeaderSection,
-	HeaderLink,
-	FeaturedBanner,
-	BannerContentContainer,
-	BannerContent,
-	BannerOverview,
-	BannerPlayButton,
-	BannerInfoButton,
-} from "./browse.styles";
-import { ReactComponent as NetflixLogo } from "../../logo.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faBell,
 	faChevronDown,
@@ -23,16 +7,41 @@ import {
 	faPlay,
 	faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import { GenreContext } from "../../components/contexts";
-import { db } from "../../firebase";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import Carousel from "../../components/carousel/carousel.component";
+import useLazyLoader from "../../components/component-lazy-loader/component-lazy-loader.component";
+import { GenreContext } from "../../components/contexts";
+import LoadingAnimation from "../../components/LoadingAnimation/loading-animation.component";
+import { db } from "../../firebase";
 import { truncateText } from "../../helpers/utilities";
+import {
+	BannerContent,
+	BannerContentContainer,
+	BannerInfoButton,
+	BannerOverview,
+	BannerPlayButton,
+	BrowsePageContainer,
+	BrowsePageHeader,
+	CarouselWrapper,
+	FeaturedBanner,
+	HeaderItem,
+	HeaderLink,
+	HeaderSection,
+	NetflixLogo,
+} from "./browse.styles";
 
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);
 	const [categoryIDs, setCategoryIDs] = useState([]);
 	const [featured, setFeatured] = useState();
+	const [loading, setLoading] = useState(true);
+	const [LazyCarousel, visibleComponents] = useLazyLoader(
+		"carousel",
+		Carousel,
+		CarouselWrapper
+	);
+
 	useEffect(() => {
 		const getTitles = async () => {
 			try {
@@ -55,7 +64,7 @@ const BrowsePage = () => {
 					alert("There was a problem loading content");
 				}
 			} catch (err) {
-				alert(err);
+				console.log(err);
 			}
 		};
 
@@ -72,7 +81,7 @@ const BrowsePage = () => {
 					alert("There was a problem loading content");
 				}
 			} catch (err) {
-				alert(err);
+				console.log(err);
 			}
 		};
 
@@ -80,17 +89,15 @@ const BrowsePage = () => {
 		getCategoryIDs();
 	}, []);
 
+	useEffect(() => {
+		if (categoryIDs.length && titles.length) setLoading(false);
+	}, [categoryIDs.length, titles.length]);
+
 	return (
 		<BrowsePageContainer>
 			<BrowsePageHeader>
 				<HeaderSection>
-					<NetflixLogo
-						style={{
-							maxHeight: "60%",
-							maxWidth: "30%",
-							marginRight: "3%",
-						}}
-					/>
+					<NetflixLogo />
 					<HeaderLink>Home</HeaderLink>
 					<HeaderLink>Series</HeaderLink>
 					<HeaderLink>Films</HeaderLink>
@@ -134,61 +141,72 @@ const BrowsePage = () => {
 				</HeaderSection>
 			</BrowsePageHeader>
 
-			{featured && (
-				<FeaturedBanner
-					$backgroundImage={
-						"https://image.tmdb.org/t/p/original" +
-						featured.poster_path
-					}
-				>
-					<BannerContentContainer>
-						<BannerContent>
-							<BannerOverview style={{}}>
-								{featured.overview &&
-									truncateText(
-										featured.overview,
-										200
-									)}
-								<div
-									style={{
-										display: "flex",
-										margin: "13px 0",
-									}}
-								>
-									<BannerPlayButton>
-										<FontAwesomeIcon
-											className="bannericon"
-											icon={faPlay}
-										/>
-										Play
-									</BannerPlayButton>
-									<BannerInfoButton>
-										<FontAwesomeIcon
-											className="bannericon"
-											icon={
-												faInfoCircle
-											}
-										/>
-										More info
-									</BannerInfoButton>
-								</div>
-							</BannerOverview>
-						</BannerContent>
-					</BannerContentContainer>
-				</FeaturedBanner>
+			{loading ? (
+				<LoadingAnimation />
+			) : (
+				<React.Fragment>
+					<FeaturedBanner
+						$backgroundImage={
+							"https://image.tmdb.org/t/p/original" +
+							featured.poster_path
+						}
+					>
+						<BannerContentContainer>
+							<BannerContent>
+								<BannerOverview style={{}}>
+									{featured.overview &&
+										truncateText(
+											featured.overview,
+											200
+										)}
+									<div
+										style={{
+											display: "flex",
+											margin: "13px 0",
+										}}
+									>
+										<BannerPlayButton>
+											<FontAwesomeIcon
+												className="bannericon"
+												icon={
+													faPlay
+												}
+											/>
+											Play
+										</BannerPlayButton>
+										<BannerInfoButton>
+											<FontAwesomeIcon
+												className="bannericon"
+												icon={
+													faInfoCircle
+												}
+											/>
+											More info
+										</BannerInfoButton>
+									</div>
+								</BannerOverview>
+							</BannerContent>
+						</BannerContentContainer>
+					</FeaturedBanner>
+					<GenreContext.Provider value={categoryIDs}>
+						{titles.length
+							? titles.map((el, idx) => (
+									<LazyCarousel
+										$titles={el}
+										$genreIDs={
+											categoryIDs
+										}
+										key={idx}
+										lazyKey={idx}
+										visibleComponents={
+											visibleComponents
+										}
+									/>
+							  ))
+							: null}
+					</GenreContext.Provider>
+				</React.Fragment>
 			)}
-
-			<GenreContext.Provider value={categoryIDs}>
-				{titles.length
-					? titles.map((el) => (
-							<Carousel
-								$titles={el}
-								$genreIDs={categoryIDs}
-								key={Math.max(Math.random())}
-							/>
-					  ))
-					: null}
-			</GenreContext.Provider>
 		</BrowsePageContainer>
 	);
 };

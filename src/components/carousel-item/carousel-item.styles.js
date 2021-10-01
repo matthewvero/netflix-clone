@@ -1,11 +1,12 @@
 /** @format */
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const CarouselItemBackground = styled.img`
 	width: 100%;
 	height: 100%;
+	min-height: 100%;
 	position: absolute;
 	object-fit: cover;
 	will-change: transform;
@@ -27,6 +28,7 @@ export const CarouselItemContent = styled.div`
 `;
 
 export const CarouselItemContainer = styled.div`
+	position: relative;
 	z-index: 0;
 	min-height: 100%;
 	min-width: calc(${(props) => props.$width}% - 4px);
@@ -82,7 +84,9 @@ export const CarouselButton = styled.div`
 	background-color: #2a2a2a;
 	border: #aaaaaa 1px solid;
 	text-align: middle;
-
+	&.right {
+		margin-left: auto;
+	}
 	&:hover {
 		border: #eeeeee 1px solid;
 	}
@@ -125,4 +129,18 @@ export const Rating = styled.span`
 	border: white solid 1px;
 	font-weight: 600;
 	font-size: 0.5rem;
+`;
+
+export const GenresContainer = styled.div`
+	height: 30%;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+`;
+
+export const GenreContentRow = styled.div`
+	width: 100%;
+	height: 30%;
+	display: flex;
+	align-items: center;
 `;

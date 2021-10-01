@@ -1,29 +1,48 @@
 /** @format */
 
 import styled from "styled-components/macro";
-
+import { ReactComponent as Logo } from "../../logo.svg";
 export const BrowsePageContainer = styled.div`
 	width: 100%;
 	min-height: 150vh;
 	background-color: #141414;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 `;
 
 export const BrowsePageHeader = styled.header`
 	z-index: 1000;
 	position: fixed;
-	top: 10px;
+	top: 0px;
 	left: 0;
 	width: 100%;
-	height: 6vh;
-	padding: 0 50px;
+	height: 100px;
+	padding: 10px 30px 0 30px;
 	box-sizing: border-box;
 	background-color: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	background: rgb(0, 0, 0);
+	background: -moz-linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.9206057422969187) 100%
+	);
+	background: -webkit-linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.9206057422969187) 100%
+	);
+	background: linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.9206057422969187) 100%
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
 	@media (min-width: 950px) {
-		height: 9vh;
+		height: 75px;
 	}
 `;
 
@@ -39,7 +58,7 @@ export const HeaderSection = styled.div`
 `;
 
 export const HeaderLink = styled.a`
-	margin: 0 3%;
+	margin: 0 2%;
 	height: auto;
 	width: auto;
 	font-size: 1rem;
@@ -77,15 +96,27 @@ export const FeaturedBanner = styled.div`
 		position: absolute;
 		bottom: 0;
 		left: 0;
+		background: rgb(0, 0, 0);
+		background: -moz-linear-gradient(
+			180deg,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 1) 100%
+		);
+		background: -webkit-linear-gradient(
+			180deg,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 1) 100%
+		);
 		background: linear-gradient(
 			180deg,
-			rgba(255, 255, 255, 0) 0%,
-			rgba(20, 20, 20, 1) 100%
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 1) 100%
 		);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
 	}
 	@media (min-width: 1100px) {
 		background-size: cover;
-		height: 750px;
+		height: 600px;
 	}
 `;
 
@@ -164,4 +195,22 @@ export const BannerInfoButton = styled(BannerButton)`
 	&:active {
 		background-color: rgba(109, 109, 110, 0.3);
 	}
+`;
+
+export const NetflixLogo = styled(Logo)`
+	max-height: 70%;
+	max-width: 20%;
+	margin-right: 3%;
+	@media (max-width: 1200px) {
+		max-width: 30%;
+	}
+	@media (max-width: 650px) {
+		max-width: 40%;
+	}
+`;
+
+export const CarouselWrapper = styled.div`
+	height: 300px;
+	width: auto;
+	margin: 100px 0;
 `;
