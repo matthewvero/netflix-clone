@@ -10,6 +10,11 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: black;
+}
+
+.noscroll {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {

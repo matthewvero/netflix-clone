@@ -86,13 +86,11 @@ export const FeaturedBanner = styled.div`
 	background-position: 0% 40%;
 	background-size: 120% auto;
 	background-repeat: no-repeat;
-
 	overflow: hidden;
-
 	&:after {
 		content: " ";
 		width: 100%;
-		height: 40%;
+		height: 60%;
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -113,6 +111,9 @@ export const FeaturedBanner = styled.div`
 			rgba(0, 0, 0, 1) 100%
 		);
 		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
+		@media (min-width: 1000px) {
+			height: 40%;
+		}
 	}
 	@media (min-width: 1100px) {
 		background-size: cover;
@@ -126,12 +127,12 @@ export const BannerContentContainer = styled.div`
 	left: 0;
 	height: 100%;
 	width: 100%;
-	z-index: 0;
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-	padding: 40px;
+	padding: 100px 40px;
+	align-items: center;
+	justify-content: flex-end;
 	box-sizing: border-box;
 	background: linear-gradient(
 		90deg,
@@ -141,14 +142,23 @@ export const BannerContentContainer = styled.div`
 		rgba(20, 20, 20, 0.3) 60%,
 		rgba(20, 20, 20, 1) 100%
 	);
+	@media (min-width: 800px) {
+		justify-content: center;
+		align-items: flex-start;
+	}
 `;
 
 export const BannerContent = styled.div`
-	height: 100%;
-	width: 35%;
+	height: auto;
+	width: 90%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	z-index: 1;
+
+	@media (min-width: 800px) {
+		width: 40%;
+	}
 	@media (min-width: 1000px) {
 		width: 30%;
 	}
@@ -162,13 +172,28 @@ export const BannerOverview = styled.h3`
 	height: 45%;
 `;
 
+export const BannerButtonContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 13px;
+	@media (min-width: 600px) {
+		flex-direction: row;
+	}
+`;
+
 const BannerButton = styled.button`
 	padding: 8px 20px;
 	border: none;
 	border-radius: 3px;
-	margin-right: 7px;
+
 	font-weight: 600;
 	cursor: pointer;
+	width: 100%;
+	margin: 3px 0;
+	@media (min-width: 600px) {
+		width: auto;
+		margin-right: 7px;
+	}
 	& .bannericon {
 		margin: 0 5px;
 	}
@@ -207,10 +232,4 @@ export const NetflixLogo = styled(Logo)`
 	@media (max-width: 650px) {
 		max-width: 40%;
 	}
-`;
-
-export const CarouselWrapper = styled.div`
-	height: 300px;
-	width: auto;
-	margin: 100px 0;
 `;

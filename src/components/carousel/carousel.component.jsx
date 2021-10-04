@@ -5,6 +5,7 @@ import {
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useCallback, useEffect, useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import { CSSTransition } from "react-transition-group";
 import { useThrottle } from "../../helpers/utilities";
 import CarouselItem from "../carousel-item/carousel-item.component";
@@ -32,6 +33,10 @@ const Carousel = ({ $titles, ...props }) => {
 	const [domNode, setDomNode] = useState(null);
 	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
+	const handlers = useSwipeable({
+		onSwipedLeft: () => throttledClickHandler(true),
+		onSwipedRight: () => throttledClickHandler(false),
+	});
 
 	// Preload images
 	useEffect(() => {
@@ -126,7 +131,7 @@ const Carousel = ({ $titles, ...props }) => {
 	const throttledClickHandler = useThrottle(clickHandler, 500);
 	if (!$titles) return null;
 	return (
-		<CarouselContainer $height={height}>
+		<CarouselContainer $height={height} {...handlers}>
 			{$titles && (
 				<CarouselTitle>{$titles.collectionName}</CarouselTitle>
 			)}

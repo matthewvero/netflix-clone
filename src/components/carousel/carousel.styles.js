@@ -76,13 +76,11 @@ export const CarouselContainer = styled.div`
 	position: relative;
 	height: ${(props) => props.$height}px;
 	width: 100vw;
-	margin: 50px 0;
 	transition: height 100ms linear;
+	z-index: 100;
+	user-select: none;
 	&:hover ${IndicatorGroup} {
 		opacity: 1;
-	}
-	&:hover {
-		z-index: 100;
 	}
 `;
 
@@ -128,4 +126,17 @@ export const CarouselTitle = styled.div`
 	width: auto;
 	color: white;
 	font-size: 20px;
+`;
+
+export const CarouselWrapper = styled.div`
+	width: auto;
+	margin: 5vw 0;
+	min-height: 200px;
+
+	@media (min-width: 400px) {
+		margin: 6vw 0;
+	}
+	@media (min-width: 700px) {
+		margin: 30px 0;
+	}
 `;

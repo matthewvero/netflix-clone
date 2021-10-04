@@ -16,6 +16,7 @@ import LoadingAnimation from "../../components/LoadingAnimation/loading-animatio
 import { db } from "../../firebase";
 import { truncateText } from "../../helpers/utilities";
 import {
+	BannerButtonContainer,
 	BannerContent,
 	BannerContentContainer,
 	BannerInfoButton,
@@ -23,13 +24,13 @@ import {
 	BannerPlayButton,
 	BrowsePageContainer,
 	BrowsePageHeader,
-	CarouselWrapper,
 	FeaturedBanner,
 	HeaderItem,
 	HeaderLink,
 	HeaderSection,
 	NetflixLogo,
 } from "./browse.styles";
+import { CarouselWrapper } from "../../components/carousel/carousel.styles";
 
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);
@@ -153,18 +154,13 @@ const BrowsePage = () => {
 					>
 						<BannerContentContainer>
 							<BannerContent>
-								<BannerOverview style={{}}>
+								<BannerOverview>
 									{featured.overview &&
 										truncateText(
 											featured.overview,
 											200
 										)}
-									<div
-										style={{
-											display: "flex",
-											margin: "13px 0",
-										}}
-									>
+									<BannerButtonContainer>
 										<BannerPlayButton>
 											<FontAwesomeIcon
 												className="bannericon"
@@ -183,7 +179,7 @@ const BrowsePage = () => {
 											/>
 											More info
 										</BannerInfoButton>
-									</div>
+									</BannerButtonContainer>
 								</BannerOverview>
 							</BannerContent>
 						</BannerContentContainer>

@@ -34,10 +34,6 @@ const useLazyLoader = (
 		observer.takeRecords();
 	}, [lazyClass, options]);
 
-	useEffect(() => {
-		console.log(visibleComponents);
-	}, [visibleComponents]);
-
 	const LazyComponent = ({ lazyKey, visibleComponents, ...props }) => {
 		const [load, setLoad] = useState(false);
 		useEffect(() => {

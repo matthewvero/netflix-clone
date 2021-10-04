@@ -35,12 +35,6 @@ export const StartPageHeader = styled.header`
 	box-sizing: border-box;
 	display: flex;
 	justify-content: space-between;
-	background: linear-gradient(
-		0deg,
-		rgba(255, 255, 255, 0) 0%,
-		rgba(0, 0, 0, 1) 78%,
-		rgba(0, 0, 0, 1) 100%
-	);
 `;
 
 export const SignInButton = styled(Button)`
