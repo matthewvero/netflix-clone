@@ -77,10 +77,13 @@ export const CarouselContainer = styled.div`
 	height: ${(props) => props.$height}px;
 	width: 100vw;
 	transition: height 100ms linear;
-	z-index: 100;
 	user-select: none;
+	z-index: 100;
 	&:hover ${IndicatorGroup} {
 		opacity: 1;
+	}
+	&:hover {
+		z-index: 1000;
 	}
 `;
 

@@ -71,23 +71,3 @@ export const SignupFormInputBox = styled(FormInputContainer)`
 export const InputContainer = styled.div`
 	position: relative;
 `;
-
-export const Button = styled.button`
-	height: 40px;
-	padding: 0 16px;
-	background-color: #e50914;
-	border: none;
-	border-radius: 2px;
-	margin-top: 4px;
-	font-family: Arial, Helvetica, sans-serif;
-	color: white;
-	font-size: 1rem;
-	cursor: pointer;
-
-	&:hover {
-		background-color: #f40612;
-	}
-	&:active {
-		background-color: #e50914;
-	}
-`;

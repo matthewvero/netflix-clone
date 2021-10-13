@@ -33,6 +33,8 @@ const Carousel = ({ $titles, ...props }) => {
 	const [domNode, setDomNode] = useState(null);
 	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
+
+	// Handle swipes on touchscreen devices
 	const handlers = useSwipeable({
 		onSwipedLeft: () => throttledClickHandler(true),
 		onSwipedRight: () => throttledClickHandler(false),
@@ -45,6 +47,7 @@ const Carousel = ({ $titles, ...props }) => {
 			img.src = el.poster_path;
 		});
 	}, [$titles.titles.results]);
+
 	// Change number of results based on view width
 	const resizeListener = useCallback(() => {
 		if (window.innerWidth < 500) {
@@ -94,6 +97,7 @@ const Carousel = ({ $titles, ...props }) => {
 			setPageArr(newArr);
 		}
 	}, [$titles, resultsPerPage]);
+
 	// Create array of refs to prevent ref forwarding error
 	useEffect(() => {
 		const newRefArr = pageArr.map(() => React.createRef(null));
@@ -130,6 +134,7 @@ const Carousel = ({ $titles, ...props }) => {
 
 	const throttledClickHandler = useThrottle(clickHandler, 500);
 	if (!$titles) return null;
+
 	return (
 		<CarouselContainer $height={height} {...handlers}>
 			{$titles && (

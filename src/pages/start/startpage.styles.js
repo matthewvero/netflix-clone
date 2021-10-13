@@ -1,11 +1,8 @@
 /** @format */
 
 import styled from "styled-components/macro";
-import {
-	Button,
-	InputBox,
-	InputContainer,
-} from "../../components/misc/inputs.styles";
+import { Button } from "../../components/buttons.styles";
+import { InputBox, InputContainer } from "../../components/misc/inputs.styles";
 import { SubHeading } from "../../components/misc/text.styles";
 
 export const StartPageCard = styled.section`

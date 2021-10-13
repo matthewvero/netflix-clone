@@ -1,23 +1,20 @@
 /** @format */
 
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 
 export const TitleModalContentContainer = styled.div`
 	position: fixed;
-
-	height: 90vh;
-	width: 95vw;
+	width: 98vw;
 	top: 5vh;
-	left: 2.5vw;
-	background-color: rgba(0, 0, 0, 0.7);
-	transition: all 200ms linear;
-	background-image: url(${(props) => props.background});
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
+	left: 1vw;
 	border-radius: 6px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	overflow: scroll;
+	transition: all 200ms linear;
+	will-change: all;
 	@media (min-width: 1000px) {
-		height: 90vh;
 		width: 60vw;
 		top: 10vh;
 		left: 20vw;
@@ -35,49 +32,42 @@ export const TitleModalContainer = styled.div`
 	place-items: center;
 	background-color: rgba(0, 0, 0, 0.5);
 	&.modal-enter ${TitleModalContentContainer} {
-		@media (min-width: 1000px) {
-			height: calc(
-				${(props) => (props.height ? props.height : 0)}px * 1.4
-			);
-			width: calc(
-				${(props) => (props.width ? props.width : 0)}px * 1.4
-			);
+		opacity: 0;
+		@media (min-width: 750px) {
+			height: calc(${(props) => props.height}px * 1.4);
+			width: calc(${(props) => props.width}px * 1.4);
 			left: ${(props) => (props.left ? props.left : 0)}px;
 			top: ${(props) => (props.top ? props.top : 0)}px;
+			opacity: 1;
 		}
 	}
 	&.modal-enter-active ${TitleModalContentContainer} {
-		@media (min-width: 1000px) {
+		@media (min-width: 750px) {
 			height: 90vh;
 			width: 60vw;
 			top: 10vh;
 			left: 20vw;
+			opacity: 1;
 		}
-		height: 90vh;
-		width: 95vw;
-		top: 5vh;
-		left: 2.5vw;
+		opacity: 1;
 	}
 	&.modal-exit ${TitleModalContentContainer} {
-		@media (min-width: 1000px) {
+		@media (min-width: 750px) {
 			height: 90vh;
 			width: 60vw;
 			top: 10vh;
 			left: 20vw;
 		}
-		height: 90vh;
-		width: 95vw;
-		top: 5vh;
-		left: 2.5vw;
+		opacity: 1;
 	}
 	&.modal-exit-active ${TitleModalContentContainer} {
-		@media (min-width: 1000px) {
-			height: calc(
-				${(props) => (props.height ? props.height : 0)}px
-			);
-			width: calc(${(props) => (props.width ? props.width : 0)}px);
+		opacity: 0;
+		@media (min-width: 750px) {
+			height: calc(${(props) => props.height}px);
+			width: calc(${(props) => props.width}px);
 			left: ${(props) => (props.left ? props.left : 0)}px;
 			top: ${(props) => (props.top ? props.top : 0)}px;
+			opacity: 1;
 		}
 	}
 `;
@@ -97,19 +87,27 @@ export const TitleModalCloseButton = styled.div`
 	cursor: pointer;
 `;
 
-export const TitleModalContent = styled.div`
-	position: relative;
-	top: 50%;
-	left: 0;
+export const TitleModalContentCard = styled.div`
 	width: 100%;
-	min-height: 50%;
+	height: auto;
+	padding: 5%;
+	box-sizing: border-box;
 	background-color: #141414;
-	&:before {
+`;
+
+export const TitleModalImageCard = styled(TitleModalContentCard)`
+	position: relative;
+	min-height: 70vh;
+	background-image: url(${(props) => props.background});
+	background-position: top;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	&:after {
 		content: "";
 		height: 20%;
 		width: 100%;
 		position: absolute;
-		top: -20%;
+		bottom: 0%;
 		left: 0;
 		background: rgb(0, 0, 0);
 		background: -moz-linear-gradient(
@@ -128,4 +126,41 @@ export const TitleModalContent = styled.div`
 			rgba(20, 20, 20, 1) 100%
 		);
 	}
+	& .title-card-button-container {
+		position: absolute;
+		bottom: 15%;
+		left: 5%;
+		height: auto;
+		width: auto;
+		display: flex;
+		justify-content: space-between;
+	}
+	& .title-card-icon {
+		font-size: 1.1rem;
+		color: white;
+	}
+`;
+
+const fadein = keyframes`
+	from {
+		opacity: 0;
+	} to {
+		visibility: visible;
+		opacity: 1;
+	}
+`;
+
+export const ContentFader = styled.div`
+	height: auto;
+	width: 100%;
+	visibility: hidden;
+	animation: ${fadein} 200ms 400ms linear 1 forwards;
+`;
+
+export const TitleModalInfoContainer = styled.div`
+	height: auto;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 3fr 2fr;
+	grid-template-rows: auto;
 `;

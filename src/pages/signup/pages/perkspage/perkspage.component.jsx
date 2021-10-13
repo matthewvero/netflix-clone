@@ -3,7 +3,8 @@
 import { faCheck, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router";
-import { Button } from "../../../../components/misc/inputs.styles";
+import { Button } from "../../../../components/buttons.styles";
+
 import { Heading } from "../../../../components/misc/text.styles";
 import { ListIcon } from "../../signuppage.styles";
 import { PerksContainer } from "./perkspage.styles";

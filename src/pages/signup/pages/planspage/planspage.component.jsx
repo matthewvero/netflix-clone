@@ -3,7 +3,7 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "../../../../components/misc/inputs.styles";
+
 import { Heading } from "../../../../components/misc/text.styles";
 import { UserContext } from "../../../../components/contexts";
 import { updateDocument } from "../../../../firebase.utils";
@@ -16,6 +16,7 @@ import {
 	TitleCell,
 } from "../perkspage/perkspage.styles";
 import { PlanFormContainer } from "./planspage.styles";
+import { Button } from "../../../../components/buttons.styles";
 
 export const PlansPage = ({ $ref }) => {
 	const [selectedPlan, setSelectedPlan] = useState(2);

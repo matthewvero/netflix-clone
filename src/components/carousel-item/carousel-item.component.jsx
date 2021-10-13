@@ -7,7 +7,7 @@ import {
 	faThumbsDown,
 	faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { functionsURL } from "../../firebase";
 import { GenreContext } from "../contexts";
@@ -16,12 +16,12 @@ import {
 	CarouselItemContainer,
 	CarouselItemContent,
 	CarouselItemBackground,
-	CarouselButton,
-	CarouselButtonIcon,
 	Rating,
 	GenresContainer,
 	GenreContentRow,
 } from "./carousel-item.styles";
+import { CircleButton, CircleButtonIcon } from "../buttons.styles";
+import TitleMetaData from "../title-meta-data/title-meta-data.component";
 
 const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const genreIDs = useContext(GenreContext);
@@ -29,7 +29,8 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const [info, setInfo] = useState({});
 	const [modalVisible, setModalVisible] = useState(false);
 	const domNode = document.getElementById("App");
-	const [itemRef, setItemRef] = useState(null);
+	const [itemRef, setItemRef] = useState();
+	const modalRef = useRef();
 	const [imgLoaded, setImgLoaded] = useState(false);
 
 	useEffect(() => {
@@ -72,18 +73,6 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 		}
 	};
 
-	const minToHourConverter = (minutes) => {
-		let str = "";
-		const hours = Math.floor(minutes / 60);
-		const mins = minutes % 60;
-		if (hours > 0) {
-			str += `${hours}h`;
-		}
-		if (mins > 0) {
-			str += ` ${mins}m`;
-		}
-		return str;
-	};
 	if (!$title) return null;
 	return (
 		<CarouselItemContainer
@@ -94,64 +83,26 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 		>
 			<CarouselItemContent>
 				<GenreContentRow>
-					<CarouselButton style={{ marginLeft: "0" }}>
-						<CarouselButtonIcon icon={faPlay} />
-					</CarouselButton>
-					<CarouselButton>
-						<CarouselButtonIcon icon={faPlus} />
-					</CarouselButton>
-					<CarouselButton>
-						<CarouselButtonIcon icon={faThumbsUp} />
-					</CarouselButton>
-					<CarouselButton>
-						<CarouselButtonIcon icon={faThumbsDown} />
-					</CarouselButton>
-					<CarouselButton
+					<CircleButton style={{ marginLeft: "0" }}>
+						<CircleButtonIcon icon={faPlay} />
+					</CircleButton>
+					<CircleButton>
+						<CircleButtonIcon icon={faPlus} />
+					</CircleButton>
+					<CircleButton>
+						<CircleButtonIcon icon={faThumbsUp} />
+					</CircleButton>
+					<CircleButton>
+						<CircleButtonIcon icon={faThumbsDown} />
+					</CircleButton>
+					<CircleButton
 						className="right"
 						onClick={() => setModalVisible(true)}
 					>
-						<CarouselButtonIcon icon={faChevronDown} />
-					</CarouselButton>
+						<CircleButtonIcon icon={faChevronDown} />
+					</CircleButton>
 				</GenreContentRow>
-				<div
-					style={{
-						height: "30%",
-						width: "100%",
-						display: "flex",
-						flexWrap: "wrap",
-						alignItems: "center",
-					}}
-				>
-					{info.releaseInfo &&
-						info.releaseInfo.hasOwnProperty(
-							"iso_3166_1"
-						) && (
-							<Rating>
-								{info.releaseInfo
-									.release_dates[0]
-									.certification === "12A"
-									? "12"
-									: info.releaseInfo
-											.release_dates[0]
-											.certification}
-							</Rating>
-						)}
-					{info.titleInfo && (
-						<p
-							style={{
-								display: "inline-block",
-								color: "white",
-								fontSize: "0.7rem",
-								margin: "0 10px",
-								transform: "translateY(1px)",
-							}}
-						>
-							{minToHourConverter(
-								info.titleInfo.runtime
-							)}
-						</p>
-					)}
-				</div>
+				<TitleMetaData info={info} />
 				<GenresContainer>
 					{genres.map((el, idx) => (
 						<React.Fragment key={idx}>
@@ -176,13 +127,16 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 				classNames={"modal"}
 				timeout={200}
 				unmountOnExit
+				nodeRef={modalRef}
 			>
 				<TitleModal
 					$title={$title}
+					info={info}
 					itemRef={itemRef}
 					modalVisible={modalVisible}
 					setModalVisible={setModalVisible}
 					domNode={domNode}
+					transitionRef={modalRef}
 				/>
 			</CSSTransition>
 		</CarouselItemContainer>

@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
+import { Button } from "../../../../components/buttons.styles";
 import {
-	Button,
 	InputBox,
 	InputLabel,
 	SignupFormInputBox,

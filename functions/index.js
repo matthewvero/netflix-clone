@@ -118,6 +118,15 @@ const sendRequest = async (query, method) => {
 	}
 };
 
+app.get("/tmdb/*", async (req, res) => {
+	try {
+		const response = await sendRequest(req.params[0]);
+		res.send(response);
+	} catch (err) {
+		res.send(err);
+	}
+});
+
 app.get("/films", async (req, res) => {
 	try {
 		const films = await sendRequest("trending/movie/week");

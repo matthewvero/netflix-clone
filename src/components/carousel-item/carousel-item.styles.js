@@ -1,7 +1,7 @@
 /** @format */
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 
 export const CarouselItemBackground = styled.img`
 	width: 100%;
@@ -14,17 +14,32 @@ export const CarouselItemBackground = styled.img`
 	border-radius: 6px;
 `;
 
+const slideDown = keyframes`
+	from {
+		transform: translateY(-50%);
+	}
+	to {
+		transform: translateY(0);
+	}
+`;
+
 export const CarouselItemContent = styled.div`
+	position: absolute;
+	top: 75%;
+	left: 0;
 	width: 100%;
-	height: 35%;
-	display: flex;
-	flex-direction: column;
+	place-items: center;
+	grid-template-columns: auto;
+	grid-auto-rows: auto;
+	gap: 5px;
 	padding: 4%;
 	box-sizing: border-box;
 	display: none;
-	&:hover {
-		display: block;
-	}
+	border-radius: 6px;
+	background-color: #141414;
+	transform: scaleY(0);
+	transform-origin: top;
+	animation: ${slideDown} 200ms 300ms linear 1 forwards;
 `;
 
 export const CarouselItemContainer = styled.div`
@@ -37,7 +52,6 @@ export const CarouselItemContainer = styled.div`
 	flex-direction: column-reverse;
 	border-radius: 6px;
 	color: white;
-	background-color: #141414;
 	transition: z-index 1ms 300ms linear, transform 200ms linear;
 	transform-origin: ${(props) => {
 		if (props.$left) return "left";
@@ -46,9 +60,10 @@ export const CarouselItemContainer = styled.div`
 	}};
 	will-change: transform;
 	cursor: pointer;
+	background-color: #141414;
 	&:hover {
 		transform: scale(1.4);
-		z-index: 100;
+		z-index: 1000;
 		transition: transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
 		box-shadow: 0 0 10px #101010;
@@ -57,10 +72,10 @@ export const CarouselItemContainer = styled.div`
 	&:hover ${CarouselItemBackground} {
 		transition: transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
-		transform: translateY(-35%);
+		transform: translateY(-25%);
 	}
 	&:hover ${CarouselItemContent} {
-		display: block;
+		display: grid;
 	}
 	& span:after {
 		content: "•";
@@ -73,32 +88,10 @@ export const CarouselItemContainer = styled.div`
 	}
 `;
 
-export const CarouselButton = styled.div`
-	height: 20px;
-	width: 20px;
-	margin: 1.5%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	background-color: #2a2a2a;
-	border: #aaaaaa 1px solid;
-	text-align: middle;
-	&.right {
-		margin-left: auto;
-	}
-	&:hover {
-		border: #eeeeee 1px solid;
-	}
-`;
-
-export const CarouselButtonIcon = styled(FontAwesomeIcon)`
-	font-size: 0.5rem;
-`;
-
 export const Rating = styled.span`
-	height: 10px;
-	width: 10px;
+	min-height: 10px;
+	min-width: 10px;
+	color: white;
 	background-color: ${(props) => {
 		switch (props.children) {
 			case "U":
@@ -119,7 +112,7 @@ export const Rating = styled.span`
 			case "18":
 				return "red";
 			default:
-				return "white";
+				return "transparent";
 		}
 	}};
 	display: grid;
@@ -132,7 +125,6 @@ export const Rating = styled.span`
 `;
 
 export const GenresContainer = styled.div`
-	height: 30%;
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
@@ -140,7 +132,7 @@ export const GenresContainer = styled.div`
 
 export const GenreContentRow = styled.div`
 	width: 100%;
-	height: 30%;
+	height: auto;
 	display: flex;
 	align-items: center;
 `;

@@ -19,9 +19,7 @@ import {
 	BannerButtonContainer,
 	BannerContent,
 	BannerContentContainer,
-	BannerInfoButton,
 	BannerOverview,
-	BannerPlayButton,
 	BrowsePageContainer,
 	BrowsePageHeader,
 	FeaturedBanner,
@@ -31,6 +29,10 @@ import {
 	NetflixLogo,
 } from "./browse.styles";
 import { CarouselWrapper } from "../../components/carousel/carousel.styles";
+import {
+	BannerInfoButton,
+	BannerPlayButton,
+} from "../../components/buttons.styles";
 
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);

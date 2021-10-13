@@ -12,7 +12,7 @@ export const BrowsePageContainer = styled.div`
 `;
 
 export const BrowsePageHeader = styled.header`
-	z-index: 1000;
+	z-index: 100000;
 	position: fixed;
 	top: 0px;
 	left: 0;
@@ -173,52 +173,13 @@ export const BannerOverview = styled.h3`
 `;
 
 export const BannerButtonContainer = styled.div`
-	display: flex;
-	flex-direction: column;
 	margin-top: 13px;
-	@media (min-width: 600px) {
-		flex-direction: row;
-	}
-`;
-
-const BannerButton = styled.button`
-	padding: 8px 20px;
-	border: none;
-	border-radius: 3px;
-
-	font-weight: 600;
-	cursor: pointer;
 	width: 100%;
-	margin: 3px 0;
+	display: grid;
+	place-items: center;
+	grid-template-columns: auto auto;
+	grid-gap: 20%;
 	@media (min-width: 600px) {
-		width: auto;
-		margin-right: 7px;
-	}
-	& .bannericon {
-		margin: 0 5px;
-	}
-`;
-
-export const BannerPlayButton = styled(BannerButton)`
-	background-color: white;
-	color: black;
-	&:hover {
-		background-color: rgba(255, 255, 255, 0.75);
-	}
-	&:active {
-		background-color: rgba(255, 255, 255, 0.5);
-	}
-`;
-
-export const BannerInfoButton = styled(BannerButton)`
-	background-color: rgba(109, 109, 110, 0.7);
-	color: white;
-
-	&:hover {
-		background-color: rgba(109, 109, 110, 0.4);
-	}
-	&:active {
-		background-color: rgba(109, 109, 110, 0.3);
 	}
 `;
 

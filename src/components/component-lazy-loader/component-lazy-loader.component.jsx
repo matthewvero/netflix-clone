@@ -4,27 +4,33 @@ import React, { useEffect, useState } from "react";
 
 const useLazyLoader = (
 	lazyClass,
-	Component,
+	Components,
 	Wrapper,
 	options = {
 		root: null,
 		rootMargin: "0px 0px 400px 0px",
-		threshold: [0.01, 0.3, 0.7, 1.0],
+		threshold: 0,
 	},
 	ignore = [0, 1]
 ) => {
 	// Add components that we want to be loaded immediately.
 	const [visibleComponents, setVisibleComponents] = useState([...ignore]);
 
+	// Init intersection observers for all elements with lazy class.
 	useEffect(() => {
 		const handleLazyLoad = (e) => {
-			const id = parseInt(e[0].target.dataset.lazyId);
-			if (e[0].isIntersecting && !visibleComponents.includes(id)) {
-				setVisibleComponents((visibleComponents) => [
-					...visibleComponents,
-					id,
-				]);
-			}
+			e.forEach((el) => {
+				const id = parseInt(el.target.dataset.lazyId);
+				if (
+					!visibleComponents.includes(id) &&
+					el.isIntersecting
+				) {
+					setVisibleComponents((visibleComponents) => [
+						...visibleComponents,
+						id,
+					]);
+				}
+			});
 		};
 		const observer = new IntersectionObserver(handleLazyLoad, options);
 		const components = document.querySelectorAll(`.${lazyClass}`);
@@ -32,9 +38,19 @@ const useLazyLoader = (
 			observer.observe(el);
 		});
 		observer.takeRecords();
-	}, [lazyClass, options]);
+		return () => {
+			components.forEach((el) => {
+				observer.unobserve(el);
+			});
+		};
+	}, [lazyClass, options, visibleComponents]);
 
-	const LazyComponent = ({ lazyKey, visibleComponents, ...props }) => {
+	const LazyComponents = ({
+		lazyKey,
+		visibleComponents,
+		ignore,
+		...props
+	}) => {
 		const [load, setLoad] = useState(false);
 		useEffect(() => {
 			visibleComponents.includes(lazyKey) && setLoad(true);
@@ -42,12 +58,12 @@ const useLazyLoader = (
 
 		return (
 			<Wrapper className={lazyClass} data-lazy-id={lazyKey}>
-				{load && <Component {...props} />}
+				{load && <Components {...props} />}
 			</Wrapper>
 		);
 	};
 
-	return [LazyComponent, visibleComponents];
+	return [LazyComponents, visibleComponents];
 };
 
 export default useLazyLoader;

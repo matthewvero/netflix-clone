@@ -32,3 +32,16 @@ export const truncateText = (str, maxLength) => {
 		);
 	}
 };
+
+export const minToHourConverter = (minutes) => {
+	let str = "";
+	const hours = Math.floor(minutes / 60);
+	const mins = minutes % 60;
+	if (hours > 0) {
+		str += `${hours}h`;
+	}
+	if (mins > 0) {
+		str += ` ${mins}m`;
+	}
+	return str;
+};
