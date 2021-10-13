@@ -49,9 +49,9 @@ export const SignupForm = ({ formApi, $ref }) => {
 				<ValidatedEmail api={formApi} />
 				<InputLabel>Email</InputLabel>
 			</SignupFormInputBox>
-			{state.errors["email"] &&
+			{
 				state.interacted["email"] &&
-				state.errors["email"].map((el, idx) => (
+				state.errors["email"]?.map((el, idx) => (
 					<p key={idx} className="inputerror">
 						{el}
 					</p>
@@ -60,9 +60,9 @@ export const SignupForm = ({ formApi, $ref }) => {
 				<ValidatedPassword api={formApi} />
 				<InputLabel>Add a password</InputLabel>
 			</SignupFormInputBox>
-			{state.errors["password"] &&
+			{
 				state.interacted["password"] &&
-				state.errors["password"].map((el, idx) => (
+				state.errors["password"]?.map((el, idx) => (
 					<p key={idx} className="inputerror">
 						{el}
 					</p>

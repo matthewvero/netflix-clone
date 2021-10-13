@@ -189,9 +189,7 @@ export const withValidation = (WrappedComponent, name, type, rules = {}) => {
 				type={type}
 				value={state.values[name] || ""}
 				className={`${
-					state.values[name] &&
-					state.values[name].length &&
-					"populated"
+					state.values[name]?.length && "populated"
 				} ${
 					state.errors[name] &&
 					state.interacted[name] &&

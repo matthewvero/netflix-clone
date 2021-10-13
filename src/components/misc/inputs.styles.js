@@ -22,12 +22,6 @@ export const FormInputContainer = styled.div`
 	flex-wrap: wrap;
 	justify-content: center;
 	box-sizing: border-box;
-	@media (max-width: 950px) {
-		width: 500px;
-	}
-	@media (max-width: 550px) {
-		width: 400px;
-	}
 `;
 
 export const InputBox = styled.input`

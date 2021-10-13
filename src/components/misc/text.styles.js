@@ -30,6 +30,7 @@ export const SubHeading = styled.h2`
 `;
 
 export const EmailFormTitle = styled.h3`
+	width: 100%;
 	font-size: 23px;
 	margin-bottom: 0;
 	color: white;

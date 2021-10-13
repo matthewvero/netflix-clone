@@ -133,7 +133,7 @@ const TitleModal = ({
 											"10px",
 									}}
 								>
-									{$title.overview}
+									{$title?.overview}
 								</p>
 								<div
 									style={{
@@ -157,7 +157,7 @@ const TitleModal = ({
 										>
 											Genres:{" "}
 										</span>
-										{info.titleInfo.genres.map(
+										{info?.titleInfo?.genres?.map(
 											(el) => (
 												<span className="genre">{`${el.name}, `}</span>
 											)
@@ -172,7 +172,7 @@ const TitleModal = ({
 											Cast:{" "}
 										</span>
 
-										{cast.map((el) => (
+										{cast?.map((el) => (
 											<span className="genre">{`${el.name}, `}</span>
 										))}
 									</div>

@@ -5,10 +5,10 @@ import { minToHourConverter } from "../../helpers/utilities";
 import { GenreContentRow, Rating } from "../carousel-item/carousel-item.styles";
 import { MetaDataText } from "./title-meta-data.styles";
 
-const TitleMetaData = ({ info, large }) => {
+const TitleMetaData = ({ info }) => {
 	return (
 		<GenreContentRow>
-			{info.releaseInfo &&
+			{info?.releaseInfo &&
 				info.releaseInfo.hasOwnProperty("iso_3166_1") && (
 					<Rating>
 						{info.releaseInfo.release_dates[0]
@@ -18,7 +18,7 @@ const TitleMetaData = ({ info, large }) => {
 									.certification}
 					</Rating>
 				)}
-			{info.titleInfo && (
+			{info?.titleInfo && (
 				<MetaDataText>
 					{minToHourConverter(info.titleInfo.runtime)}
 				</MetaDataText>

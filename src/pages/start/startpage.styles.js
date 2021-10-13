@@ -28,10 +28,13 @@ export const StartPageCard = styled.section`
 export const StartPageHeader = styled.header`
 	height: 90px;
 	width: 100%;
-	padding: 20px 3% 0 3%;
+	padding: 20px 6% 0 6%;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: space-between;
+	@media (min-width: 750px) {
+		padding: 20px 3% 0 3%;
+	}
 `;
 
 export const SignInButton = styled(Button)`
@@ -80,7 +83,7 @@ export const StartPageEmailInput = styled(InputBox)`
 `;
 
 export const StartPageInputContainer = styled(InputContainer)`
-	width: 100%;
+	width: 80%;
 	@media (min-width: 950px) {
 		width: 70%;
 	}

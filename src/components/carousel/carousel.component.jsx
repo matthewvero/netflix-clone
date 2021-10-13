@@ -42,7 +42,7 @@ const Carousel = ({ $titles, ...props }) => {
 
 	// Preload images
 	useEffect(() => {
-		$titles.titles.results.forEach((el) => {
+		$titles?.titles?.results?.forEach((el) => {
 			const img = new Image();
 			img.src = el.poster_path;
 		});

@@ -94,6 +94,7 @@ const StartPage = ({ history }) => {
 							display: "flex",
 							flexDirection: "column",
 							alignItems: "center",
+							maxWidth: '100%'
 						}}
 						onSubmit={(e) => {
 							e.preventDefault();

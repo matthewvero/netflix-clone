@@ -44,6 +44,7 @@ export const Button = styled.button`
 	cursor: pointer;
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 	&:hover {
 		background-color: #f40612;
 	}

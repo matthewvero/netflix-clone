@@ -16,7 +16,6 @@ import {
 	CarouselItemContainer,
 	CarouselItemContent,
 	CarouselItemBackground,
-	Rating,
 	GenresContainer,
 	GenreContentRow,
 } from "./carousel-item.styles";

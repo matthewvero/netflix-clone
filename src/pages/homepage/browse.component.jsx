@@ -157,7 +157,7 @@ const BrowsePage = () => {
 						<BannerContentContainer>
 							<BannerContent>
 								<BannerOverview>
-									{featured.overview &&
+									{featured?.overview &&
 										truncateText(
 											featured.overview,
 											200
@@ -187,8 +187,8 @@ const BrowsePage = () => {
 						</BannerContentContainer>
 					</FeaturedBanner>
 					<GenreContext.Provider value={categoryIDs}>
-						{titles.length
-							? titles.map((el, idx) => (
+						{
+							titles?.map((el, idx) => (
 									<LazyCarousel
 										$titles={el}
 										$genreIDs={
@@ -201,7 +201,7 @@ const BrowsePage = () => {
 										}
 									/>
 							  ))
-							: null}
+						}
 					</GenreContext.Provider>
 				</React.Fragment>
 			)}
