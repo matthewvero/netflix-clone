@@ -19,13 +19,16 @@ export const FormContainer = styled.div`
 
 export const FormPage = styled.form`
 	height: 100%;
-	width: 500px;
+	max-width: 100%;
 	padding: 0 20px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-start;
+	@media (min-width: 750px) {
+		width: 500px;
+	}
 	&.forward-enter {
 		opacity: 0;
 		transform: translateX(50%);

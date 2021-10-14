@@ -10,6 +10,7 @@ import { useAuthListener } from "./hooks/auth-hooks";
 import BrowsePage from "./pages/homepage/browse.component";
 import SignupPage from "./pages/signup/signuppage.component";
 import StartPage from "./pages/start/startpage.component";
+import SigninPage from "./pages/signinpage/signinpage.component";
 
 function App() {
 	const user = useAuthListener();
@@ -42,6 +43,17 @@ function App() {
 					value={user}
 				>
 					<SignupPage />
+				</ContextRoute>
+				<ContextRoute
+					path="/signin"
+					contextComponent={UserContext}
+					value={user}
+				>
+					{user ? (
+						<Redirect to="/browse" />
+					) : (
+						<SigninPage />
+					)}
 				</ContextRoute>
 			</BrowserRouter>
 		</div>

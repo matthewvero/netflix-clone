@@ -21,16 +21,17 @@ import {
 } from "./carousel-item.styles";
 import { CircleButton, CircleButtonIcon } from "../buttons.styles";
 import TitleMetaData from "../title-meta-data/title-meta-data.component";
+import AttributeList from "../attribute-list/attribute-list.component";
 
 const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const genreIDs = useContext(GenreContext);
 	const [genres, setGenres] = useState([]);
 	const [info, setInfo] = useState({});
 	const [modalVisible, setModalVisible] = useState(false);
-	const domNode = document.getElementById("App");
 	const [itemRef, setItemRef] = useState();
-	const modalRef = useRef();
 	const [imgLoaded, setImgLoaded] = useState(false);
+	const domNode = document.getElementById("App");
+	const modalRef = useRef();
 
 	useEffect(() => {
 		if (genreIDs?.length && $title?.genre_ids?.length) {
@@ -103,18 +104,7 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 				</GenreContentRow>
 				<TitleMetaData info={info} />
 				<GenresContainer>
-					{genres.map((el, idx) => (
-						<React.Fragment key={idx}>
-							<span
-								style={{
-									color: "white",
-									fontSize: "0.7rem",
-								}}
-							>
-								{el.name}
-							</span>
-						</React.Fragment>
-					))}
+					<AttributeList items={genres} separator=' •' small/>
 				</GenresContainer>
 			</CarouselItemContent>
 			<CarouselItemBackground

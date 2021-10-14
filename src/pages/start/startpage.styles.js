@@ -66,7 +66,7 @@ export const OurStoryContainer = styled.div`
 `;
 
 export const StartPageEmailInput = styled(InputBox)`
-	@media (max-width: 750px) {
+	@media (max-width: 950px) {
 		height: 48px;
 	}
 	&.error {
@@ -92,6 +92,7 @@ export const StartPageInputContainer = styled(InputContainer)`
 export const StartPageButton = styled(Button)`
 	margin-top: 10px;
 	font-weight: 400;
+	height: 48px;
 	@media (min-width: 950px) {
 		width: 30%;
 		height: 60px;

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button } from "../../../../components/buttons.styles";
+import FormErrors from "../../../../components/form-errors/form-errors.component";
 import {
 	InputBox,
 	InputLabel,
@@ -49,25 +50,12 @@ export const SignupForm = ({ formApi, $ref }) => {
 				<ValidatedEmail api={formApi} />
 				<InputLabel>Email</InputLabel>
 			</SignupFormInputBox>
-			{
-				state.interacted["email"] &&
-				state.errors["email"]?.map((el, idx) => (
-					<p key={idx} className="inputerror">
-						{el}
-					</p>
-				))}
+			<FormErrors state={state} inputName='email'/>
 			<SignupFormInputBox>
 				<ValidatedPassword api={formApi} />
 				<InputLabel>Add a password</InputLabel>
 			</SignupFormInputBox>
-			{
-				state.interacted["password"] &&
-				state.errors["password"]?.map((el, idx) => (
-					<p key={idx} className="inputerror">
-						{el}
-					</p>
-				))}
-
+			<FormErrors state={state} inputName='password'/>
 			<Button type="submit" className="signupbutton">
 				{" "}
 				Next{" "}

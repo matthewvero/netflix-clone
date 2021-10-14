@@ -11,12 +11,14 @@ import reactDom from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	ContentFader,
+	TitleMetaDataContainer,
 	TitleModalCloseButton,
 	TitleModalContainer,
 	TitleModalContentCard,
 	TitleModalContentContainer,
 	TitleModalImageCard,
 	TitleModalInfoContainer,
+	TitleOverview,
 } from "./title-modal.styles";
 import {
 	BannerPlayButton,
@@ -25,6 +27,7 @@ import {
 } from "../buttons.styles";
 import TitleMetaData from "../title-meta-data/title-meta-data.component";
 import { functionsURL } from "../../firebase";
+import AttributeList from "../attribute-list/attribute-list.component";
 
 const TitleModal = ({
 	$title,
@@ -65,8 +68,8 @@ const TitleModal = ({
 		<TitleModalContainer
 			top={itemRef && itemRef.getBoundingClientRect().top}
 			left={itemRef && itemRef.getBoundingClientRect().left}
-			width={itemRef && itemRef.offsetWidth}
-			height={itemRef && itemRef.offsetHeight}
+			width={itemRef && itemRef.offsetWidth * 1.4}
+			height={itemRef && itemRef.offsetHeight * 1.4}
 			ref={transitionRef}
 		>
 			<TitleModalContentContainer>
@@ -119,67 +122,30 @@ const TitleModal = ({
 					)}
 				</TitleModalImageCard>
 				{modalVisible && (
-					<TitleModalContentCard>
-						<ContentFader>
+					<ContentFader>
+						<TitleModalContentCard>
 							<TitleModalInfoContainer>
 								<TitleMetaData info={info} />
-								<p
-									style={{
-										color: "white",
-										textAlign: "left",
-										fontSize: "1.1rem",
-										gridColumn: "1/2",
-										paddingRight:
-											"10px",
-									}}
-								>
+								<TitleOverview>
 									{$title?.overview}
-								</p>
-								<div
-									style={{
-										height: "100%",
-										color: "white",
-										gridRow: "1/3",
-										gridColumn: "2/3",
-										textAlign: "left",
-									}}
-								>
-									<div
-										style={{
-											marginBottom:
-												"10px",
-										}}
-									>
-										<span
-											style={{
-												color: "#888888",
-											}}
-										>
-											Genres:{" "}
-										</span>
-										{info?.titleInfo?.genres?.map(
-											(el) => (
-												<span className="genre">{`${el.name}, `}</span>
-											)
-										)}
-									</div>
-									<div>
-										<span
-											style={{
-												color: "#888888",
-											}}
-										>
-											Cast:{" "}
-										</span>
-
-										{cast?.map((el) => (
-											<span className="genre">{`${el.name}, `}</span>
-										))}
-									</div>
-								</div>
+								</TitleOverview>
+								<TitleMetaDataContainer>
+									<AttributeList
+										items={
+											info
+												?.titleInfo
+												?.genres
+										}
+										title={"Genres"}
+									/>
+									<AttributeList
+										items={cast}
+										title={"Cast"}
+									/>
+								</TitleMetaDataContainer>
 							</TitleModalInfoContainer>
-						</ContentFader>
-					</TitleModalContentCard>
+						</TitleModalContentCard>
+					</ContentFader>
 				)}
 			</TitleModalContentContainer>
 		</TitleModalContainer>,

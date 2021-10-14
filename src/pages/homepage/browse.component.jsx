@@ -20,6 +20,7 @@ import {
 	BannerContent,
 	BannerContentContainer,
 	BannerOverview,
+	BannerTitle,
 	BrowsePageContainer,
 	BrowsePageHeader,
 	FeaturedBanner,
@@ -157,11 +158,20 @@ const BrowsePage = () => {
 						<BannerContentContainer>
 							<BannerContent>
 								<BannerOverview>
-									{featured?.overview &&
-										truncateText(
+
+									{featured && (
+										<>
+										<BannerTitle>{featured.name}</BannerTitle>
+									
+											{
+											truncateText(
 											featured.overview,
 											200
-										)}
+											)}
+										
+										</>
+										)
+									}
 									<BannerButtonContainer>
 										<BannerPlayButton>
 											<FontAwesomeIcon

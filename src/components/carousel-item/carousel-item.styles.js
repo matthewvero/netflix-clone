@@ -14,15 +14,6 @@ export const CarouselItemBackground = styled.img`
 	border-radius: 6px;
 `;
 
-const slideDown = keyframes`
-	from {
-		transform: translateY(-50%);
-	}
-	to {
-		transform: translateY(0);
-	}
-`;
-
 export const CarouselItemContent = styled.div`
 	position: absolute;
 	top: 75%;
@@ -37,9 +28,7 @@ export const CarouselItemContent = styled.div`
 	display: none;
 	border-radius: 6px;
 	background-color: #141414;
-	transform: scaleY(0);
 	transform-origin: top;
-	animation: ${slideDown} 200ms 300ms linear 1 forwards;
 `;
 
 export const CarouselItemContainer = styled.div`

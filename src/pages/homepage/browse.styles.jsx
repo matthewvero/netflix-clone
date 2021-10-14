@@ -79,7 +79,6 @@ export const FeaturedBanner = styled.div`
 	position: relative;
 	width: 100%;
 	height: 500px;
-
 	margin-bottom: -10%;
 	box-sizing: border-box;
 	background-image: url(${(props) => props.$backgroundImage});
@@ -123,7 +122,7 @@ export const FeaturedBanner = styled.div`
 
 export const BannerContentContainer = styled.div`
 	position: absolute;
-	bottom: 0;
+	bottom: 50px;
 	left: 0;
 	height: 100%;
 	width: 100%;
@@ -167,21 +166,30 @@ export const BannerContent = styled.div`
 export const BannerOverview = styled.h3`
 	color: white;
 	font-size: 0.9rem;
-	text-align: left;
 	margin: 0;
 	height: 45%;
+	@media(min-width: 800px) {
+		text-align: left;
+	}
 `;
 
 export const BannerButtonContainer = styled.div`
 	margin-top: 13px;
 	width: 100%;
-	display: grid;
-	place-items: center;
-	grid-template-columns: auto auto;
-	grid-gap: 20%;
-	@media (min-width: 600px) {
+	display: flex;
+	justify-content: center;
+	gap: 20%;
+	@media(min-width: 800px) {
+		justify-content: flex-start;
+		gap: 0;
 	}
 `;
+
+export const BannerTitle = styled.h2`
+	font-size: 3rem;
+	margin: 0;
+
+`
 
 export const NetflixLogo = styled(Logo)`
 	max-height: 70%;
@@ -194,3 +202,4 @@ export const NetflixLogo = styled(Logo)`
 		max-width: 40%;
 	}
 `;
+

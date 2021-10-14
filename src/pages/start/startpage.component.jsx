@@ -80,7 +80,7 @@ const StartPage = ({ history }) => {
 							paddingTop: "8px",
 						}}
 					/>
-					<SignInButton>Sign In</SignInButton>
+					<SignInButton onClick={() => history.push('/signin')}>Sign In</SignInButton>
 				</StartPageHeader>
 				<OurStoryContainer>
 					<Heading>
@@ -127,13 +127,7 @@ const StartPage = ({ history }) => {
 										Email address
 									</InputLabel>
 								</InputContainer>
-								<div
-									style={{
-										position: "absolute",
-										bottom: "-75%",
-										height: "50px",
-									}}
-								>
+								<div>
 									{state.errors["email"] &&
 										state.interacted[
 											"email"

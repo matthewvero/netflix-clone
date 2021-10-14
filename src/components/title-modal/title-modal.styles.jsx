@@ -3,20 +3,15 @@
 import styled, { keyframes } from "styled-components/macro";
 
 export const TitleModalContentContainer = styled.div`
-	position: fixed;
 	width: 98vw;
-	top: 5vh;
-	left: 1vw;
-	border-radius: 6px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	overflow: scroll;
-	transition: all 200ms linear;
 	will-change: all;
+	overflow: visible;
+	transition: all 200ms linear;
 	@media (min-width: 1000px) {
 		width: 60vw;
-		top: 10vh;
 		left: 20vw;
 	}
 `;
@@ -28,43 +23,52 @@ export const TitleModalContainer = styled.div`
 	left: 0;
 	height: 100vh;
 	width: 100vw;
+	box-sizing: border-box;
 	display: grid;
 	place-items: center;
+	padding: vw;
+	overflow-y: scroll;
 	background-color: rgba(0, 0, 0, 0.5);
+	@media(min-width: 1000px){
+		padding: 5%;
+	}
+	
 	&.modal-enter ${TitleModalContentContainer} {
 		opacity: 0;
 		@media (min-width: 750px) {
-			height: calc(${(props) => props.height}px * 1.4);
-			width: calc(${(props) => props.width}px * 1.4);
-			left: ${(props) => (props.left ? props.left : 0)}px;
-			top: ${(props) => (props.top ? props.top : 0)}px;
-			opacity: 1;
+			transform: scale(0.8);
 		}
 	}
 	&.modal-enter-active ${TitleModalContentContainer} {
+		
 		@media (min-width: 750px) {
-			height: 90vh;
-			width: 60vw;
-			top: 10vh;
-			left: 20vw;
-			opacity: 1;
+			transform: scale(1);
 		}
 		opacity: 1;
 	}
 	&.modal-exit ${TitleModalContentContainer} {
+		position: fixed;
 		@media (min-width: 750px) {
-			height: 90vh;
-			width: 60vw;
-			top: 10vh;
-			left: 20vw;
+			height: 90%;
+			width: 98%;
+			top: 5%;
+			left: 1%;
+			opacity: 1;
+		}
+		@media (min-width: 1000px) {
+			height: 90%;
+			width: 60%;
+			top: 10%;
+			left: 20%;
+			opacity: 1;
 		}
 		opacity: 1;
 	}
 	&.modal-exit-active ${TitleModalContentContainer} {
 		opacity: 0;
 		@media (min-width: 750px) {
-			height: calc(${(props) => props.height}px);
-			width: calc(${(props) => props.width}px);
+			height: ${(props) => props.height}px;
+			width: ${(props) => props.width}px;
 			left: ${(props) => (props.left ? props.left : 0)}px;
 			top: ${(props) => (props.top ? props.top : 0)}px;
 			opacity: 1;
@@ -102,6 +106,8 @@ export const TitleModalImageCard = styled(TitleModalContentCard)`
 	background-position: top;
 	background-size: 100%;
 	background-repeat: no-repeat;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 	&:after {
 		content: "";
 		height: 20%;
@@ -164,3 +170,24 @@ export const TitleModalInfoContainer = styled.div`
 	grid-template-columns: 3fr 2fr;
 	grid-template-rows: auto;
 `;
+
+export const TitleOverview = styled.p`
+	color: white;
+	text-align: left;
+	font-size: 1.1rem;
+	grid-column: 1/2;
+	padding-right: 10px;
+									
+`
+
+export const TitleMetaDataContainer = styled.div`
+	height: 100%;
+	color: white;
+	grid-row: 1/3;
+	grid-column: 2/3;
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+				
+`
