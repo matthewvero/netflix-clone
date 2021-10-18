@@ -2,7 +2,6 @@
 
 import {
 	faBell,
-	faChevronDown,
 	faInfoCircle,
 	faPlay,
 	faSearch,

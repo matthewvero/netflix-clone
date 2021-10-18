@@ -16,19 +16,23 @@ export const CarouselItemBackground = styled.img`
 
 export const CarouselItemContent = styled.div`
 	position: absolute;
-	top: 74%;
+	top: 73%;
 	left: 0;
 	width: 100%;
 	place-items: center;
 	grid-template-columns: auto;
 	grid-auto-rows: auto;
 	gap: 5px;
-	padding: 4%;
+	padding: 6% 4% 4% 4%;
 	box-sizing: border-box;
 	display: none;
 	border-radius: 6px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 	background-color: #141414;
 	transform-origin: top;
+	opacity: 0;
+	transition: opacity 1000ms 200ms linear;
 `;
 
 export const CarouselItemContainer = styled.div`
@@ -49,13 +53,11 @@ export const CarouselItemContainer = styled.div`
 	}};
 	will-change: transform;
 	cursor: pointer;
-	background-color: #141414;
 	&:hover {
 		transform: scale(1.4);
 		z-index: 1000;
 		transition: transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
-		box-shadow: 0 0 10px #101010;
 	}
 
 	&:hover ${CarouselItemBackground} {
@@ -65,6 +67,7 @@ export const CarouselItemContainer = styled.div`
 	}
 	&:hover ${CarouselItemContent} {
 		display: grid;
+		opacity: 1;
 	}
 	& span:after {
 		content: "•";

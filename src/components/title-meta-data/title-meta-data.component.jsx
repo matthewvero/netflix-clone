@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React from "react";
 import { minToHourConverter } from "../../helpers/utilities";
 import { GenreContentRow, Rating } from "../carousel-item/carousel-item.styles";
 import { MetaDataText } from "./title-meta-data.styles";

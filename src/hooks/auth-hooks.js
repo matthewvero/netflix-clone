@@ -1,11 +1,12 @@
 /** @format */
 import { useEffect, useState } from "react";
+
 import { auth, db } from "../firebase";
 import { getIdToken } from "../firebase.utils";
-import { useHistory } from "react-router-dom";
+
 export const useAuthListener = () => {
 	const [user, setUser] = useState();
-	const history = useHistory();
+
 	useEffect(() => {
 		let unsub;
 		auth.onAuthStateChanged(async (data) => {
@@ -32,7 +33,6 @@ export const useAuthListener = () => {
 									);
 								}
 							} else {
-								history.push("/");
 								alert("Error fetching profile");
 							}
 						});

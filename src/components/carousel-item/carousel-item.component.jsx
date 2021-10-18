@@ -32,7 +32,7 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const domNode = document.getElementById("App");
 	const modalRef = useRef();
-
+	const [contentRef, setContentRef] = useState();
 	useEffect(() => {
 		if (genreIDs?.length && $title?.genre_ids?.length) {
 			setGenres(
@@ -80,8 +80,9 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 			$right={$right}
 			$width={$width}
 			onMouseEnter={() => getInfo($title.id)}
+			
 		>
-			<CarouselItemContent>
+			<CarouselItemContent >
 				<GenreContentRow>
 					<CircleButton style={{ marginLeft: "0" }}>
 						<CircleButtonIcon icon={faPlay} />
