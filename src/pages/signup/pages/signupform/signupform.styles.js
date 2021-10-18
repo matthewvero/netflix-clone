@@ -39,7 +39,7 @@ export const SignupFormContainer = styled(FormPage)`
 
 	& .signupbutton {
 		width: 100%;
-		height: 64px;
+		min-height: 64px;
 		font-size: 24px;
 		margin-top: 20px;
 	}

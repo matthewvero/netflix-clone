@@ -27,5 +27,4 @@ export const HeaderContainer = styled.header`
 		rgba(0, 0, 0, 0) 0%,
 		rgba(0, 0, 0, 0.9206057422969187) 100%
 	);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
 `;

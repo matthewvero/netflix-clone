@@ -13,4 +13,9 @@ export const Page = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	background-color: black;
+	background-image: ${(props) =>
+		props.backgroundImage ? props.backgroundImage : null};
+	&.centered {
+		justify-content: center;
+	}
 `;

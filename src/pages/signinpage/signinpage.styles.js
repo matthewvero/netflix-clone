@@ -25,9 +25,17 @@ export const SigninFormContainer = styled.form`
 		margin-top: 20px;
 		font-size: 1.3rem;
 	}
+	@media (min-width: 800px) {
+		width: 450px;
+		height: auto;
+		position: static;
+		background-color: #000000bf;
+		border-radius: 4px;
+		padding: 2%;
+	}
 `;
 
-export const SignupPageheader = styled(StartPageHeader)`
+export const SigninPageheader = styled(StartPageHeader)`
 	position: fixed;
 	z-index: 1;
 	top: 0;

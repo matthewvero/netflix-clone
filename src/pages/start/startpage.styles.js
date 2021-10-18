@@ -102,6 +102,16 @@ export const StartPageButton = styled(Button)`
 	}
 `;
 
+export const AnimationCardContentContainer = styled.div`
+	display: flex;
+	flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-content: center;
+	max-width: 1100px;
+`;
+
 export const AnimationCardTextContainer = styled.div`
 	width: 52%;
 	padding-right: 50px;

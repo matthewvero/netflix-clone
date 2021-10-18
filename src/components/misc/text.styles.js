@@ -43,3 +43,18 @@ export const EmailFormTitle = styled.h3`
 		padding: 0 10%;
 	}
 `;
+
+export const HyperLink = styled.a`
+	text-decoration: none;
+	color: white;
+	font-weight: 600;
+	&:hover {
+		text-decoration: underline;
+	}
+`;
+
+export const Text = styled.p`
+	color: white;
+	font-size: 20px;
+	text-align: left;
+`;

@@ -35,15 +35,10 @@ export const TitleModalContainer = styled.div`
 	
 	&.modal-enter ${TitleModalContentContainer} {
 		opacity: 0;
-		@media (min-width: 750px) {
-			transform: scale(0.8);
-		}
+		transform: scale(0.8);
 	}
 	&.modal-enter-active ${TitleModalContentContainer} {
-		
-		@media (min-width: 750px) {
-			transform: scale(1);
-		}
+		transform: scale(1);
 		opacity: 1;
 	}
 	&.modal-exit ${TitleModalContentContainer} {

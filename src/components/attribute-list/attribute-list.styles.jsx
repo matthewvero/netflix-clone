@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
-export const ListItem = styled.span`
+export const ListItem = styled.li`
       color: white;
       font-size: 1rem;
-      `
-      export const ListTitle = styled.span`
-            color: #888;
-      `
-export const AttributeListContainer = styled.div`
+      display: inline;
+`
+export const ListTitle = styled.span`
+      color: #888;
+`
+export const AttributeListContainer = styled.ul`
       display: inline-block;
-      margin-bottom: 0px;
+      margin: 0;
+      padding: 0;
       text-align: left;
+      list-style-type: none;
       & ${ListItem}:not(:last-of-type):after {
             content: '${props => props.separator ? `${props.separator} ` : ', '}';
       }
@@ -18,3 +21,4 @@ export const AttributeListContainer = styled.div`
             font-size: 0.8rem;
       }
 `;
+

@@ -16,7 +16,7 @@ export const CarouselItemBackground = styled.img`
 
 export const CarouselItemContent = styled.div`
 	position: absolute;
-	top: 75%;
+	top: 74%;
 	left: 0;
 	width: 100%;
 	place-items: center;

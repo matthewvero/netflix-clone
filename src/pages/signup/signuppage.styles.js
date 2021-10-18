@@ -2,6 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components/macro";
+import { HeaderContainer } from "../../components/header/header.styles";
 import { Page } from "../page.styles";
 
 export const SignupPageContainer = styled(Page)`
@@ -96,4 +97,9 @@ export const ListIcon = styled(FontAwesomeIcon)`
 	font-size: 1.3rem;
 	color: #e50914;
 	margin-right: 3px;
+`;
+
+export const SignupPageheader = styled(HeaderContainer)`
+	background-color: transparent;
+	background: none;
 `;

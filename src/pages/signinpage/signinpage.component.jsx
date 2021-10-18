@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Page } from '../page.styles'
 import background from "../../images/home-bg.jpeg";
 import { ReactComponent as ReactLogo } from "../../logo.svg";
-import { SigninFormContainer, SignupPageheader, SignupPageInput } from './signinpage.styles';
-import { Heading } from '../../components/misc/text.styles';
+import { SigninFormContainer, SigninPageheader, SignupPageInput } from './signinpage.styles';
+import { Heading, HyperLink } from '../../components/misc/text.styles';
 import { useFormValidator, withValidation } from '../../hooks/form-validator/form-validator';
 import { FormInputContainer, InputBox, InputLabel } from '../../components/misc/inputs.styles';
 import FormErrors from '../../components/form-errors/form-errors.component';
 import { Button } from '../../components/buttons.styles';
 import { auth } from '../../firebase';
+import Header from '../../components/header/header.component';
 const ValidatedEmailInput = withValidation(SignupPageInput, 'email', 'email');
 const ValidatedPasswordInput = withValidation(SignupPageInput, 'password', 'password', {required: true});
 const SigninPage = () => {
@@ -44,11 +45,9 @@ const SigninPage = () => {
       }
      
       return (
-            <Page>
-                  <div
-				style={{ backgroundImage: `url(${background})`, height: '100vh', width: '100%', display: 'flex', justifyContent: 'flex-start',  }}
-			>
-				<SignupPageheader>
+            <Page backgroundImage={`url(${background})`} className='centered'>
+                
+				<SigninPageheader>
 					<ReactLogo
 						style={{
 							maxHeight: "50%",
@@ -59,9 +58,9 @@ const SigninPage = () => {
 						}}
 					/>
 					
-				</SignupPageheader>
+				</SigninPageheader>
                         <SigninFormContainer onSubmit={e => formApi.handleSubmit(e, signIn)}>
-                              <Heading style={{marginBottom: '10px'}}>Sign In</Heading> 
+                              <Heading style={{margin: '0 0 10px 0'}}>Sign In</Heading> 
                               {
                                     signinFailed &&
                                     <div style={{color: 'white', backgroundColor: '#e87c03', padding: '10px', borderRadius: '4px', textAlign: 'left'}}>{errMessage}</div>
@@ -85,8 +84,9 @@ const SigninPage = () => {
 
                               <FormErrors state={formApi.state} inputName='password'/>
                               <Button className='signinbutton'>Sign in</Button>
+                              <p style={{color: '#737373'}}>New to Netflix? <HyperLink href='/signup'>Sign up now.</HyperLink></p>
                         </SigninFormContainer>
-                  </div>
+                              
             </Page>
       )
 }

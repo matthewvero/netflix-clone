@@ -14,7 +14,7 @@ import useLazyLoader from "../../components/component-lazy-loader/component-lazy
 import { GenreContext } from "../../components/contexts";
 import LoadingAnimation from "../../components/LoadingAnimation/loading-animation.component";
 import { db } from "../../firebase";
-import { truncateText } from "../../helpers/utilities";
+import { truncateText, useThrottle } from "../../helpers/utilities";
 import {
 	BannerButtonContainer,
 	BannerContent,
@@ -34,17 +34,36 @@ import {
 	BannerInfoButton,
 	BannerPlayButton,
 } from "../../components/buttons.styles";
+import HeaderDropdown from "../../components/header-dropdown/header-dropdown.component";
 
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);
 	const [categoryIDs, setCategoryIDs] = useState([]);
 	const [featured, setFeatured] = useState();
+	const [scrolled, setScrolled] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [LazyCarousel, visibleComponents] = useLazyLoader(
 		"carousel",
 		Carousel,
 		CarouselWrapper
 	);
+
+	const handleScroll = e => {
+		if(window.scrollY > 0 && scrolled === false) {
+			setScrolled(true);
+		} else if (window.scrollY === 0 && scrolled === true) {
+			setScrolled(false)
+		}
+	}
+	const debouncedHandleScroll = useThrottle(handleScroll, 1000);
+
+	useEffect(() => {
+		
+		window.addEventListener('scroll', debouncedHandleScroll);
+		return () => {
+			window.removeEventListener('scroll', debouncedHandleScroll);
+		}
+	}, [debouncedHandleScroll])
 
 	useEffect(() => {
 		const getTitles = async () => {
@@ -99,7 +118,7 @@ const BrowsePage = () => {
 
 	return (
 		<BrowsePageContainer>
-			<BrowsePageHeader>
+			<BrowsePageHeader className={scrolled ? 'scrolled' : null}>
 				<HeaderSection>
 					<NetflixLogo />
 					<HeaderLink>Home</HeaderLink>
@@ -125,23 +144,7 @@ const BrowsePage = () => {
 							}}
 						/>
 					</HeaderItem>
-					<HeaderItem>
-						<div
-							style={{
-								height: "30px",
-								width: "30px",
-								backgroundColor: "yellow",
-								borderRadius: "4px",
-								marginRight: "10px",
-							}}
-						></div>
-						<FontAwesomeIcon
-							icon={faChevronDown}
-							style={{
-								color: "#e5e5e5",
-							}}
-						/>
-					</HeaderItem>
+					<HeaderDropdown/>
 				</HeaderSection>
 			</BrowsePageHeader>
 

@@ -1,15 +1,15 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { minToHourConverter } from "../../helpers/utilities";
 import { GenreContentRow, Rating } from "../carousel-item/carousel-item.styles";
 import { MetaDataText } from "./title-meta-data.styles";
 
 const TitleMetaData = ({ info }) => {
-	return (
+	if(info?.releaseInfo &&
+		info.releaseInfo.hasOwnProperty("iso_3166_1")) return (
+		
 		<GenreContentRow>
-			{info?.releaseInfo &&
-				info.releaseInfo.hasOwnProperty("iso_3166_1") && (
 					<Rating>
 						{info.releaseInfo.release_dates[0]
 							.certification === "12A"
@@ -17,14 +17,16 @@ const TitleMetaData = ({ info }) => {
 							: info.releaseInfo.release_dates[0]
 									.certification}
 					</Rating>
-				)}
-			{info?.titleInfo && (
+			
 				<MetaDataText>
 					{minToHourConverter(info.titleInfo.runtime)}
 				</MetaDataText>
-			)}
+			
 		</GenreContentRow>
-	);
+		);
+	else {
+		return null
+	}
 };
 
 export default TitleMetaData;

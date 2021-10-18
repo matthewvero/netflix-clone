@@ -19,6 +19,7 @@ import {
 	AnimationCardSubHeading,
 	DownLoadCard,
 	StartPageEmailInput,
+	AnimationCardContentContainer,
 } from "./startpage.styles";
 import { ReactComponent as ReactLogo } from "../../logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,6 +45,7 @@ import {
 	EmailFormTitle,
 	Heading,
 	SubHeading,
+	Text,
 } from "../../components/misc/text.styles";
 import { withRouter } from "react-router";
 import {
@@ -56,6 +58,7 @@ import {
 	AccordionSummary,
 } from "../../components/accordion/accordion.styles";
 import Accordion from "../../components/accordion/accordion.component";
+import FormErrors from "../../components/form-errors/form-errors.component";
 const ValidatedEmail = withValidation(StartPageEmailInput, "email", "email", {
 	required: true,
 });
@@ -127,29 +130,8 @@ const StartPage = ({ history }) => {
 										Email address
 									</InputLabel>
 								</InputContainer>
-								<div>
-									{state.errors["email"] &&
-										state.interacted[
-											"email"
-										] &&
-										state.errors[
-											"email"
-										].map((el, idx) => (
-											<p
-												key={
-													idx
-												}
-												style={{
-													margin: "5px 0",
-													color: "orange",
-													textAlign:
-														"left",
-												}}
-											>
-												{el}
-											</p>
-										))}
-								</div>
+								
+								<FormErrors state={state} inputName={'email'}/>
 							</StartPageInputContainer>
 							<StartPageButton>
 								Get Started{" "}
@@ -165,17 +147,7 @@ const StartPage = ({ history }) => {
 				</OurStoryContainer>
 			</StartPageCard>
 			<AnimationCard>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						flexWrap: "wrap",
-						alignContent: "center",
-						maxWidth: "1100px",
-						height: "auto",
-					}}
-				>
+				<AnimationCardContentContainer>
 					<AnimationCardTextContainer>
 						<AnimationCardHeading className="left">
 							Enjoy on your TV.
@@ -195,20 +167,10 @@ const StartPage = ({ history }) => {
 							loop
 						/>
 					</AnimationContainer>
-				</div>
+				</AnimationCardContentContainer>
 			</AnimationCard>
 			<AnimationCard>
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "row-reverse",
-						alignItems: "center",
-						justifyContent: "center",
-						flexWrap: "wrap",
-						alignContent: "center",
-						maxWidth: "1100px",
-					}}
-				>
+				<AnimationCardContentContainer reverse>
 					<AnimationCardTextContainer>
 						<AnimationCardHeading className="right">
 							Download your programmes to watch
@@ -273,19 +235,10 @@ const StartPage = ({ history }) => {
 							src={mobile}
 						></AnimationImage>
 					</AnimationContainer>
-				</div>
+				</AnimationCardContentContainer>
 			</AnimationCard>
 			<AnimationCard>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						flexWrap: "wrap",
-						alignContent: "center",
-						maxWidth: "1100px",
-					}}
-				>
+				<AnimationCardContentContainer>
 					<AnimationCardTextContainer>
 						<AnimationCardHeading className="left">
 							Watch everywhere.
@@ -311,9 +264,9 @@ const StartPage = ({ history }) => {
 							loop
 						/>
 					</AnimationContainer>
-				</div>
+				</AnimationCardContentContainer>
 			</AnimationCard>
-			<StartPageCard style={{ height: "auto" }}>
+			<StartPageCard style={{ height: "auto", paddingBottom: '100px' }}>
 				<Heading>Frequently asked Questions</Heading>
 				<Accordion>
 					<AccordionSegment className="segment">
@@ -330,35 +283,21 @@ const StartPage = ({ history }) => {
 								className="closed"
 							/>
 						</AccordionSummary>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						<Text>
 							Netflix is a streaming service that
 							offers a wide variety of award-winning
 							TV programmes, films, anime,
 							documentaries and more – on thousands
 							of internet-connected devices.
-						</p>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						</Text>
+						<Text>
 							You can watch as much as you want,
 							whenever you want, without a single
 							advert – all for one low monthly
 							price. There's always something new to
 							discover, and new TV programmes and
 							films are added every week!
-						</p>
+						</Text>
 					</AccordionSegment>
 					<AccordionSegment className="segment">
 						<AccordionSummary>
@@ -374,20 +313,13 @@ const StartPage = ({ history }) => {
 								className="closed"
 							/>
 						</AccordionSummary>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						<Text>
 							Watch Netflix on your smartphone,
 							tablet, smart TV, laptop or streaming
 							device, all for one fixed monthly fee.
 							Plans range from £5.99 to £13.99 a
 							month. No extra costs, no contracts.
-						</p>
+						</Text>
 					</AccordionSegment>
 					<AccordionSegment className="segment">
 						<AccordionSummary>
@@ -403,15 +335,7 @@ const StartPage = ({ history }) => {
 								className="closed"
 							/>
 						</AccordionSummary>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-								marginBottom: "30px",
-							}}
-						>
+						<Text>
 							Watch anywhere, anytime, on an
 							unlimited number of devices. Sign in
 							with your Netflix account to watch
@@ -421,22 +345,15 @@ const StartPage = ({ history }) => {
 							the Netflix app, including smart TVs,
 							smartphones, tablets, streaming media
 							players and game consoles.
-						</p>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						</Text>
+						<Text>
 							You can also download your favourite
 							programmes with the iOS, Android, or
 							Windows 10 app. Use downloads to watch
 							while you're on the go and without an
 							internet connection. Take Netflix with
 							you anywhere.
-						</p>
+						</Text>
 					</AccordionSegment>
 					<AccordionSegment className="segment">
 						<AccordionSummary>
@@ -452,21 +369,14 @@ const StartPage = ({ history }) => {
 								className="closed"
 							/>
 						</AccordionSummary>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						<Text>
 							Netflix is flexible. There are no
 							annoying contracts and no commitments.
 							You can easily cancel your account
 							online in two clicks. There are no
 							cancellation fees – start or stop your
 							account at any time.
-						</p>
+						</Text>
 					</AccordionSegment>
 					<AccordionSegment className="segment">
 						<AccordionSummary>
@@ -482,20 +392,13 @@ const StartPage = ({ history }) => {
 								className="closed"
 							/>
 						</AccordionSummary>
-						<p
-							style={{
-								margin: "0",
-								color: "white",
-								textAlign: "left",
-								fontSize: "20px",
-							}}
-						>
+						<Text>
 							Netflix has an extensive library of
 							feature films, documentaries, TV
 							programmes, anime, award-winning
 							Netflix originals, and more. Watch as
 							much as you want, any time you want.
-						</p>
+						</Text>
 					</AccordionSegment>
 				</Accordion>
 				<form
@@ -531,23 +434,7 @@ const StartPage = ({ history }) => {
 									Email address
 								</InputLabel>
 							</InputContainer>
-							{state.errors["email"] &&
-								state.interacted["email"] &&
-								state.errors["email"].map(
-									(el, idx) => (
-										<p
-											key={idx}
-											style={{
-												margin: "5px 0",
-												color: "orange",
-												textAlign:
-													"left",
-											}}
-										>
-											{el}
-										</p>
-									)
-								)}
+							<FormErrors state={state} inputName='email'/>
 						</StartPageInputContainer>
 						<StartPageButton>
 							Get Started{" "}

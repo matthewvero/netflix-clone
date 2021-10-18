@@ -18,13 +18,6 @@ function App() {
 	return (
 		<div className="App" id="App">
 			<BrowserRouter>
-				<ContextRoute
-					path="/signup/:anything"
-					contextComponent={UserContext}
-					value={user}
-				>
-					<Header />
-				</ContextRoute>
 				<Route exact path="/">
 					{user ? <Redirect to="/browse" /> : <StartPage />}
 				</Route>
@@ -55,6 +48,9 @@ function App() {
 						<SigninPage />
 					)}
 				</ContextRoute>
+				<Route path="/logout">
+					<StartPage />
+				</Route>
 			</BrowserRouter>
 		</div>
 	);

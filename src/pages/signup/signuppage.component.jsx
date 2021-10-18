@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { UserContext } from "../../components/contexts";
+import { ReactComponent as ReactLogo } from "../../logo.svg";
 
 import { useFormValidator } from "../../hooks/form-validator/form-validator";
 import PaymentPage from "./pages/paymentpage/paymentpage.component";
@@ -13,7 +14,7 @@ import PerksPage from "./pages/perkspage/perkspage.component";
 import { PlansPage } from "./pages/planspage/planspage.component";
 import { SignupForm } from "./pages/signupform/signupform.component";
 
-import { FormContainer, SignupPageContainer } from "./signuppage.styles";
+import { FormContainer, SignupPageContainer, SignupPageheader } from "./signuppage.styles";
 
 const SignupPage = ({ location }) => {
 	const [locationKeys, setLocationKeys] = useState([]);
@@ -77,6 +78,18 @@ const SignupPage = ({ location }) => {
 
 	return (
 		<SignupPageContainer>
+			<SignupPageheader>
+				<ReactLogo
+						style={{
+							maxHeight: "50%",
+							maxWidth: "12.5%",
+							minHeight: "43px",
+							minWidth: "120px",
+							paddingTop: "8px",
+						}}
+					/>
+			</SignupPageheader>
+
 			<FormContainer>
 				<BrowserRouter>
 					<Route path={"/signup/form"} exact>

@@ -41,9 +41,14 @@ export const BrowsePageHeader = styled.header`
 		rgba(0, 0, 0, 0.9206057422969187) 100%
 	);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
+	transition: background-color 500ms linear;
 	@media (min-width: 950px) {
 		height: 75px;
 	}
+	&.scrolled {
+		background-color: rgb(20,20,20);
+	}
+
 `;
 
 export const HeaderSection = styled.div`
@@ -163,7 +168,7 @@ export const BannerContent = styled.div`
 	}
 `;
 
-export const BannerOverview = styled.h3`
+export const BannerOverview = styled.article`
 	color: white;
 	font-size: 0.9rem;
 	margin: 0;
