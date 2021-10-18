@@ -14,6 +14,14 @@ export const CarouselItemBackground = styled.img`
 	border-radius: 6px;
 `;
 
+const fadein = keyframes`
+	from {
+		opacity: 0;
+	} to {
+		opacity: 1;
+	}
+`;
+
 export const CarouselItemContent = styled.div`
 	position: absolute;
 	top: 73%;
@@ -32,7 +40,7 @@ export const CarouselItemContent = styled.div`
 	background-color: #141414;
 	transform-origin: top;
 	opacity: 0;
-	transition: opacity 1000ms 200ms linear;
+	animation: ${fadein} 200ms linear 400ms 1 forwards;
 `;
 
 export const CarouselItemContainer = styled.div`
@@ -67,7 +75,6 @@ export const CarouselItemContainer = styled.div`
 	}
 	&:hover ${CarouselItemContent} {
 		display: grid;
-		opacity: 1;
 	}
 	& span:after {
 		content: "•";
