@@ -4,10 +4,9 @@ import { BrowserRouter, Redirect, Route } from "react-router-dom";
 
 import "./App.css";
 import ContextRoute from "./components/context-route/context-route.component";
-import Header from "./components/header/header.component";
 import { UserContext } from "./components/contexts";
 import { useAuthListener } from "./hooks/auth-hooks";
-import BrowsePage from "./pages/homepage/browse.component";
+import BrowsePage from "./pages/browsepage/browse.component";
 import SignupPage from "./pages/signup/signuppage.component";
 import StartPage from "./pages/start/startpage.component";
 import SigninPage from "./pages/signinpage/signinpage.component";

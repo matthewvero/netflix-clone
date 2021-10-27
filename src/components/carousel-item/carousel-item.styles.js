@@ -1,6 +1,5 @@
 /** @format */
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { keyframes } from "styled-components/macro";
 
 export const CarouselItemBackground = styled.img`

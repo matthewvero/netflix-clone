@@ -33,6 +33,7 @@ const Carousel = ({ $titles, ...props }) => {
 		Math.round((window.innerWidth / resultsPerPage) * 1.4)
 	);
 	const [domNode, setDomNode] = useState(null);
+	
 	// Listen for size changes
 	const setRef = useCallback((node) => setDomNode(node), []);
 

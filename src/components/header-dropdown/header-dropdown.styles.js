@@ -2,7 +2,7 @@
 
 import styled from "styled-components/macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { HeaderItem } from "../../pages/homepage/browse.styles";
+import { HeaderItem } from "../../pages/browsepage/browse.styles";
 
 export const DropdownContainer = styled.div`
 	position: absolute;
@@ -15,7 +15,7 @@ export const DropdownContainer = styled.div`
 	align-items: flex-start;
 	border: 1px solid #444444;
 	padding: 10px;
-
+	outline: none;
 	&.dropdown-enter {
 		transition: opacity 150ms linear;
 		opacity: 0;
@@ -51,6 +51,7 @@ export const HeaderDropdownContainer = styled(HeaderItem)`
 	position: relative;
 	overflow: visible;
 	cursor: pointer;
+	outline: none;
 `;
 
 export const HeaderProfileIcon = styled.div`
@@ -58,7 +59,9 @@ export const HeaderProfileIcon = styled.div`
 	width: 30px;
 	border-radius: 6px;
 	background-color: yellow;
+	outline: none;
 `;
+
 
 export const HeaderDropdownIndicator = styled(FontAwesomeIcon)`
 	color: white;

@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useReducer } from "react";
-import styled from "styled-components";
 import { reducer, stateTypes } from "./form-validator.reducer";
 
 function capitalise(str) {

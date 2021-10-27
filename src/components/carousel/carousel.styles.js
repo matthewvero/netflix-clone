@@ -1,8 +1,7 @@
 /** @format */
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components/macro";
-
+import styled, {keyframes} from "styled-components/macro";
 import {IndicatorGroupContainer} from './indicator-group/indicator-group.styles'
 
 export const CarouselPage = styled.div`
@@ -56,6 +55,15 @@ export const CarouselSlider = styled.div`
 	position: relative;
 `;
 
+const fadein = keyframes`
+	from {
+		opacity: 0;
+	} to {
+		opacity: 1;
+	}
+
+`
+
 export const CarouselContainer = styled.div`
 	position: relative;
 	height: ${(props) => props.$height}px;
@@ -63,12 +71,14 @@ export const CarouselContainer = styled.div`
 	transition: height 100ms linear;
 	user-select: none;
 	z-index: 100;
+	opacity: 0;
 	&:hover ${IndicatorGroupContainer} {
 		opacity: 1;
 	}
 	&:hover {
 		z-index: 1000;
 	}
+	animation: ${fadein} 200ms 1 forwards linear;
 `;
 
 export const CarouselIcon = styled(FontAwesomeIcon)`

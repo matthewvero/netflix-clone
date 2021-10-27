@@ -84,7 +84,7 @@ export const FeaturedBanner = styled.div`
 	position: relative;
 	width: 100%;
 	height: 500px;
-	margin-bottom: -10%;
+	margin-bottom: -5%;
 	box-sizing: border-box;
 	background-image: url(${(props) => props.$backgroundImage});
 	background-position: 0% 40%;
@@ -127,7 +127,7 @@ export const FeaturedBanner = styled.div`
 
 export const BannerContentContainer = styled.div`
 	position: absolute;
-	bottom: 50px;
+	bottom: 0px;
 	left: 0;
 	height: 100%;
 	width: 100%;

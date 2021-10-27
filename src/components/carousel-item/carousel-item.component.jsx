@@ -32,7 +32,6 @@ const CarouselItem = ({ $title, $left, $right, $width }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const domNode = document.getElementById("App");
 	const modalRef = useRef();
-	const [contentRef, setContentRef] = useState();
 	useEffect(() => {
 		if (genreIDs?.length && $title?.genre_ids?.length) {
 			setGenres(
