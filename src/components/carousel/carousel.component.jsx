@@ -16,9 +16,9 @@ import {
 	CarouselPage,
 	CarouselSlider,
 	CarouselTitle,
-	Indicator,
-	IndicatorGroup,
 } from "./carousel.styles";
+
+import IndicatorGroup from './indicator-group/indicator-group.component'
 
 import {paginator} from './carousel.utilities'
 
@@ -121,15 +121,7 @@ const Carousel = ({ $titles, ...props }) => {
 			{$titles && (
 				<CarouselTitle>{$titles.collectionName}</CarouselTitle>
 			)}
-			<IndicatorGroup>
-				{pageArr.map((el, idx) => (
-					<Indicator
-						$activePage={activePage}
-						$idx={idx}
-						key={idx}
-					/>
-				))}
-			</IndicatorGroup>
+			<IndicatorGroup pages={pageArr.length} activePage={activePage}/>
 			<CarouselButton
 				$width={width}
 				className="left"

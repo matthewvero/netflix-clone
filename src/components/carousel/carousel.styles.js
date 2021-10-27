@@ -3,23 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components/macro";
 
-export const IndicatorGroup = styled.div`
-	opacity: 0;
-	position: absolute;
-	top: -20px;
-	right: 30px;
-	height: 2px;
-	width: auto;
-	display: flex;
-`;
-
-export const Indicator = styled.div`
-	height: 2px;
-	width: 12px;
-	background-color: ${(props) =>
-		props.$activePage === props.$idx ? "white" : "#333333"};
-	margin: 1px;
-`;
+import {IndicatorGroupContainer} from './indicator-group/indicator-group.styles'
 
 export const CarouselPage = styled.div`
 	min-width: 100%;
@@ -79,7 +63,7 @@ export const CarouselContainer = styled.div`
 	transition: height 100ms linear;
 	user-select: none;
 	z-index: 100;
-	&:hover ${IndicatorGroup} {
+	&:hover ${IndicatorGroupContainer} {
 		opacity: 1;
 	}
 	&:hover {
