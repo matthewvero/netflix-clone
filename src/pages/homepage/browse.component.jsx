@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import Carousel from "../../components/carousel/carousel.component";
-import useLazyLoader from "../../components/component-lazy-loader/component-lazy-loader.component";
+import {useLazyLoader, withLazyLoad} from "../../components/component-lazy-loader/component-lazy-loader.component";
 import { GenreContext } from "../../components/contexts";
 import LoadingAnimation from "../../components/LoadingAnimation/loading-animation.component";
 import { db } from "../../firebase";
@@ -35,17 +35,15 @@ import {
 } from "../../components/buttons.styles";
 import HeaderDropdown from "../../components/header-dropdown/header-dropdown.component";
 
+const LazyCarousel = withLazyLoad(CarouselWrapper, Carousel);
+
 const BrowsePage = () => {
 	const [titles, setTitles] = useState([]);
 	const [categoryIDs, setCategoryIDs] = useState([]);
 	const [featured, setFeatured] = useState();
 	const [scrolled, setScrolled] = useState(false);
 	const [loading, setLoading] = useState(true);
-	const [LazyCarousel, visibleComponents] = useLazyLoader(
-		"carousel",
-		Carousel,
-		CarouselWrapper
-	);
+	const [visibleComponents] = useLazyLoader("carousel");
 
 	const handleScroll = e => {
 		if(window.scrollY > 0 && scrolled === false) {
@@ -203,11 +201,10 @@ const BrowsePage = () => {
 							titles?.map((el, idx) => (
 									<LazyCarousel
 										$titles={el}
-										$genreIDs={
-											categoryIDs
-										}
+										$genreIDs={categoryIDs}
 										key={idx}
 										lazyKey={idx}
+										lazyClass={'carousel'}
 										visibleComponents={
 											visibleComponents
 										}

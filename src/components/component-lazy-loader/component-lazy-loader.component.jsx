@@ -1,11 +1,9 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
-const useLazyLoader = (
+export const useLazyLoader = (
 	lazyClass,
-	Components,
-	Wrapper,
 	options = {
 		root: null,
 		rootMargin: "0px 0px 400px 0px",
@@ -15,6 +13,8 @@ const useLazyLoader = (
 ) => {
 	// Add components that we want to be loaded immediately.
 	const [visibleComponents, setVisibleComponents] = useState([...ignore]);
+
+
 
 	// Init intersection observers for all elements with lazy class.
 	useEffect(() => {
@@ -45,25 +45,28 @@ const useLazyLoader = (
 		};
 	}, [lazyClass, options, visibleComponents]);
 
-	const LazyComponents = ({
+
+
+	return [visibleComponents];
+};
+
+
+export const withLazyLoad = (Wrapper, Component) => ({
 		lazyKey,
+		lazyClass,
 		visibleComponents,
 		ignore,
 		...props
 	}) => {
 		const [load, setLoad] = useState(false);
+
 		useEffect(() => {
 			visibleComponents.includes(lazyKey) && setLoad(true);
 		}, [lazyKey, visibleComponents]);
 
 		return (
 			<Wrapper className={lazyClass} data-lazy-id={lazyKey}>
-				{load && <Components {...props} />}
+				{load && <Component {...props} />}
 			</Wrapper>
 		);
 	};
-
-	return [LazyComponents, visibleComponents];
-};
-
-export default useLazyLoader;
