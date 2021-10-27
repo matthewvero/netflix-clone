@@ -12,8 +12,8 @@ const AttributeList = ({title, items, separator, small}) => {
                         </ListTitle> 
                   }
 
-                  {items?.map((el) => (
-                        <ListItem >{el.name}</ListItem>
+                  {items?.map((el, key) => (
+                        <ListItem key={key}>{el.name}</ListItem>
                   ))}
             </AttributeListContainer>
       )

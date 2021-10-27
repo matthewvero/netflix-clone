@@ -64,7 +64,7 @@ export const CarouselItemContainer = styled.div`
 	&:hover {
 		transform: scale(1.4);
 		z-index: 1000;
-		transition: transform 350ms 500ms
+		transition: z-index 1ms 300ms linear, transform 350ms 500ms
 			cubic-bezier(0.15, 0.75, 0.3, 1.03);
 	}
 

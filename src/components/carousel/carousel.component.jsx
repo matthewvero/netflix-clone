@@ -20,6 +20,8 @@ import {
 	IndicatorGroup,
 } from "./carousel.styles";
 
+import {paginator} from './carousel.utilities'
+
 const Carousel = ({ $titles, ...props }) => {
 	const [pageArr, setPageArr] = useState([]);
 	const [refArr, setRefArr] = useState([]);
@@ -50,18 +52,13 @@ const Carousel = ({ $titles, ...props }) => {
 
 	// Change number of results based on view width
 	const resizeListener = useCallback(() => {
-		if (window.innerWidth < 500) {
-			setResultsPerPage(2);
-		} else if (window.innerWidth >= 500 && window.innerWidth < 800) {
-			setResultsPerPage(3);
-		} else if (window.innerWidth >= 800 && window.innerWidth < 1100) {
-			setResultsPerPage(4);
-		} else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
-			setResultsPerPage(5);
-		} else if (window.innerWidth >= 1400) {
-			setResultsPerPage(6);
+		let results = 2;
+		for ( let i = 500; i < 1700; i += 300) {
+			if(window.innerWidth > i) {
+				results++
+			}
 		}
-
+		setResultsPerPage(results)
 		setHeight(Math.round((window.innerWidth / resultsPerPage) * 1.35));
 	}, [resultsPerPage]);
 
@@ -78,23 +75,7 @@ const Carousel = ({ $titles, ...props }) => {
 	useEffect(() => {
 		// Paginate titles
 		if ($titles.titles) {
-			const data = $titles.titles.results;
-
-			let newArr = [];
-			let i,
-				j,
-				newSlice,
-				chunk = resultsPerPage;
-			for (i = 0, j = data.length; i < j; i += chunk) {
-				const prevIdx = i - 1 < 0 ? data.length - 1 : i - 1;
-				const nextIdx =
-					i + chunk + 1 > data.length - 1 ? 0 : i + chunk;
-				newSlice = data.slice(i, i + chunk);
-				newSlice.unshift(data[prevIdx]);
-				newSlice.push(data[nextIdx]);
-				newArr.push(newSlice);
-			}
-			setPageArr(newArr);
+			setPageArr(paginator($titles.titles.results, resultsPerPage));
 		}
 	}, [$titles, resultsPerPage]);
 
@@ -200,5 +181,7 @@ const Carousel = ({ $titles, ...props }) => {
 		</CarouselContainer>
 	);
 };
+
+
 
 export default Carousel;
